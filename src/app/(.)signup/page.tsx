@@ -4,7 +4,9 @@ import Box from '@/components/molecules/Box';
 export default function SignupHome() {
   return (
     <>
-      <Box />
+      <Modal>
+        <Box />
+      </Modal>
     </>
   );
 }
