@@ -1,21 +1,21 @@
 import React from "react";
 
 interface Props {
-  isRecruiting: boolean;
+  isClose: boolean;
 }
 
 /**
  * Badge 컴포넌트 - 모집중, 마감 표현을 위한 뱃지
- * @param {boolean} isRecruiting - 모집 여부를 불리언(true, false)으로 전달받는다
+ * @param {boolean} isClose - 마감 여부를 불리언(true, false)으로 전달받는다
  */
-function Badge({ isRecruiting }: Props) {
+function Badge({ isClose }: Props) {
   return (
     <span
       className={`inline-block text-white rounded-full px-3 py-1 ${
-        isRecruiting ? "bg-[#37D629]" : "bg-neutral-400"
+        isClose ? "bg-neutral-400" : "bg-[#37D629]"
       }`}
     >
-      {isRecruiting ? "모집중" : "마감"}
+      {isClose ? "마감" : "모집중"}
     </span>
   );
 }
