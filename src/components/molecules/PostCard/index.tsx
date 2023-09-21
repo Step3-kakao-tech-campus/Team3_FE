@@ -5,12 +5,24 @@ import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
 
 interface Props {
-  // props 추가 필요
-  // innerText: string,
-  // backgroundColor?: string,
+  title: string;
+  dueTime: string;
+  startTime: string;
+  districtName: string;
+  userName: string;
+  profileImage: string | null;
+  isClose: boolean;
 }
 
-function PostCard({}: Props) {
+function PostCard({
+  title,
+  dueTime,
+  startTime,
+  districtName,
+  userName,
+  profileImage,
+  isClose,
+}: Props) {
   return (
     <section className="post-card flex flex-col gap-6 p-7 rounded-2xl shadow">
       <div className="post-title-upper">
