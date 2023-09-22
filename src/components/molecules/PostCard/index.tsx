@@ -12,6 +12,7 @@ interface Props {
   userName: string;
   profileImage: string | null;
   isClose: boolean;
+  currentNumber: number;
 }
 
 function PostCard({
@@ -22,6 +23,7 @@ function PostCard({
   userName,
   profileImage,
   isClose,
+  currentNumber,
 }: Props) {
   return (
     <section className="post-card flex flex-col gap-6 p-7 rounded-2xl shadow">
@@ -30,7 +32,7 @@ function PostCard({
         <span className="text-sm mx-2">
           <MdPeopleAlt className="inline mr-1 text-neutral-400" />
           <span>참석 </span>
-          <span className="text-[#37D629]">{"hard"}</span>
+          <span className="text-[#37D629]">{currentNumber}</span>
         </span>
         <span className="text-neutral-400">
           <span className="mr-1">모집마감</span>
