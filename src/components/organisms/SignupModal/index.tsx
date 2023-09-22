@@ -5,8 +5,11 @@ import Image from 'next/image';
 import Button from '@/components/atoms/Button';
 import Input from '@/components/atoms/Input';
 import Dropdown from '@/components/atoms/Dropdown';
+import ConsentCheckbox from '@/components/atoms/CheckBox';
 
-export default function Box() {
+// 컴포넌트화된 동의 체크박스
+
+export default function SignupModal() {
   const createOption = (value: string) => ({ value, label: value });
 
   const options1 = [createOption('광역시 / 도'), createOption('서울특별시'), createOption('부산광역시')];
@@ -18,6 +21,7 @@ export default function Box() {
   const [selectedOption1, setSelectedOption1] = useState(options1[0].value);
   const [selectedOption2, setSelectedOption2] = useState(options2[0].value);
   const [selectedOption3, setSelectedOption3] = useState(options3[0].value);
+  const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
 
   const handleDropdownChange1 = (selectedValue: any) => {
     setSelectedOption1(selectedValue);
@@ -79,7 +83,7 @@ export default function Box() {
           />
         </div>
       </div>
-
+      <p className="pb-[32px]" />
       {/* 지역 선택 */}
       <div className="flex justify-between">
         <Dropdown
@@ -103,14 +107,15 @@ export default function Box() {
           dropdownId="dropdown3" // Provide a unique identifier
         />
       </div>
-
+      <p className="pb-[32px]" />
+      {/* 개인 정보 수집 및 이용 동의 체크박스 */}
+      <div className="mb-4">
+        <ConsentCheckbox checked={consentChecked} onChange={(isChecked) => setConsentChecked(isChecked)} />
+      </div>
+      <p className="pb-[32px]" />
       {/* 제출 버튼 */}
       <div className="flex justify-center ">
-        {Button(
-          'submit',
-          'bg-gradient-to-tl from-[#FE7E07] to-[#FFDE67] text-white w-[546px] h-[60px] rounded-full',
-          '회원가입'
-        )}
+        {Button('submit', 'bg-thunder text-white w-[546px] h-[60px] rounded-full text-xl', '회원가입')}
       </div>
     </div>
   );
