@@ -16,15 +16,18 @@ export const metadata: Metadata = {
 export default function RootLayout(props: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <html lang="ko" className={inter.className}>
-      <body>
+      <body className="bg-[#F6F6F6]">
         <header className="flex justify-between items-center bg-gray-800 text-white p-4">
           <nav>
             <ul className="flex space-x-4">
               <li>
+                <Link href="/">홈</Link>
+              </li>
+              <li>
                 <Link href="/signup">회원가입</Link>
               </li>
               <li>
-                <Link href="/login">로그인</Link>
+                <Link href="/signin">로그인</Link>
               </li>
             </ul>
           </nav>
