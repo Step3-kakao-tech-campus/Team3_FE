@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        lightningOrange: "#FE7E07",
+        lightningYellow: "#FFDE67",
+        "custom-gradient": "bg-gradient-to-br from-[#FE7E07] to-[#FFDE67]",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

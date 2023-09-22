@@ -1,3 +1,5 @@
+import Background from "@/components/atoms/Background";
+import NavigationBar from "@/components/molecules/NavigationBar";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 
@@ -13,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <head>
+        <link rel="icon" href="/favicons/favicon.ico" />
+      </head>
+      <body>
+        <NavigationBar />
+        <Background>{children}</Background>
+      </body>
     </html>
   );
 }
