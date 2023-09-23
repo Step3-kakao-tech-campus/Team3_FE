@@ -11,13 +11,12 @@ const config: Config = {
       colors: {
         lightningOrange: "#FE7E07",
         lightningYellow: "#FFDE67",
-        "custom-gradient": "bg-gradient-to-br from-[#FE7E07] to-[#FFDE67]",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        thunder: "linear-gradient(to top left, #FE7E07, #FFDE67)",
+        thunder: "linear-gradient(to top left, #FE7E07, #FFC750)",
       },
     },
   },
