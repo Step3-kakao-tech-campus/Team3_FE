@@ -22,7 +22,7 @@ interface Props {
 
 function PostCard({ data }: Props) {
   return (
-    <section className="post-card flex flex-col gap-6 p-7 rounded-2xl shadow">
+    <section className="post-card flex flex-col gap-6 p-7 rounded-2xl shadow hover:scale-[103%] transition">
       <div className="post-title-upper">
         <Badge isClose={data.isClose} />
         <span className="text-sm mx-2">
