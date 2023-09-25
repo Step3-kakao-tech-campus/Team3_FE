@@ -1,11 +1,21 @@
-import { InputHTMLAttributes } from 'react';
+interface Props {
+  style: 'white' | 'thunder' | 'yellow';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+  children: React.ReactNode;
+}
 
-export default function Button(id: string, className: string, text: string) {
+function Button({ style, onClick, className, children }: Props) {
+  const styleObj = {
+    white: 'text-gray-600 ring-1',
+    thunder: 'bg-thunder text-white',
+    yellow: 'bg-kakao_yellow',
+  };
   return (
-    <>
-      <button id={id} className={className}>
-        {text}
-      </button>
-    </>
+    <button className={`${className} ${styleObj[style]} `} onClick={onClick}>
+      {children}
+    </button>
   );
 }
+
+export default Button;

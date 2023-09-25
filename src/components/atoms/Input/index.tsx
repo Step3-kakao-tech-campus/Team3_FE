@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-interface InputProps {
+interface Props {
   id: string;
   type: string;
   placeholder: string;
   className: string;
 }
 
-export default function Input({ id, type, placeholder, className }: InputProps) {
+function Input({ id, type, placeholder, className }: Props) {
   const [isVisible, setIsVisible] = useState(false);
 
   // 비밀번호 필드인 경우에만 숨기기/보이기 버튼 추가
@@ -44,3 +44,5 @@ export default function Input({ id, type, placeholder, className }: InputProps) 
     </div>
   );
 }
+
+export default Input;
