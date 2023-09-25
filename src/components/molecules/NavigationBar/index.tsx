@@ -12,7 +12,7 @@ function NavigationBar() {
           <div className="flex items-center space-x-4">
             <div className="flex items-center mr-4">
               <Image src={Logo} alt="볼링 로고" width={45} height={45} />
-              <span className="text-2xl font-bold bg-clip-text bg-gradient-to-tl from-lightningYellow to-lightningOrange text-transparent">
+              <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">
                 번개볼링
               </span>
             </div>
@@ -21,7 +21,7 @@ function NavigationBar() {
           </div>
           <div className="flex items-center space-x-4">
             <Button style={"white"}>로그인</Button>
-            <Button style={"lightning"}>회원가입</Button>
+            <Button style={"thunder"}>회원가입</Button>
           </div>
         </div>
       </InnerContainer>

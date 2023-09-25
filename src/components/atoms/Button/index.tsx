@@ -1,5 +1,5 @@
 interface Props {
-  style: "white" | "lightning";
+  style: "white" | "thunder";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
 }
@@ -7,7 +7,7 @@ interface Props {
 function Button({ style, onClick, children }: Props) {
   const styleObj = {
     white: "text-gray-600 ring-1",
-    lightning: "bg-thunder text-white",
+    thunder: "bg-thunder text-white",
   };
   return (
     <button

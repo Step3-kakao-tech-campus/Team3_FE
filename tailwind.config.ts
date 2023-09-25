@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        lightningOrange: "#FE7E07",
-        lightningYellow: "#FFDE67",
+        thunderOrange: "#FE7E07",
+        thunderYellow: "#FFDE67",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
