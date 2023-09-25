@@ -3,6 +3,7 @@ import { MdLocationPin } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
 import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
+import formatDateToString from "@/utils/formatDateToString";
 
 export interface PostData {
   id: number;
@@ -32,7 +33,7 @@ function PostCard({ data }: Props) {
         </span>
         <span className="text-neutral-400">
           <span className="mr-1">모집마감</span>
-          <span>{data.dueTime}</span>
+          <span>{formatDateToString(data.dueTime)}</span>
         </span>
       </div>
       <div className="post-title-wrapper">
@@ -46,7 +47,7 @@ function PostCard({ data }: Props) {
           </p>
           <p className="start-time">
             <MdAlarm className="inline" />
-            <span>{data.startTime}</span>
+            <span>{formatDateToString(data.startTime)}</span>
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
