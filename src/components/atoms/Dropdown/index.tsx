@@ -1,8 +1,8 @@
 interface Props {
-  options: { value: string; label: string }[];
-  selectedValue: string;
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
-  className?: string;
+  options: { value: string; label: string }[]
+  selectedValue: string
+  onChange: React.ChangeEventHandler<HTMLSelectElement>
+  className?: string
 }
 
 function Dropdown({ options, selectedValue, onChange, className }: Props) {
@@ -12,7 +12,7 @@ function Dropdown({ options, selectedValue, onChange, className }: Props) {
         value={selectedValue}
         onChange={onChange}
         className="border rounded-full p-2"
-        style={{ borderRadius: '20px', padding: '8px', minWidth: '180px' }}
+        style={{ borderRadius: "20px", padding: "8px", minWidth: "180px" }}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -21,6 +21,6 @@ function Dropdown({ options, selectedValue, onChange, className }: Props) {
         ))}
       </select>
     </div>
-  );
+  )
 }
-export default Dropdown;
+export default Dropdown

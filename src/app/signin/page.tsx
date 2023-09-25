@@ -1,14 +1,14 @@
-'use client';
+"use client"
 
-import React from 'react';
-import Image from 'next/image';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
+import React from "react"
+import Image from "next/image"
+import Button from "@/components/atoms/Button"
+import Input from "@/components/atoms/Input"
 
 function SigninHome() {
   const handleButtonClick = () => {
-    console.log('회원가입 버튼 클릭');
-  };
+    console.log("회원가입 버튼 클릭")
+  }
   return (
     <div className="py-3">
       <div className="flex items-center justify-center pb-[44px]">
@@ -64,7 +64,7 @@ function SigninHome() {
         </Button>
       </div>
     </div>
-  );
+  )
 }
 
-export default SigninHome;
+export default SigninHome

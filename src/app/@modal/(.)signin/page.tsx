@@ -1,15 +1,15 @@
-'use client';
+"use client"
 
-import React from 'react';
-import Image from 'next/image';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import Modal from '@/components/atoms/Modal';
+import React from "react"
+import Image from "next/image"
+import Button from "@/components/atoms/Button"
+import Input from "@/components/atoms/Input"
+import Modal from "@/components/atoms/Modal"
 
 function SigninHome() {
   const handleButtonClick = () => {
-    console.log('회원가입 버튼 클릭');
-  };
+    console.log("회원가입 버튼 클릭")
+  }
   return (
     <Modal>
       <div className="py-3">
@@ -67,7 +67,7 @@ function SigninHome() {
         </div>
       </div>
     </Modal>
-  );
+  )
 }
 
-export default SigninHome;
+export default SigninHome
