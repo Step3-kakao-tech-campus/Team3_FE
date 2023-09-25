@@ -1,6 +1,6 @@
 import InnerContainer from "@/components/atoms/InnerContainer";
 import Image from "next/image";
-import Logo from "/public/images/bowling_logo.png";
+import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import Button from "@/components/atoms/Button";
 
@@ -12,16 +12,14 @@ function NavigationBar() {
           <div className="flex items-center space-x-4">
             <div className="flex items-center mr-4">
               <Image src={Logo} alt="볼링 로고" width={45} height={45} />
-              <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">
-                번개볼링
-              </span>
+              <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">번개볼링</span>
             </div>
             <Link href="/">홈</Link>
             <Link href="/">볼링장 찾기</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Button style={"white"}>로그인</Button>
-            <Button style={"thunder"}>회원가입</Button>
+            <Button styleType="white">로그인</Button>
+            <Button styleType="thunder">회원가입</Button>
           </div>
         </div>
       </InnerContainer>
