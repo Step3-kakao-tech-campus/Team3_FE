@@ -10,11 +10,7 @@ interface Props {
  */
 function Badge({ isClose }: Props) {
   return (
-    <span
-      className={`inline-block text-white rounded-full px-3 py-1 ${
-        isClose ? "bg-neutral-400" : "bg-[#37D629]"
-      }`}
-    >
+    <span className={`inline-block text-white rounded-full px-3 py-1 ${isClose ? "bg-neutral-400" : "bg-[#37D629]"}`}>
       {isClose ? "마감" : "모집중"}
     </span>
   );
