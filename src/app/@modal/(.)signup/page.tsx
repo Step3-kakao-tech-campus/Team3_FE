@@ -20,7 +20,7 @@ function SignupHome() {
     <Modal>
       <div className="">
         <div className="flex items-center justify-center pb-[44px]">
-          <Image src="/logo.png" width={100} height={100} alt="logo" />
+          <Image src={Logo} alt="볼링 로고" width={100} height={100} />
           <h1 className="text-[60px] text-transparent bg-clip-text bg-thunder">번개볼링</h1>
         </div>
 
@@ -65,7 +65,7 @@ function SignupHome() {
         <p className="pb-[32px]" />
         {/* 제출 버튼 */}
         <div className="flex justify-center ">
-          <Button style="thunder" onClick={handleButtonClick} className="w-[546px] h-[60px] rounded-full text-xl">
+          <Button styleType="thunder_full" onClick={handleButtonClick}>
             회원가입
           </Button>
         </div>

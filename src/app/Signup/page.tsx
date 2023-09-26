@@ -63,7 +63,7 @@ function SignupHome() {
       <p className="pb-[32px]" />
       {/* 제출 버튼 */}
       <div className="flex justify-center ">
-        <Button style="thunder" onClick={handleButtonClick} className="w-[546px] h-[60px] rounded-full text-xl">
+        <Button styleType="thunder" onClick={handleButtonClick}>
           회원가입
         </Button>
       </div>

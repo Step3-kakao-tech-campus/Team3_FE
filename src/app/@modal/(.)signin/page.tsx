@@ -51,15 +51,15 @@ function SigninHome() {
         {/* 제출 버튼 */}
         <p className="pb-[32px]" />
         <div className="flex justify-center ">
-          <Button style="thunder" onClick={handleButtonClick} className="w-[546px] h-[60px] rounded-full text-xl">
+          <Button styleType="thunder_full" onClick={handleButtonClick}>
             로그인
           </Button>
         </div>
         <p className="pb-[32px]" />
         <div className="flex justify-center ">
-          <Button style="yellow" onClick={handleButtonClick} className="w-[546px] h-[60px] rounded-full text-xl">
+          {/* <Button style="yellow" onClick={handleButtonClick} className="w-[546px] h-[60px] rounded-full text-xl">
             카카오 로그인
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Modal>
