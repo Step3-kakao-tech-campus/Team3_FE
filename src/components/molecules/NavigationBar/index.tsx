@@ -18,8 +18,12 @@ function NavigationBar() {
             <Link href="/">볼링장 찾기</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Button styleType="white">로그인</Button>
-            <Button styleType="thunder">회원가입</Button>
+            <Button style="white" className="px-2 py-1 ring-gray-400 ring-inset rounded-md font-bold">
+              <Link href="/signin">로그인</Link>
+            </Button>
+            <Button style="thunder" className="px-2 py-1 ring-gray-400 ring-inset rounded-md font-bold">
+              <Link href="/signup">회원가입</Link>
+            </Button>
           </div>
         </div>
       </InnerContainer>
