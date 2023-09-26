@@ -6,8 +6,11 @@ import Button from "@/components/atoms/Button";
 import InputBox from "@/components/molecules/InputBox";
 import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function SigninHome() {
+  const router = useRouter();
+
   return (
     <div className="py-3">
       <div className="flex items-center justify-center pb-[44px]">
@@ -34,9 +37,15 @@ function SigninHome() {
 
       {/* 회원가입 및 비밀번호 찾기 링크 */}
       <div className="flex justify-between text-sm">
-        <Link href="/signup" className="text-[#99A2A5] text-xl">
+        <button
+          type="button"
+          className="text-[#99A2A5] text-xl"
+          onClick={() => {
+            router.replace("/signup", { scroll: false });
+          }}
+        >
           회원가입
-        </Link>
+        </button>
         <Link href="/forgot-password" className="text-[#99A2A5] text-xl">
           비밀번호 찾기
         </Link>

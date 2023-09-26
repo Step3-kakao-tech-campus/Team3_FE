@@ -15,9 +15,9 @@ interface InputBoxProps {
 function InputBox({ inputs }: InputBoxProps) {
   return (
     <div>
-      {inputs.map((input) => (
+      {inputs.map((input, index) => (
         <Input
-          key={null}
+          key={index.toString()}
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}

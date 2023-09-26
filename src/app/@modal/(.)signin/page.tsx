@@ -45,7 +45,7 @@ function SigninHome() {
             type="button"
             className="text-[#99A2A5] text-xl"
             onClick={() => {
-              router.replace("/signup");
+              router.replace("/signup", { scroll: false });
             }}
           >
             회원가입
