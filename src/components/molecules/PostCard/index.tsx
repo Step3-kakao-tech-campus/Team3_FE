@@ -1,6 +1,4 @@
-import { MdAlarm } from "react-icons/md";
-import { MdLocationPin } from "react-icons/md";
-import { MdPeopleAlt } from "react-icons/md";
+import { MdAlarm, MdLocationPin, MdPeopleAlt } from "react-icons/md";
 import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
 import formatDateToString from "@/utils/formatDateToString";
@@ -55,7 +53,7 @@ function PostCard({ data }: Props) {
             <Image
               alt="유저 프로필 이미지"
               src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
-              fill={true}
+              fill
             />
           </div>
           <span className="user-name text-2xl mx-1">{data.userName}</span>
