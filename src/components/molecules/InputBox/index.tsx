@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "@/components/atoms/Input"; // Import the modified Input component
+import Input from "@/components/atoms/AuthInput"; // Import the modified Input component
 
 interface InputConfig {
   type: string;

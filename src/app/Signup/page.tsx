@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
-import ConsentCheckbox from "@/components/atoms/CheckBox";
+import ConsentCheckbox from "@/components/atoms/AuthCheckBox";
 import InputBox from "@/components/molecules/InputBox";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { validateEmail, validatePassword, validateName } from "@/utils/validation";
