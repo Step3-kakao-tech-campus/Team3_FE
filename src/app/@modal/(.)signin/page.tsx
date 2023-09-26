@@ -5,6 +5,7 @@ import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import Modal from "@/components/atoms/Modal";
 import InputBox from "@/components/molecules/InputBox";
+import Logo from "public/images/bowling_logo.png";
 
 function SigninHome() {
   const handleButtonClick = () => {
@@ -14,7 +15,7 @@ function SigninHome() {
     <Modal>
       <div className="py-3">
         <div className="flex items-center justify-center pb-[44px]">
-          <Image src="/logo.png" width={100} height={100} alt="logo" />
+          <Image src={Logo} alt="볼링 로고" width={100} height={100} />
           <h1 className="text-[60px] text-transparent bg-clip-text bg-thunder">번개볼링</h1>
         </div>
 

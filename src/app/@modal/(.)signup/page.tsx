@@ -8,6 +8,7 @@ import Modal from "@/components/atoms/Modal";
 import InputBox from "@/components/molecules/InputBox";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { validateEmail, validatePassword, validateName } from "@/utils/validation";
+import Logo from "public/images/bowling_logo.png";
 
 function SignupHome() {
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
