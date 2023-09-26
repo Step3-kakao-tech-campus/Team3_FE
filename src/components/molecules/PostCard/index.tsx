@@ -51,17 +51,13 @@ function PostCard({ data }: Props) {
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
-          {/* // Image 컴포넌트로 외부 경로 이미지 로드시 next.config.js를 설정해 줘야해서 일단 img 태그로 구현 */}
-          {/* <Image alt="유저 프로필 이미지" src={data.profileImage ? `임시APIURL${profileImage}` : "기본이미지경로"} fill={true}/> */}
-          <img
-            alt="유저 프로필 이미지"
-            src={
-              data.profileImage
-                ? `임시APIURL${data.profileImage}`
-                : "https://w7.pngwing.com/pngs/741/68/png-transparent-user-computer-icons-user-miscellaneous-cdr-rectangle-thumbnail.png"
-            }
-            className="user-profile-image rounded-full h-full"
-          />
+          <div className="profile-image relative h-8 w-8 rounded-full overflow-hidden">
+            <Image
+              alt="유저 프로필 이미지"
+              src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
+              fill={true}
+            />
+          </div>
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
       </div>
