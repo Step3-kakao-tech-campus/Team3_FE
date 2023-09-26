@@ -2,6 +2,7 @@ import { MdAlarm, MdLocationPin, MdPeopleAlt } from "react-icons/md";
 import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
 import formatDateToString from "@/utils/formatDateToString";
+import Link from "next/link";
 
 export interface PostData {
   id: number;
@@ -21,7 +22,10 @@ interface Props {
 
 function PostCard({ data }: Props) {
   return (
-    <section className="post-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow hover:scale-[103%] transition">
+    <Link
+      href={`/post/${data.id}`}
+      className="post-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow hover:scale-[103%] transition"
+    >
       <div className="post-title-upper">
         <Badge isClose={data.isClose} />
         <span className="text-sm mx-2">
@@ -59,7 +63,7 @@ function PostCard({ data }: Props) {
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
       </div>
-    </section>
+    </Link>
   );
 }
 
