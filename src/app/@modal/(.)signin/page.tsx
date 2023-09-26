@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import React from "react"
-import Image from "next/image"
-import Button from "@/components/atoms/Button"
-import Input from "@/components/atoms/Input"
-import Modal from "@/components/atoms/Modal"
+import React from "react";
+import Image from "next/image";
+import Button from "@/components/atoms/Button";
+import Modal from "@/components/atoms/Modal";
+import InputBox from "@/components/molecules/InputBox";
 
 function SigninHome() {
   const handleButtonClick = () => {
-    console.log("회원가입 버튼 클릭")
-  }
+    console.log("회원가입 버튼 클릭");
+  };
   return (
     <Modal>
       <div className="py-3">
@@ -20,25 +20,20 @@ function SigninHome() {
 
         <div>
           {/* 이메일 입력란 */}
-          <div className="mb-4">
-            <Input
-              id="email"
-              type="email"
-              placeholder="이메일(아이디)"
-              className="w-full py-2 px-3 rounded-lg border border-gray-400"
-            />
-          </div>
-          <p className="pb-[32px]" />
-
-          {/* 비밀번호 입력란 */}
-          <div className="mb-4">
-            <Input
-              id="password"
-              type="password"
-              placeholder="비밀번호"
-              className="w-full py-2 px-3 rounded-lg border border-gray-400"
-            />
-          </div>
+          <InputBox
+            inputs={[
+              {
+                type: "email",
+                placeholder: "이메일(아이디)",
+                className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              },
+              {
+                type: "password",
+                placeholder: "비밀번호",
+                className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              },
+            ]}
+          />
         </div>
         <p className="pb-[32px]" />
 
@@ -67,7 +62,7 @@ function SigninHome() {
         </div>
       </div>
     </Modal>
-  )
+  );
 }
 
-export default SigninHome
+export default SigninHome;

@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
-import React from "react"
-import Image from "next/image"
-import Button from "@/components/atoms/Button"
-import Input from "@/components/atoms/Input"
+import React from "react";
+import Image from "next/image";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import InputBox from "@/components/molecules/InputBox";
 
 function SigninHome() {
   const handleButtonClick = () => {
-    console.log("회원가입 버튼 클릭")
-  }
+    console.log("회원가입 버튼 클릭");
+  };
   return (
     <div className="py-3">
       <div className="flex items-center justify-center pb-[44px]">
@@ -17,28 +18,21 @@ function SigninHome() {
       </div>
 
       <div>
-        {/* 이메일 입력란 */}
-        <div className="mb-4">
-          <Input
-            id="email"
-            type="email"
-            placeholder="이메일(아이디)"
-            className="w-full py-2 px-3 rounded-lg border border-gray-400"
-          />
-        </div>
-        <p className="pb-[32px]" />
-
-        {/* 비밀번호 입력란 */}
-        <div className="mb-4">
-          <Input
-            id="password"
-            type="password"
-            placeholder="비밀번호"
-            className="w-full py-2 px-3 rounded-lg border border-gray-400"
-          />
-        </div>
+        <InputBox
+          inputs={[
+            {
+              type: "email",
+              placeholder: "이메일(아이디)",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+            },
+            {
+              type: "password",
+              placeholder: "비밀번호",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+            },
+          ]}
+        />
       </div>
-      <p className="pb-[32px]" />
 
       {/* 회원가입 및 비밀번호 찾기 링크 */}
       <div className="flex justify-between text-sm">
@@ -64,7 +58,7 @@ function SigninHome() {
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
-export default SigninHome
+export default SigninHome;

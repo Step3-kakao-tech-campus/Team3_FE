@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
-import InputBox from "@/components/molecules/InputBox";
 import ConsentCheckbox from "@/components/atoms/CheckBox";
 import Dropdown from "@/components/atoms/Dropdown";
 import Modal from "@/components/atoms/Modal";
+import InputBox from "@/components/molecules/InputBox";
+
 function SignupHome() {
   const createOption = (value: string) => ({ value, label: value });
 
@@ -71,7 +72,6 @@ function SignupHome() {
             ]}
           />
         </div>
-        <p className="pb-[32px]" />
         {/* 지역 선택 */}
 
         <div className="flex justify-between">
