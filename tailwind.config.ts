@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        Lightning_orange: "#FE7E07",
-        Lightning_yellow: "#FFDE67",
+        thunderOrange: "#FE7E07",
+        thunderYellow: "#FFDE67",
         border_color: "#667479",
         kakao_yellow: "#FEE500",
       },
@@ -23,5 +23,5 @@ const config: Config = {
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;

@@ -1,11 +1,8 @@
 import "@/styles/globals.css"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Inter } from "@next/font/google"
-
-const inter = Inter({
-  subsets: ["latin"],
-})
+import Background from "@/components/atoms/Background";
+import NavigationBar from "@/components/molecules/NavigationBar";
 
 export const metadata: Metadata = {
   title: "Lightning bowling",
@@ -14,8 +11,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout(props: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
-    <html lang="ko" className={inter.className}>
+    <html lang="ko">
       <body className="bg-[#F6F6F6]">
+        <head>
+        <link rel="icon" href="/favicons/favicon.ico" />
+        </head>
         <header className="flex justify-between items-center bg-gray-800 text-white p-4">
           <nav>
             <ul className="flex space-x-4">
@@ -31,7 +31,8 @@ export default function RootLayout(props: { children: React.ReactNode; modal: Re
             </ul>
           </nav>
         </header>
-        {props.children}
+        <NavigationBar />
+        <Background>{props.children}</Background>
         {props.modal}
       </body>
     </html>
