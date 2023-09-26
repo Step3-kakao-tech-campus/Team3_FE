@@ -3,18 +3,7 @@ import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
 import formatDateToString from "@/utils/formatDateToString";
 import Link from "next/link";
-
-export interface PostData {
-  id: number;
-  title: string;
-  dueTime: Date;
-  startTime: Date;
-  districtName: string;
-  userName: string;
-  profileImage: string | null;
-  isClose: boolean;
-  currentNumber: number;
-}
+import { PostData } from "@/types/PostData";
 
 interface Props {
   data: PostData;
