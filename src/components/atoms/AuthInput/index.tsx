@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import BlankBar from "../BlankBar";
 
 interface InputProps {
   type: string;
@@ -51,7 +52,7 @@ function Input({ type, placeholder, className, validate }: InputProps) {
           </button>
         )}
       </div>
-      <p className="pb-[32px]" />
+      <BlankBar />
     </>
   );
 }
