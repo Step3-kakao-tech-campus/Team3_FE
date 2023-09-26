@@ -6,11 +6,12 @@ import Button from "@/components/atoms/Button";
 import Modal from "@/components/atoms/Modal";
 import InputBox from "@/components/molecules/InputBox";
 import Logo from "public/images/bowling_logo.png";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function SigninHome() {
-  const handleButtonClick = () => {
-    console.log("회원가입 버튼 클릭");
-  };
+  const router = useRouter();
+
   return (
     <Modal>
       <div className="py-3">
@@ -40,12 +41,19 @@ function SigninHome() {
 
         {/* 회원가입 및 비밀번호 찾기 링크 */}
         <div className="flex justify-between text-sm">
-          <a href="/signup" className="text-[#99A2A5] text-xl">
+          <button
+            type="button"
+            className="text-[#99A2A5] text-xl"
+            onClick={() => {
+              router.replace("/signup");
+            }}
+          >
             회원가입
-          </a>
-          <a href="/forgot-password" className="text-[#99A2A5] text-xl">
+          </button>
+
+          <Link href="/forgot-password" className="text-[#99A2A5] text-xl">
             비밀번호 찾기
-          </a>
+          </Link>
         </div>
 
         {/* 제출 버튼 */}

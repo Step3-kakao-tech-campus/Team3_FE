@@ -1,8 +1,8 @@
 interface Props {
-  options: { value: string; label: string }[]
-  selectedValue: string
-  onChange: React.ChangeEventHandler<HTMLSelectElement>
-  className?: string
+  options: { value: string; label: string }[];
+  selectedValue: string;
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  className?: string;
 }
 
 function Dropdown({ options, selectedValue, onChange, className }: Props) {
@@ -21,6 +21,6 @@ function Dropdown({ options, selectedValue, onChange, className }: Props) {
         ))}
       </select>
     </div>
-  )
+  );
 }
-export default Dropdown
+export default Dropdown;

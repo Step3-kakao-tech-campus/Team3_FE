@@ -12,9 +12,6 @@ import Logo from "public/images/bowling_logo.png";
 function SignupHome() {
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
 
-  const handleButtonClick = () => {
-    console.log("회원가입 버튼 클릭");
-  };
   return (
     <div className="">
       <div className="flex items-center justify-center pb-[44px]">
@@ -63,9 +60,7 @@ function SignupHome() {
       <p className="pb-[32px]" />
       {/* 제출 버튼 */}
       <div className="flex justify-center ">
-        <Button styleType="thunder" onClick={handleButtonClick}>
-          회원가입
-        </Button>
+        <Button styleType="thunder">회원가입</Button>
       </div>
     </div>
   );

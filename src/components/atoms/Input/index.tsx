@@ -23,7 +23,7 @@ function Input({ type, placeholder, className, validate }: InputProps) {
     setValue(inputValue);
 
     if (validate && !validate(inputValue)) {
-      console.log(`Validation failed for input: ${placeholder}`);
+      // 유효성 검사 함수가 존재하고, 유효하지 않은 값이 입력되었을 때 추후 구현
     }
   };
 

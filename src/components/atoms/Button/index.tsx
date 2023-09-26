@@ -6,9 +6,9 @@ interface Props {
 
 function Button({ styleType, onClick, children }: Props) {
   const styleObj = {
-    white: "text-gray-600 ring-1 rounded-md",
+    white: "text-gray-600 ring-1 rounded-md bg-white",
     thunder: "bg-thunder text-white rounded-md",
-    thunder_full: "bg-thunder text-white w-[546px] h-[60px] rounded-full text-xl",
+    thunder_full: "bg-thunder rounded-full text-white w-[546px] h-[60px] text-xl",
   };
   return (
     <button
