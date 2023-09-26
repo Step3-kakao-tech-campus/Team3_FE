@@ -7,6 +7,7 @@ import ConsentCheckbox from "@/components/atoms/CheckBox";
 import Dropdown from "@/components/atoms/Dropdown";
 import Modal from "@/components/atoms/Modal";
 import InputBox from "@/components/molecules/InputBox";
+import { validateEmail, validatePassword, validateName } from "@/utils/validation";
 
 function SignupHome() {
   const createOption = (value: string) => ({ value, label: value });
@@ -53,16 +54,19 @@ function SignupHome() {
                 type: "email",
                 placeholder: "이메일",
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+                validate: validateEmail,
               },
               {
                 type: "text",
                 placeholder: "닉네임",
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+                validate: validateName,
               },
               {
                 type: "password",
                 placeholder: "비밀번호",
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+                validate: validatePassword,
               },
               {
                 type: "password",

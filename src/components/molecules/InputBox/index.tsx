@@ -5,6 +5,7 @@ interface InputConfig {
   type: string;
   placeholder: string;
   className: string;
+  validate?: (value: string) => boolean; // New prop for validation function
 }
 
 interface InputBoxProps {
@@ -13,13 +14,14 @@ interface InputBoxProps {
 
 function InputBox({ inputs }: InputBoxProps) {
   return (
-    <div className="mb-4">
+    <div>
       {inputs.map((input, index) => (
         <Input
-          key={index} // Make sure to provide a unique key for each input
+          key={index}
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}
+          validate={input.validate}
         />
       ))}
     </div>

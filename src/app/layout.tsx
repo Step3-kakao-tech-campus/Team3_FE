@@ -12,25 +12,11 @@ export const metadata: Metadata = {
 export default function RootLayout(props: { children: React.ReactNode; modal: React.ReactNode }) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="icon" href="/favicons/favicon.ico" />
+      </head>
+
       <body className="bg-[#F6F6F6]">
-        <head>
-          <link rel="icon" href="/favicons/favicon.ico" />
-        </head>
-        <header className="flex justify-between items-center bg-gray-800 text-white p-4">
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/">홈</Link>
-              </li>
-              <li>
-                <Link href="/signup">회원가입</Link>
-              </li>
-              <li>
-                <Link href="/signin">로그인</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
         <NavigationBar />
         <Background>{props.children}</Background>
         {props.modal}

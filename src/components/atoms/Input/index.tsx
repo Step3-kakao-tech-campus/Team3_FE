@@ -5,10 +5,12 @@ interface InputProps {
   type: string;
   placeholder: string;
   className: string;
+  validate?: (value: string) => boolean;
 }
 
-function Input({ type, placeholder, className }: InputProps) {
+function Input({ type, placeholder, className, validate }: InputProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [value, setValue] = useState("");
 
   const isPasswordField = type === "password" || type === "confirmPassword";
 
@@ -16,10 +18,25 @@ function Input({ type, placeholder, className }: InputProps) {
     setIsVisible(!isVisible);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setValue(inputValue);
+
+    if (validate && !validate(inputValue)) {
+      console.log(`Validation failed for input: ${placeholder}`);
+    }
+  };
+
   return (
     <>
       <div className="relative">
-        <input type={isPasswordField && isVisible ? "text" : type} placeholder={placeholder} className={className} />
+        <input
+          type={isPasswordField && isVisible ? "text" : type}
+          placeholder={placeholder}
+          className={className}
+          value={value}
+          onChange={handleChange}
+        />
         {isPasswordField && (
           <button
             type="button"
