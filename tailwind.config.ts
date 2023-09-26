@@ -11,7 +11,10 @@ const config: Config = {
       colors: {
         thunderOrange: "#FE7E07",
         thunderYellow: "#FFDE67",
+        border_color: "#667479",
+        kakao_yellow: "#FEE500",
       },
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

@@ -1,10 +1,14 @@
+"use client";
+
 import InnerContainer from "@/components/atoms/InnerContainer";
 import Image from "next/image";
 import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import Button from "@/components/atoms/Button";
+import { useRouter } from "next/navigation";
 
 function NavigationBar() {
+  const router = useRouter();
   return (
     <nav className="fixed top-0 inset-x-0 z-999 bg-white">
       <InnerContainer>
@@ -18,8 +22,24 @@ function NavigationBar() {
             <Link href="/">볼링장 찾기</Link>
           </div>
           <div className="flex items-center space-x-4">
-            <Button styleType="white">로그인</Button>
-            <Button styleType="thunder">회원가입</Button>
+            <Button
+              styleType="white"
+              onClick={() => {
+                router.refresh();
+                router.push("/signin");
+              }}
+            >
+              로그인
+            </Button>
+            <Button
+              styleType="thunder"
+              onClick={() => {
+                router.refresh();
+                router.push("/signup");
+              }}
+            >
+              회원가입
+            </Button>
           </div>
         </div>
       </InnerContainer>
