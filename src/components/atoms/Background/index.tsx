@@ -3,7 +3,7 @@ interface Props {
 }
 
 function Background({ children }: Props) {
-  return <div className="h-screen bg-gray-200 overflow-auto">{children}</div>;
+  return <div className="h-screen pt-16 bg-gray-200 overflow-auto">{children}</div>;
 }
 
 export default Background;
