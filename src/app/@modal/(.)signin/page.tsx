@@ -59,9 +59,7 @@ function SigninHome() {
         {/* 제출 버튼 */}
         <p className="pb-[32px]" />
         <div className="flex justify-center ">
-          <Button styleType="thunder_full" onClick={handleButtonClick}>
-            로그인
-          </Button>
+          <Button styleType="thunder_full">로그인</Button>
         </div>
         <p className="pb-[32px]" />
         <div className="flex justify-center ">
