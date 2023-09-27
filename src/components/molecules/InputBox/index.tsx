@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "@/components/atoms/AuthInput"; // Import the modified Input component
+import AuthInput from "@/components/atoms/AuthInput"; // Import the modified Input component
 
 interface InputConfig {
   type: string;
@@ -8,16 +8,16 @@ interface InputConfig {
   validate?: (value: string) => boolean; // New prop for validation function
 }
 
-interface InputBoxProps {
+interface Props {
   inputs: InputConfig[];
 }
 
-function InputBox({ inputs }: InputBoxProps) {
+function InputBox({ inputs }: Props) {
   return (
     <div>
-      {inputs.map((input) => (
-        <Input
-          key={null}
+      {inputs.map((input, index) => (
+        <AuthInput
+          key={index.toString()}
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}

@@ -26,7 +26,7 @@ function NavigationBar() {
               styleType="white"
               onClick={() => {
                 router.refresh();
-                router.push("/signin");
+                router.push("/signin", { scroll: false });
               }}
             >
               로그인
@@ -35,7 +35,7 @@ function NavigationBar() {
               styleType="thunder"
               onClick={() => {
                 router.refresh();
-                router.push("/signup");
+                router.push("/signup", { scroll: false });
               }}
             >
               회원가입

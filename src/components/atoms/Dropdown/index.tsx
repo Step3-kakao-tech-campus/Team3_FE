@@ -12,7 +12,7 @@ function Dropdown({ options, selectedValue, onChange, className }: Props) {
         value={selectedValue}
         onChange={onChange}
         className="border rounded-full p-2"
-        style={{ borderRadius: "20px", padding: "8px", minWidth: "180px" }}
+        style={{ borderRadius: "20px", padding: "4px", minWidth: "90px" }}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
