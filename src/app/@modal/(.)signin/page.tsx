@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import Modal from "@/components/atoms/Modal";
@@ -10,8 +10,35 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
 
+import { login } from "@/apis/user";
+import { setLogin } from "@/utils/user";
+
 function SigninHome() {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (fieldName: any, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    // You can access the form data in the formData object.
+    try {
+      const response = await login(formData);
+
+      setLogin(formData.email, response.headers.authorization);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(formData);
+    // Perform your signup logic here.
+  };
 
   return (
     <Modal>
@@ -36,6 +63,7 @@ function SigninHome() {
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
               },
             ]}
+            onInputChange={handleInputChange}
           />
         </div>
         <BlankBar />
@@ -60,7 +88,9 @@ function SigninHome() {
         {/* 제출 버튼 */}
         <BlankBar />
         <div className="flex justify-center ">
-          <Button styleType="thunder_full">로그인</Button>
+          <Button styleType="thunder_full" onClick={handleSubmit}>
+            로그인
+          </Button>
         </div>
         <BlankBar />
         <div className="flex justify-center ">

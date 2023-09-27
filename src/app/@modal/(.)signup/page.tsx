@@ -11,8 +11,34 @@ import { validateEmail, validatePassword, validateName } from "@/utils/validatio
 import Logo from "public/images/bowling_logo.png";
 import BlankBar from "@/components/atoms/BlankBar";
 
+import { register } from "@/apis/user";
+
 function SignupHome() {
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    districtId: 26,
+  });
+
+  const handleInputChange = (fieldName: any, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    // You can access the form data in the formData object.
+    try {
+      await register(formData);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(formData);
+    // Perform your signup logic here.
+  };
 
   return (
     <Modal>
@@ -33,7 +59,7 @@ function SignupHome() {
                 validate: validateEmail,
               },
               {
-                type: "text",
+                type: "name",
                 placeholder: "닉네임",
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
                 validate: validateName,
@@ -50,6 +76,7 @@ function SignupHome() {
                 className: "w-full py-2 px-3 rounded-lg border border-gray-400",
               },
             ]}
+            onInputChange={handleInputChange} // Pass the input change handler
           />
         </div>
         {/* 지역 선택 */}
@@ -62,8 +89,10 @@ function SignupHome() {
         </div>
         <BlankBar />
         {/* 제출 버튼 */}
-        <div className="flex justify-center ">
-          <Button styleType="thunder_full">회원가입</Button>
+        <div className="flex justify-center">
+          <Button styleType="thunder_full" onClick={handleSubmit}>
+            회원가입
+          </Button>
         </div>
       </div>
     </Modal>
