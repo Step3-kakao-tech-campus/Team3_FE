@@ -70,11 +70,6 @@ function DropdownBox() {
 
   return (
     <div className="flex justify-between">
-      <div>
-        <p>{selectedOptionIds.cityId}</p>
-        <p>{selectedOptionIds.countryId}</p>
-        <p>{selectedOptionIds.districtId}</p>
-      </div>
       <Dropdown
         placeholder="광역시 / 도"
         options={options1}
