@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Background from "@/components/atoms/Background";
 import NavigationBar from "@/components/molecules/NavigationBar";
+import Provider from "@/components/atoms/Provider/Provider";
 
 export const metadata: Metadata = {
   title: "Thunder bowling",
@@ -16,9 +17,11 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       </head>
 
       <body className="bg-[#F6F6F6]">
-        <NavigationBar />
-        <Background>{children}</Background>
-        {modal}
+        <Provider>
+          <NavigationBar />
+          <Background>{children}</Background>
+          {modal}
+        </Provider>
       </body>
     </html>
   );
