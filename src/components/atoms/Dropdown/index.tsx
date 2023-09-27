@@ -14,13 +14,16 @@ function Dropdown({ options, onChange, className, placeholder }: Props) {
         onChange={onChange}
         className="border rounded-full p-2"
         style={{ borderRadius: "20px", padding: "4px", minWidth: "90px" }}
+        defaultValue={-1}
       >
-        <option key="placeholder" value={-1} disabled hidden selected>
+        <option key="placeholder" value={-1} disabled hidden>
           {placeholder}
         </option>
-        <option key="select_all" value={-1}>
-          전체
-        </option>
+        {placeholder !== "광역시 / 도" && (
+          <option key="select_all" value={-1}>
+            전체
+          </option>
+        )}
         {options?.map((option) => (
           <option key={option.id} value={option.id}>
             {option.name}
