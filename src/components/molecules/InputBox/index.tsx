@@ -17,7 +17,7 @@ function InputBox({ inputs }: Props) {
     <div>
       {inputs.map((input, index) => (
         <AuthInput
-          key={index.toString()}
+          key={`input-${index.toString()}`}
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}
