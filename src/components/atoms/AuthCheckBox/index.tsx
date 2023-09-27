@@ -6,7 +6,7 @@ interface Props {
   onChange: (isChecked: boolean) => void;
 }
 
-function ConsentCheckbox({ checked, onChange }: Props) {
+function AuthCheckbox({ checked, onChange }: Props) {
   return (
     <button
       type="button"
@@ -27,4 +27,4 @@ function ConsentCheckbox({ checked, onChange }: Props) {
   );
 }
 
-export default ConsentCheckbox;
+export default AuthCheckbox;

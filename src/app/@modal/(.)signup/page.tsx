@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
-import ConsentCheckbox from "@/components/atoms/AuthCheckBox";
+import AuthCheckbox from "@/components/atoms/AuthCheckBox";
 import Modal from "@/components/atoms/Modal";
 import InputBox from "@/components/molecules/InputBox";
 import DropdownBox from "@/components/molecules/DropdownBox";
@@ -16,7 +16,7 @@ function SignupHome() {
 
   return (
     <Modal>
-      <div className="">
+      <div>
         <div className="flex items-center justify-center pb-[22px]">
           <Image src={Logo} alt="볼링 로고" width={50} height={50} />
           <h1 className="text-[40px] text-transparent bg-clip-text bg-thunder">번개볼링</h1>
@@ -58,7 +58,7 @@ function SignupHome() {
         <BlankBar />
         {/* 개인 정보 수집 및 이용 동의 체크박스 */}
         <div className="mb-4">
-          <ConsentCheckbox checked={consentChecked} onChange={(isChecked) => setConsentChecked(isChecked)} />
+          <AuthCheckbox checked={consentChecked} onChange={(isChecked) => setConsentChecked(isChecked)} />
         </div>
         <BlankBar />
         {/* 제출 버튼 */}

@@ -9,7 +9,7 @@ interface InputProps {
   validate?: (value: string) => boolean;
 }
 
-function Input({ type, placeholder, className, validate }: InputProps) {
+function AuthInput({ type, placeholder, className, validate }: InputProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = useState("");
 
@@ -57,4 +57,4 @@ function Input({ type, placeholder, className, validate }: InputProps) {
   );
 }
 
-export default Input;
+export default AuthInput;

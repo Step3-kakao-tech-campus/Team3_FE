@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
-import ConsentCheckbox from "@/components/atoms/AuthCheckBox";
+import AuthCheckbox from "@/components/atoms/AuthCheckBox";
 import InputBox from "@/components/molecules/InputBox";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { validateEmail, validatePassword, validateName } from "@/utils/validation";
@@ -56,7 +56,7 @@ function SignupHome() {
       <BlankBar />
       {/* 개인 정보 수집 및 이용 동의 체크박스 */}
       <div className="mb-4">
-        <ConsentCheckbox checked={consentChecked} onChange={(isChecked) => setConsentChecked(isChecked)} />
+        <AuthCheckbox checked={consentChecked} onChange={(isChecked) => setConsentChecked(isChecked)} />
       </div>
       <BlankBar />
       {/* 제출 버튼 */}
