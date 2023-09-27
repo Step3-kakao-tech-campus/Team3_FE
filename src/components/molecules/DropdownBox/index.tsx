@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
 import { useQueries } from "@tanstack/react-query";
 import getCities from "@/app/apis/getCities";
 import getCountries from "@/app/apis/getCountries";
 import getDistricts from "@/app/apis/getDistricts";
 
-function DropdownBox() {
+interface Props {
+  onChange?: (e: { cityId: string; countryId: string; districtId: string }) => void;
+}
+
+function DropdownBox({ onChange }: Props) {
   const [selectedOptionIds, setSelectedOptionIds] = useState({ cityId: "-1", countryId: "-1", districtId: "-1" });
 
   const queries = useQueries({
@@ -67,6 +71,11 @@ function DropdownBox() {
       }));
     }
   }, []);
+
+  // 선택된 지역들의 상태 변경 시 상위 컴포넌트로 상태 끌어올리기
+  useEffect(() => {
+    if (onChange) onChange(selectedOptionIds);
+  }, [onChange, selectedOptionIds]);
 
   return (
     <div className="flex justify-between">
