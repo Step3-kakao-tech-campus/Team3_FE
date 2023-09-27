@@ -1,53 +1,98 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
+import { useQueries } from "@tanstack/react-query";
+import getCities from "@/app/apis/getCities";
+import getCountries from "@/app/apis/getCountries";
+import getDistricts from "@/app/apis/getDistricts";
 
 function DropdownBox() {
-  const createOption = (value: string) => ({ value, label: value });
+  const [selectedOptionIds, setSelectedOptionIds] = useState({ cityId: "-1", countryId: "-1", districtId: "-1" });
 
-  const options1 = [createOption("광역시 / 도"), createOption("서울특별시"), createOption("부산광역시")];
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: ["cityId"],
+        queryFn: async () => {
+          const response = await getCities();
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        },
+      },
+      {
+        queryKey: ["countryId", selectedOptionIds.cityId],
+        queryFn: async () => {
+          const response = await getCountries(selectedOptionIds.cityId);
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        },
+      },
+      {
+        queryKey: ["districtId", selectedOptionIds.countryId],
+        queryFn: async () => {
+          const response = await getDistricts(selectedOptionIds.countryId);
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        },
+      },
+    ],
+  });
 
-  const options2 = [createOption("시 / 군 / 구"), createOption("남구"), createOption("북구")];
+  const options1 = queries[0]?.data?.response?.cities || [];
+  const options2 = queries[1]?.data?.response?.countries || [];
+  const options3 = queries[2]?.data?.response?.districts || [];
 
-  const options3 = [createOption("동 / 면 / 읍"), createOption("장전동"), createOption("부저동")];
-
-  const [selectedOption1, setSelectedOption1] = useState(options1[0].value);
-  const [selectedOption2, setSelectedOption2] = useState(options2[0].value);
-  const [selectedOption3, setSelectedOption3] = useState(options3[0].value);
-
-  const handleDropdownChange1 = (selectedValue: any) => {
-    setSelectedOption1(selectedValue);
-  };
-
-  const handleDropdownChange2 = (selectedValue: any) => {
-    setSelectedOption2(selectedValue);
-  };
-
-  const handleDropdownChange3 = (selectedValue: any) => {
-    setSelectedOption3(selectedValue);
-  };
+  const handleDropdownChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>, dropdownType: string) => {
+    const newValue = e.target.value;
+    // city가 바뀌면 country와 district는 -1로 초기화, country가 바뀌면 district는 -1로 초기화
+    if (dropdownType === "cityId") {
+      setSelectedOptionIds({ cityId: newValue, countryId: "-1", districtId: "-1" });
+    } else if (dropdownType === "countryId") {
+      setSelectedOptionIds((prevIds) => ({
+        ...prevIds,
+        countryId: newValue,
+        districtId: "-1",
+      }));
+    } else {
+      setSelectedOptionIds((prevIds) => ({
+        ...prevIds,
+        [dropdownType]: newValue,
+      }));
+    }
+  }, []);
 
   return (
     <div className="flex justify-between">
+      <div>
+        <p>{selectedOptionIds.cityId}</p>
+        <p>{selectedOptionIds.countryId}</p>
+        <p>{selectedOptionIds.districtId}</p>
+      </div>
       <Dropdown
+        placeholder="광역시 / 도"
         options={options1}
-        selectedValue={selectedOption1}
-        onChange={handleDropdownChange1}
+        onChange={(e) => handleDropdownChange(e, "cityId")}
         className="w-[180px]" // Adjust the width as needed
       />
 
       <Dropdown
+        placeholder="시 / 군 / 구"
         options={options2}
-        selectedValue={selectedOption2}
-        onChange={handleDropdownChange2}
+        onChange={(e) => handleDropdownChange(e, "countryId")}
         className="w-[180px]" // Adjust the width as needed
       />
 
       <Dropdown
+        placeholder="읍 / 면 / 동"
         options={options3}
-        selectedValue={selectedOption3}
-        onChange={handleDropdownChange3}
+        onChange={(e) => handleDropdownChange(e, "districtId")}
         className="w-[180px]" // Adjust the width as needed
       />
     </div>
