@@ -2,16 +2,18 @@
 
 import { MdSearch } from "react-icons/md";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import objectToQueryString from "@/utils/objectToQueryString";
 import DropdownBox from "../DropdownBox";
 
 function RegionSearchBar() {
-  const [regionIds, setRegionIds] = useState({
-    cityId: "-1",
-    countryId: "-1",
-    districtId: "-1",
-  });
+  const searchParams = useSearchParams();
+  const initialValue = {
+    cityId: searchParams.get("cityId") || "-1",
+    countryId: searchParams.get("countryId") || "-1",
+    districtId: searchParams.get("districtId") || "-1",
+  };
+  const [regionIds, setRegionIds] = useState(initialValue);
   const router = useRouter();
   const queryString = objectToQueryString(regionIds);
   return (
@@ -22,6 +24,7 @@ function RegionSearchBar() {
           onChange={(newIds) => {
             setRegionIds(newIds);
           }}
+          initialValue={initialValue}
         />
       </div>
       <button
