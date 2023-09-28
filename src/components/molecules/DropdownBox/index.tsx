@@ -9,9 +9,10 @@ import getDistricts from "@/app/apis/getDistricts";
 
 interface Props {
   onChange?: (e: { cityId: string; countryId: string; districtId: string }) => void;
+  styleType: "big" | "small";
 }
 
-function DropdownBox({ onChange }: Props) {
+function DropdownBox({ onChange, styleType }: Props) {
   const [selectedOptionIds, setSelectedOptionIds] = useState({ cityId: "-1", countryId: "-1", districtId: "-1" });
 
   const queries = useQueries({
@@ -83,21 +84,21 @@ function DropdownBox({ onChange }: Props) {
         placeholder="광역시 / 도"
         options={options1}
         onChange={(e) => handleDropdownChange(e, "cityId")}
-        className="w-[180px]" // Adjust the width as needed
+        styleType={styleType}
       />
 
       <Dropdown
         placeholder="시 / 군 / 구"
         options={options2}
         onChange={(e) => handleDropdownChange(e, "countryId")}
-        className="w-[180px]" // Adjust the width as needed
+        styleType={styleType}
       />
 
       <Dropdown
         placeholder="읍 / 면 / 동"
         options={options3}
         onChange={(e) => handleDropdownChange(e, "districtId")}
-        className="w-[180px]" // Adjust the width as needed
+        styleType={styleType}
       />
     </div>
   );
