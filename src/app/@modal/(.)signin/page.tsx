@@ -9,6 +9,7 @@ import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
+import { validateEmail, validatePassword } from "@/utils/validation";
 
 import { login } from "@/apis/user";
 import { setLogin } from "@/utils/user";
@@ -20,6 +21,15 @@ function SigninHome() {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState({
+    email: "",
+    password: "",
+    required: "",
+  });
+
+  const errorMessagesArray = Object.values(errorMessage).filter((message) => message);
+  const firstErrorMessage = errorMessagesArray[0];
+
   const handleInputChange = (fieldName: any, value: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -28,16 +38,46 @@ function SigninHome() {
   };
 
   const handleSubmit = async () => {
-    // You can access the form data in the formData object.
+    if (!formData.email || !formData.password) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        required: "모든 항목을 입력해주세요.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, required: "" }));
+
+    if (!validateEmail(formData.email)) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        email: "이메일 형식이 올바르지 않습니다.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, email: "" }));
+
+    if (!validatePassword(formData.password)) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        password: "비밀번호는 8자 이상이어야 합니다.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, password: "" }));
+
     try {
       const response = await login(formData);
 
       setLogin(formData.email, response.headers.authorization);
-    } catch (e) {
-      console.log(e);
+
+      router.back();
+    } catch (e: any) {
+      if (e.response) {
+        alert(e.response.data.errorMessage);
+      }
+      router.back();
     }
-    console.log(formData);
-    // Perform your signup logic here.
+    router.refresh();
   };
 
   return (
@@ -65,6 +105,9 @@ function SigninHome() {
             ]}
             onInputChange={handleInputChange}
           />
+        </div>
+        <div>
+          <p className="text-red-500 text-sm whitespace-pre-line">{firstErrorMessage}</p>
         </div>
         <BlankBar />
 

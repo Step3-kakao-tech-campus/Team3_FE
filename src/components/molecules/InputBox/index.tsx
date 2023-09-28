@@ -5,7 +5,6 @@ interface InputConfig {
   type: string;
   placeholder: string;
   className: string;
-  validate?: (value: string) => boolean;
 }
 
 interface Props {
@@ -22,7 +21,6 @@ function InputBox({ inputs, onInputChange }: Props) {
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}
-          validate={input.validate}
           onInputChange={(value: any) => onInputChange(input.type, value)} // Pass input value to parent component
         />
       ))}
