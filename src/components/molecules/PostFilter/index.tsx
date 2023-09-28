@@ -19,6 +19,10 @@ function PostFilter() {
     router.push(`${pathname}?${queryString}`);
   };
 
+  const commonButtonStyle = "rounded-full border min-w-[80px]";
+  const selectedButtonStyle = "border-thunderOrange text-thunderOrange";
+  const nonSelectedButtonStyle = "border-neutral-400 text-neutral-400";
+
   return (
     <div className="post-filter flex w-fit">
       <button
@@ -26,6 +30,7 @@ function PostFilter() {
         onClick={() => {
           handleOnClick(true);
         }}
+        className={`${commonButtonStyle} ${isAll ? selectedButtonStyle : nonSelectedButtonStyle}`}
       >
         전체 보기
       </button>
@@ -34,6 +39,7 @@ function PostFilter() {
         onClick={() => {
           handleOnClick(false);
         }}
+        className={`${commonButtonStyle} border ${!isAll ? selectedButtonStyle : nonSelectedButtonStyle}`}
       >
         모집중
       </button>
