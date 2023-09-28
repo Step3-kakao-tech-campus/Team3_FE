@@ -85,7 +85,6 @@ function DropdownBox({
 
   return (
     <div className="flex justify-between">
-      <p>{JSON.stringify(selectedOptionIds)}</p>
       <Dropdown
         placeholder="광역시 / 도"
         options={options1}
