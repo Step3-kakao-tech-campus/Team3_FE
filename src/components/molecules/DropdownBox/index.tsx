@@ -9,11 +9,16 @@ import getDistricts from "@/app/apis/getDistricts";
 
 interface Props {
   onChange?: (e: { cityId: string; countryId: string; districtId: string }) => void;
+  initialValue?: { cityId: string; countryId: string; districtId: string };
   styleType: "big" | "small";
 }
 
-function DropdownBox({ onChange, styleType }: Props) {
-  const [selectedOptionIds, setSelectedOptionIds] = useState({ cityId: "-1", countryId: "-1", districtId: "-1" });
+function DropdownBox({
+  onChange,
+  styleType,
+  initialValue = { cityId: "-1", countryId: "-1", districtId: "-1" },
+}: Props) {
+  const [selectedOptionIds, setSelectedOptionIds] = useState(initialValue);
 
   const queries = useQueries({
     queries: [
@@ -80,11 +85,13 @@ function DropdownBox({ onChange, styleType }: Props) {
 
   return (
     <div className="flex justify-between">
+      <p>{JSON.stringify(selectedOptionIds)}</p>
       <Dropdown
         placeholder="광역시 / 도"
         options={options1}
         onChange={(e) => handleDropdownChange(e, "cityId")}
         styleType={styleType}
+        selectedOptionId={selectedOptionIds.cityId}
       />
 
       <Dropdown
@@ -92,6 +99,7 @@ function DropdownBox({ onChange, styleType }: Props) {
         options={options2}
         onChange={(e) => handleDropdownChange(e, "countryId")}
         styleType={styleType}
+        selectedOptionId={selectedOptionIds.countryId}
       />
 
       <Dropdown
@@ -99,6 +107,7 @@ function DropdownBox({ onChange, styleType }: Props) {
         options={options3}
         onChange={(e) => handleDropdownChange(e, "districtId")}
         styleType={styleType}
+        selectedOptionId={selectedOptionIds.districtId}
       />
     </div>
   );
