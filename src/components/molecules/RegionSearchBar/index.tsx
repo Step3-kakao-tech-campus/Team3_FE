@@ -16,15 +16,17 @@ function RegionSearchBar() {
   const queryString = objectToQueryString(regionIds);
   return (
     <div className="region-search-bar flex items-center">
-      <DropdownBox
-        styleType="big"
-        onChange={(newIds) => {
-          setRegionIds(newIds);
-        }}
-      />
+      <div className="drop-box-wrapper grow">
+        <DropdownBox
+          styleType="big"
+          onChange={(newIds) => {
+            setRegionIds(newIds);
+          }}
+        />
+      </div>
       <button
         type="button"
-        className="w-10 h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
+        className="w-10 h-10 ml-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
         onClick={() => {
           router.push(`/${queryString}`);
         }}
