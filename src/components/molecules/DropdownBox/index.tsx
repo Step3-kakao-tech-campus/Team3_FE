@@ -61,14 +61,14 @@ function DropdownBox({
 
   const handleDropdownChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>, dropdownType: string) => {
     const newValue = e.target.value;
-    // city가 바뀌면 country와 district는 -1로 초기화, country가 바뀌면 district는 -1로 초기화
+    // city가 바뀌면 country와 district는 0으로 초기화, country가 바뀌면 district는 0으로 초기화
     if (dropdownType === "cityId") {
-      setSelectedOptionIds({ cityId: newValue, countryId: "-1", districtId: "-1" });
+      setSelectedOptionIds({ cityId: newValue, countryId: "0", districtId: "0" });
     } else if (dropdownType === "countryId") {
       setSelectedOptionIds((prevIds) => ({
         ...prevIds,
         countryId: newValue,
-        districtId: "-1",
+        districtId: "0",
       }));
     } else {
       setSelectedOptionIds((prevIds) => ({
