@@ -17,6 +17,7 @@ function NavigationBar() {
   const [user, setUser] = useState<boolean>(false);
 
   useEffect(() => {
+    // eslint 에러
     setUser(true);
   }, []);
 
