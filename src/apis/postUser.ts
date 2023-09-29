@@ -24,3 +24,14 @@ export const login = (data: UserData) => {
     password,
   });
 };
+
+// export const logout = () => {
+//   removeCookie("email");
+//   removeCookie("token");
+//   window.location.href = "/";
+//   return instance.post("/api/logout");
+// };
+
+export const authentication = () => {
+  return instance.get("/api/authentication");
+};

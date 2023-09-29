@@ -12,7 +12,7 @@ import Logo from "public/images/bowling_logo.png";
 import BlankBar from "@/components/atoms/BlankBar";
 import { useRouter } from "next/navigation";
 
-import { register, login } from "@/apis/user";
+import { register, login } from "@/apis/postUser";
 import { setLogin } from "@/utils/user";
 
 function SignupHome() {
