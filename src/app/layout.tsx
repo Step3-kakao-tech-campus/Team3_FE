@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Background from "@/components/atoms/Background";
 import NavigationBar from "@/components/molecules/NavigationBar";
+import Providers from "@/redux/provider";
 import { Noto_Sans_KR } from "next/font/google";
 
 const notoSans = Noto_Sans_KR({
@@ -24,9 +25,11 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       </head>
 
       <body className={`bg-[#F6F6F6] ${notoSans.className}`}>
-        <NavigationBar />
-        <Background>{children}</Background>
-        {modal}
+        <Providers>
+          <NavigationBar />
+          <Background>{children}</Background>
+          {modal}
+        </Providers>
       </body>
     </html>
   );

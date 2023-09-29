@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
 import { validateEmail, validatePassword } from "@/utils/validation";
 
-import { login } from "@/apis/user";
-import { setLogin } from "@/utils/user";
+import { login } from "@/apis/postUser";
+import { setLogin, getTokenPayload, logout } from "@/utils/user";
 
 function SigninHome() {
   const router = useRouter();
@@ -67,8 +67,14 @@ function SigninHome() {
 
     try {
       const response = await login(formData);
-
-      setLogin(formData.email, response.headers.authorization);
+      const payload = getTokenPayload(response.headers.authorization);
+      // 토큰 만료시간 설정
+      if (payload === null) {
+        logout();
+        return;
+      }
+      console.log(payload.exp);
+      setLogin(formData.email, response.headers.authorization, payload.exp);
 
       router.back();
     } catch (e: any) {
