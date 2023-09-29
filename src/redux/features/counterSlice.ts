@@ -1,32 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type CounterState = {
-  value: number;
+interface AuthState {
+  isLoggedIn: boolean;
+  expiryDate: number | null; // UNIX timestamp for the expiry date
+}
+
+const initialState: AuthState = {
+  isLoggedIn: false,
+  expiryDate: null,
 };
 
-const initialState = {
-  value: 0,
-} as CounterState;
-
-export const counter = createSlice({
-  name: "counter",
+const counterSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
-    reset: () => initialState,
-    increment: (state) => {
-      return { ...state, value: state.value + 1 };
+    islogin: (state) => {
+      console.log("islogin : ", state.isLoggedIn);
+      return { ...state, isLoggedIn: true };
     },
-    decrement: (state) => {
-      return { ...state, value: state.value - 1 };
+    islogout: (state) => {
+      console.log("islogout : ", state.isLoggedIn);
+      return { ...state, isLoggedIn: false };
     },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      return { ...state, value: state.value + action.payload };
-    },
-    decrementByAmount: (state, action: PayloadAction<number>) => {
-      return { ...state, value: state.value - action.payload };
+    setExpiryDate: (state, action: PayloadAction<number | null>) => {
+      console.log("setExpiryDate : ", action.payload);
+      return { ...state, expiryDate: action.payload };
     },
   },
 });
 
-export const { increment, incrementByAmount, decrement, decrementByAmount, reset } = counter.actions;
-export default counter.reducer;
+export const { islogin, islogout, setExpiryDate } = counterSlice.actions;
+
+export default counterSlice.reducer;

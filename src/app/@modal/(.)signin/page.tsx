@@ -13,8 +13,11 @@ import { validateEmail, validatePassword } from "@/utils/validation";
 
 import { login } from "@/apis/postUser";
 import { setLogin, getTokenPayload, logout } from "@/utils/user";
+import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 function SigninHome() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -69,6 +72,8 @@ function SigninHome() {
       const response = await login(formData);
       const payload = getTokenPayload(response.headers.authorization);
       // 토큰 만료시간 설정
+      dispatch(islogin());
+      dispatch(setExpiryDate(payload.exp));
       if (payload === null) {
         logout();
         return;
