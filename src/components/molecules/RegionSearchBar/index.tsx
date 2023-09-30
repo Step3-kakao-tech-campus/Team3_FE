@@ -9,9 +9,9 @@ import DropdownBox from "../DropdownBox";
 function RegionSearchBar() {
   const searchParams = useSearchParams();
   const initialValue = {
-    cityId: searchParams.get("cityId") || "-1",
-    countryId: searchParams.get("countryId") || "-1",
-    districtId: searchParams.get("districtId") || "-1",
+    cityId: searchParams.get("cityId") ? parseInt(searchParams.get("cityId")!, 10) : -1,
+    countryId: searchParams.get("countryId") ? parseInt(searchParams.get("countryId")!, 10) : -1,
+    districtId: searchParams.get("districtId") ? parseInt(searchParams.get("districtId")!, 10) : -1,
   };
   const [regionIds, setRegionIds] = useState(initialValue);
   const router = useRouter();
