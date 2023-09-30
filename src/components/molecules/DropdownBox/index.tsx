@@ -8,7 +8,7 @@ import getCountries from "@/app/apis/getCountries";
 import getDistricts from "@/app/apis/getDistricts";
 
 interface Props {
-  onChange?: (e: { cityId: string; countryId: string; districtId: string }) => void;
+  onChange?: (newValue: { cityId: string; countryId: string; districtId: string }) => void;
   initialValue?: { cityId: string; countryId: string; districtId: string };
   styleType: "big" | "small";
 }
