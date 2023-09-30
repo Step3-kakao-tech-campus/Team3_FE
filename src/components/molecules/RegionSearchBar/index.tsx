@@ -1,19 +1,38 @@
 "use client";
 
 import { MdSearch } from "react-icons/md";
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import objectToQueryString from "@/utils/objectToQueryString";
 import DropdownBox from "../DropdownBox";
 
-function RegionSearchBar() {
-  const searchParams = useSearchParams();
-  const initialValue = {
-    cityId: searchParams.get("cityId") ? parseInt(searchParams.get("cityId")!, 10) : -1,
-    countryId: searchParams.get("countryId") ? parseInt(searchParams.get("countryId")!, 10) : -1,
-    districtId: searchParams.get("districtId") ? parseInt(searchParams.get("districtId")!, 10) : -1,
-  };
-  const [regionIds, setRegionIds] = useState(initialValue);
+interface Prop {
+  pageSearchParams:
+    | {
+        search?: string | undefined;
+      }
+    | undefined;
+}
+
+function RegionSearchBar({ pageSearchParams }: Prop) {
+  const searchParamsToState = useCallback((param: URLSearchParams) => {
+    return {
+      cityId: param.get("cityId") ? parseInt(param.get("cityId")!, 10) : -1,
+      countryId: param.get("countryId") ? parseInt(param.get("countryId")!, 10) : -1,
+      districtId: param.get("districtId") ? parseInt(param.get("districtId")!, 10) : -1,
+    };
+  }, []);
+
+  const [searchParams, setSearchParams] = useState(new URLSearchParams(pageSearchParams));
+  const [regionIds, setRegionIds] = useState(searchParamsToState(searchParams));
+
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(pageSearchParams));
+  }, [pageSearchParams]);
+  useEffect(() => {
+    setRegionIds(searchParamsToState(searchParams));
+  }, [searchParams, searchParamsToState]);
+
   const router = useRouter();
   const queryString = objectToQueryString(regionIds);
   return (
