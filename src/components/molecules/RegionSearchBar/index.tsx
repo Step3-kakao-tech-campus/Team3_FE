@@ -19,13 +19,7 @@ function RegionSearchBar() {
   return (
     <div className="region-search-bar flex items-center">
       <div className="drop-box-wrapper grow">
-        <DropdownBox
-          styleType="big"
-          onChange={(newIds) => {
-            setRegionIds(newIds);
-          }}
-          initialValue={initialValue}
-        />
+        <DropdownBox styleType="big" selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} />
       </div>
       <button
         type="button"
