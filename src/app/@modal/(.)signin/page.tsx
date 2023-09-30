@@ -72,7 +72,7 @@ function SigninHome() {
       const response = await login(formData);
       const payload = getTokenPayload(response.headers.authorization);
       // 토큰 만료시간 설정
-      dispatch(islogin());
+      dispatch(islogin(formData.email));
       dispatch(setExpiryDate(payload.exp));
       if (payload === null) {
         logout();

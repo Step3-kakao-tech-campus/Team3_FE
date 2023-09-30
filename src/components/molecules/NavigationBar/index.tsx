@@ -6,20 +6,16 @@ import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
-import { getCookie } from "@/storage/Cookie";
 import { logout } from "@/utils/user";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { islogout } from "@/redux/features/counterSlice";
 
 function NavigationBar() {
   const router = useRouter();
-  const userEmail = getCookie("email");
-  const [user, setUser] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // eslint 에러
-    setUser(true);
-  }, []);
+  const email = useAppSelector((state) => state.email);
 
   // componentDidUpdate() 메서드에서 userEmail이 변경되었는지 검사하고 user 상태를 업데이트
 
@@ -37,12 +33,13 @@ function NavigationBar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            {user && userEmail ? (
+            {email ? (
               <div>
-                <span className="mr-2 text-sm text-gray-500">{userEmail.split("@")[0]}님</span>
+                <span className="mr-2 text-sm text-gray-500">{email.split("@")[0]}님</span>
                 <Button
                   styleType="white"
                   onClick={() => {
+                    dispatch(islogout());
                     logout();
                     router.push("/", { scroll: false });
                   }}

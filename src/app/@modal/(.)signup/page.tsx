@@ -13,9 +13,12 @@ import BlankBar from "@/components/atoms/BlankBar";
 import { useRouter } from "next/navigation";
 
 import { register, login } from "@/apis/postUser";
-import { setLogin } from "@/utils/user";
+import { setLogin, getTokenPayload } from "@/utils/user";
+import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 function SignupHome() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -98,7 +101,11 @@ function SignupHome() {
     try {
       await register(formData);
       const response = await login(formData);
-      setLogin(formData.email, response.headers.authorization);
+      const payload = getTokenPayload(response.headers.authorization);
+      // 토큰 만료시간 설정
+      dispatch(islogin(formData.email));
+      dispatch(setExpiryDate(payload.exp));
+      setLogin(formData.email, response.headers.authorization, payload.exp);
 
       router.back();
     } catch (e: any) {
