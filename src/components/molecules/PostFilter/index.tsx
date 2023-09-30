@@ -1,21 +1,33 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-function PostFilter() {
+interface Prop {
+  pageSearchParams:
+    | {
+        search?: string | undefined;
+      }
+    | undefined;
+}
+
+function PostFilter({ pageSearchParams }: Prop) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const newSearchParams = new URLSearchParams(searchParams);
+  const [searchParams, setSearchParams] = useState(new URLSearchParams(pageSearchParams));
+  const [isAll, setIsAll] = useState(searchParams.get("all") !== "false");
   const router = useRouter();
 
-  const searchParamAll = newSearchParams.get("all");
-  const [isAll, setIsAll] = useState(searchParamAll !== "false");
+  useEffect(() => {
+    setSearchParams(new URLSearchParams(pageSearchParams));
+  }, [pageSearchParams]);
+  useEffect(() => {
+    setIsAll(searchParams.get("all") !== "false");
+  }, [searchParams]);
 
   const handleOnClick = (newIsAll: boolean) => {
     setIsAll(newIsAll);
-    newSearchParams.set("all", newIsAll.toString());
-    const queryString = newSearchParams.toString();
+    searchParams.set("all", newIsAll.toString());
+    const queryString = searchParams.toString();
     router.push(`${pathname}?${queryString}`);
   };
 
