@@ -8,16 +8,12 @@ import getCountries from "@/app/apis/getCountries";
 import getDistricts from "@/app/apis/getDistricts";
 
 interface Props {
-  onChange?: (newValue: { cityId: string; countryId: string; districtId: string }) => void;
-  initialValue?: { cityId: string; countryId: string; districtId: string };
+  onChange?: (newValue: { cityId: number; countryId: number; districtId: number }) => void;
+  initialValue?: { cityId: number; countryId: number; districtId: number };
   styleType: "big" | "small";
 }
 
-function DropdownBox({
-  onChange,
-  styleType,
-  initialValue = { cityId: "-1", countryId: "-1", districtId: "-1" },
-}: Props) {
+function DropdownBox({ onChange, styleType, initialValue = { cityId: -1, countryId: -1, districtId: -1 } }: Props) {
   const [selectedOptionIds, setSelectedOptionIds] = useState(initialValue);
 
   const queries = useQueries({
@@ -59,24 +55,27 @@ function DropdownBox({
   const options2 = queries[1]?.data?.response?.countries || [];
   const options3 = queries[2]?.data?.response?.districts || [];
 
-  const handleDropdownChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>, dropdownType: string) => {
-    const newValue = e.target.value;
-    // city가 바뀌면 country와 district는 0으로 초기화, country가 바뀌면 district는 0으로 초기화
-    if (dropdownType === "cityId") {
-      setSelectedOptionIds({ cityId: newValue, countryId: "0", districtId: "0" });
-    } else if (dropdownType === "countryId") {
-      setSelectedOptionIds((prevIds) => ({
-        ...prevIds,
-        countryId: newValue,
-        districtId: "0",
-      }));
-    } else {
-      setSelectedOptionIds((prevIds) => ({
-        ...prevIds,
-        [dropdownType]: newValue,
-      }));
-    }
-  }, []);
+  const handleDropdownChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>, dropdownType: "cityId" | "countryId" | "districtId") => {
+      const newValue = parseInt(e.target.value, 10); // e.target.value는 기본적으로 string -> number로 변환
+      // city가 바뀌면 country와 district는 0으로 초기화, country가 바뀌면 district는 0으로 초기화
+      if (dropdownType === "cityId") {
+        setSelectedOptionIds({ cityId: newValue, countryId: 0, districtId: 0 });
+      } else if (dropdownType === "countryId") {
+        setSelectedOptionIds((prevIds) => ({
+          ...prevIds,
+          countryId: newValue,
+          districtId: 0,
+        }));
+      } else {
+        setSelectedOptionIds((prevIds) => ({
+          ...prevIds,
+          [dropdownType]: newValue,
+        }));
+      }
+    },
+    [],
+  );
 
   // 선택된 지역들의 상태 변경 시 상위 컴포넌트로 상태 끌어올리기
   useEffect(() => {
@@ -85,6 +84,7 @@ function DropdownBox({
 
   return (
     <div className="flex justify-between">
+      <p>{JSON.stringify(selectedOptionIds)}</p>
       <Dropdown
         placeholder="광역시 / 도"
         options={options1}

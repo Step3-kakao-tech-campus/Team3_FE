@@ -5,7 +5,7 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   placeholder: string;
   styleType: "big" | "small";
-  selectedOptionId?: string;
+  selectedOptionId?: number;
 }
 
 function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId }: Props) {
@@ -17,13 +17,13 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
     <select
       onChange={onChange}
       className={`border text-neutral-500 ${styleObj[styleType]}`}
-      value={selectedOptionId || "-1"}
+      value={typeof selectedOptionId !== undefined ? selectedOptionId : -1}
     >
-      <option key="placeholder" value="-1" hidden>
+      <option key="placeholder" value={-1} hidden>
         {placeholder}
       </option>
       {placeholder !== "광역시 / 도" && (
-        <option key="select_all" value="0">
+        <option key="select_all" value={0}>
           전체
         </option>
       )}
