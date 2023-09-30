@@ -1,7 +1,7 @@
 "use client";
 
 interface Props {
-  options: { name: string; id: number }[];
+  options: any;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   placeholder: string;
   styleType: "big" | "small";
@@ -27,7 +27,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
           전체
         </option>
       )}
-      {options?.map((option) => {
+      {options?.map((option: any) => {
         return (
           <option key={option.id} value={option.id}>
             {option.name}
