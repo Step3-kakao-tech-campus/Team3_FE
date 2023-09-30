@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
 import { useQueries } from "@tanstack/react-query";
 import getCities from "@/app/apis/getCities";
@@ -8,14 +8,22 @@ import getCountries from "@/app/apis/getCountries";
 import getDistricts from "@/app/apis/getDistricts";
 
 interface Props {
-  onChange?: (newValue: { cityId: number; countryId: number; districtId: number }) => void;
-  initialValue?: { cityId: number; countryId: number; districtId: number };
+  selectedOptionIds: {
+    cityId: number;
+    countryId: number;
+    districtId: number;
+  };
+  setSelectedOptionIds: React.Dispatch<
+    React.SetStateAction<{
+      cityId: number;
+      countryId: number;
+      districtId: number;
+    }>
+  >;
   styleType: "big" | "small";
 }
 
-function DropdownBox({ onChange, styleType, initialValue = { cityId: -1, countryId: -1, districtId: -1 } }: Props) {
-  const [selectedOptionIds, setSelectedOptionIds] = useState(initialValue);
-
+function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Props) {
   const queries = useQueries({
     queries: [
       {
@@ -74,13 +82,8 @@ function DropdownBox({ onChange, styleType, initialValue = { cityId: -1, country
         }));
       }
     },
-    [],
+    [setSelectedOptionIds],
   );
-
-  // 선택된 지역들의 상태 변경 시 상위 컴포넌트로 상태 끌어올리기
-  useEffect(() => {
-    if (onChange) onChange(selectedOptionIds);
-  }, [onChange, selectedOptionIds]);
 
   return (
     <div className="flex justify-between">
