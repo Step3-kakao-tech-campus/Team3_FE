@@ -3,7 +3,7 @@ import Badge from "@/components/atoms/Badge";
 import Image from "next/image";
 import formatDateToString from "@/utils/formatDateToString";
 import Link from "next/link";
-import { PostData } from "@/types/PostData";
+import { PostData } from "@/types/postData";
 
 interface Props {
   data: PostData;
