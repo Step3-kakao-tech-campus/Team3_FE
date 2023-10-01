@@ -22,11 +22,13 @@ function SignupHome() {
   const router = useRouter();
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 }); // 선택된 지역 ID
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
-    districtId: 24,
+    districtId: -1,
   });
 
   const [errorMessage, setErrorMessage] = useState({
@@ -41,10 +43,6 @@ function SignupHome() {
   const firstErrorMessage = errorMessagesArray[0];
 
   const handleInputChange = (fieldName: any, value: any) => {
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   [fieldName]: value,
-    // }));
     if (fieldName === "confirmPassword") {
       // 'confirmpassword' 필드의 값을 설정합니다.
       setConfirmPassword(value);
@@ -54,6 +52,8 @@ function SignupHome() {
         [fieldName]: value,
       }));
     }
+    formData.districtId = regionIds.districtId;
+    console.log(formData);
   };
 
   const handleSubmit = async () => {
@@ -155,7 +155,7 @@ function SignupHome() {
           />
         </div>
         {/* 지역 선택 */}
-        <DropdownBox />
+        <DropdownBox selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} styleType="small" />
 
         <BlankBar />
         {/* 개인 정보 수집 및 이용 동의 체크박스 */}

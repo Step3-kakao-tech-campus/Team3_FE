@@ -27,6 +27,7 @@ function SignupHome() {
     name: "",
     districtId: 24,
   });
+  const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 }); // 선택된 지역 ID
 
   const [errorMessage, setErrorMessage] = useState({
     email: "",
@@ -153,7 +154,7 @@ function SignupHome() {
         />
       </div>
       {/* 지역 선택 */}
-      <DropdownBox />
+      <DropdownBox selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} styleType="small" />
 
       <BlankBar />
       {/* 개인 정보 수집 및 이용 동의 체크박스 */}
