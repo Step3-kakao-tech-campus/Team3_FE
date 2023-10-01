@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 
 import { register, login } from "@/apis/postUser";
 import { setLogin, getTokenPayload } from "@/utils/user";
-import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { useAppDispatch } from "@/stores/hooks";
 
 function SignupHome() {
   const dispatch = useAppDispatch();

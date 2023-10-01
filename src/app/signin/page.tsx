@@ -12,8 +12,8 @@ import { validateEmail, validatePassword } from "@/utils/validation";
 
 import { login } from "@/apis/postUser";
 import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
-import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { useAppDispatch } from "@/stores/hooks";
 
 function SigninHome() {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import AuthCheckbox from "@/components/atoms/AuthCheckBox";
@@ -14,12 +14,13 @@ import { useRouter } from "next/navigation";
 
 import { register, login } from "@/apis/postUser";
 import { setLogin, getTokenPayload } from "@/utils/user";
-import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { useAppDispatch } from "@/stores/hooks";
 
 function SignupHome() {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const errRef = useRef<HTMLParagraphElement>(null);
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
   const [confirmPassword, setConfirmPassword] = useState("");
   const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 }); // 선택된 지역 ID
@@ -28,19 +29,8 @@ function SignupHome() {
     email: "",
     password: "",
     name: "",
-    districtId: -1,
+    districtId: regionIds.districtId,
   });
-
-  const [errorMessage, setErrorMessage] = useState({
-    email: "",
-    name: "",
-    password: "",
-    passwordConfirm: "",
-    required: "",
-  });
-
-  const errorMessagesArray = Object.values(errorMessage).filter((message) => message);
-  const firstErrorMessage = errorMessagesArray[0];
 
   const handleInputChange = (fieldName: any, value: any) => {
     if (fieldName === "confirmPassword") {
@@ -57,62 +47,36 @@ function SignupHome() {
 
   const handleSubmit = async () => {
     if (!formData.email || !formData.password || !formData.name || !confirmPassword) {
-      setErrorMessage((prev) => ({ ...prev, email: "모든 항목을 입력해주세요." }));
-      return;
-    }
-    setErrorMessage((prev) => ({ ...prev, required: "" }));
+      errRef.current!.innerHTML = "모든 항목을 입력해주세요.";
+    } else if (!validateEmail(formData.email)) {
+      errRef.current!.innerHTML = "이메일 형식이 올바르지 않습니다.";
+    } else if (!validateName(formData.name)) {
+      errRef.current!.innerHTML = "닉네임은 한글, 영문, 숫자만 가능하며 20자 이하로 입력해주세요.";
+    } else if (!validatePassword(formData.password)) {
+      errRef.current!.innerHTML = "비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.";
+    } else if (!validatePasswordConfirm(formData.password, confirmPassword)) {
+      errRef.current!.innerHTML = "비밀번호가 일치하지 않습니다.";
+    } else if (!consentChecked) {
+      errRef.current!.innerHTML = "개인정보 수집 및 이용에 동의해주세요.";
+    } else {
+      try {
+        errRef.current!.innerHTML = "";
+        await register(formData);
+        const response = await login(formData);
+        const payload = getTokenPayload(response.headers.authorization);
+        // 토큰 만료시간 설정
+        dispatch(islogin(formData.email));
+        dispatch(setExpiryDate(payload.exp));
+        setLogin(formData.email, response.headers.authorization);
 
-    if (!validateEmail(formData.email)) {
-      setErrorMessage((prev) => ({ ...prev, email: "이메일 형식이 올바르지 않습니다." }));
-      return;
-    }
-    setErrorMessage((prev) => ({ ...prev, email: "" }));
+        router.back();
+      } catch (e: any) {
+        // unkown이랑 any만 가능하다길래 any로 바꿈
 
-    if (!validateName(formData.name)) {
-      setErrorMessage((prev) => ({ ...prev, name: "닉네임은 한글, 영문, 숫자만 가능하며 20자 이하로 입력해주세요." }));
-      return;
-    }
-    setErrorMessage((prev) => ({ ...prev, name: "" }));
-
-    if (!validatePassword(formData.password)) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        password: "비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.",
-      }));
-      return;
-    }
-    setErrorMessage((prev) => ({ ...prev, password: "" }));
-
-    if (!validatePasswordConfirm(formData.password, confirmPassword)) {
-      setErrorMessage((prev) => ({ ...prev, passwordConfirm: "비밀번호가 일치하지 않습니다." }));
-      return;
-    }
-    setErrorMessage((prev) => ({ ...prev, passwordConfirm: "" }));
-
-    if (!consentChecked) {
-      setErrorMessage((prev) => ({ ...prev, required: "개인정보 수집 및 이용에 동의해주세요." }));
-      return;
-    }
-
-    try {
-      await register(formData);
-      const response = await login(formData);
-      const payload = getTokenPayload(response.headers.authorization);
-      // 토큰 만료시간 설정
-      dispatch(islogin(formData.email));
-      dispatch(setExpiryDate(payload.exp));
-      setLogin(formData.email, response.headers.authorization);
-
-      router.back();
-    } catch (e: any) {
-      // unkown이랑 any만 가능하다길래 any로 바꿈
-      if (e.response) {
-        alert(e.response.data.errorMessage);
+        router.back();
       }
-      router.back();
+      router.refresh();
     }
-    router.refresh();
-    // Perform your signup logic here.
   };
   return (
     <Modal>
@@ -160,7 +124,7 @@ function SignupHome() {
         </div>
 
         <div>
-          <p className="text-red-500 text-sm whitespace-pre-line">{firstErrorMessage}</p>
+          <p className=" text-red-500 text-sm whitespace-pre-line" ref={errRef} />
         </div>
         <BlankBar />
 

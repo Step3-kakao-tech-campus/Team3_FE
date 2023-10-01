@@ -1,4 +1,4 @@
-import { removeCookie, setCookie } from "@/storage/Cookie";
+import { removeCookie, setCookie } from "@/utils/Cookie";
 
 export const setLogin = async (email: string, token: string) => {
   setCookie("email", email, { maxAge: 3600 * 168 });

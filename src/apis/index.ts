@@ -1,13 +1,13 @@
 import axios from "axios";
-import { getCookie } from "../storage/Cookie";
+import { getCookie } from "@/utils/Cookie";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 1000, // api에 문제가 생겼을 때 무한으로 기다리게 하면 사용자 경험이 낮아진다
+  timeout: 1000,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  withCredentials: true, // 다른 도메인(Cross Origin)에 요청을 보낼 때 http -> https
 });
 
 instance.interceptors.request.use((config) => {
