@@ -7,11 +7,12 @@ const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 instance.interceptors.request.use((config) => {
-  const token = getCookie("token");
   const { headers } = config;
+  const token = getCookie("token");
   if (token) {
     headers.Authorization = token;
   }

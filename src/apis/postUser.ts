@@ -14,7 +14,7 @@ export const register = (data: UserData) => {
     password,
     name,
     districtId,
-  }); // Send with join
+  });
 };
 
 export const login = (data: UserData) => {
@@ -25,13 +25,10 @@ export const login = (data: UserData) => {
   });
 };
 
-// export const logout = () => {
-//   removeCookie("email");
-//   removeCookie("token");
-//   window.location.href = "/";
-//   return instance.post("/api/logout");
-// };
+export const logout = () => {
+  return instance.post("/api/logout");
+};
 
 export const authentication = () => {
-  return instance.get("/api/authentication");
+  return instance.post("/api/authentication");
 };

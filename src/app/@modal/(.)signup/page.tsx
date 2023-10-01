@@ -105,7 +105,7 @@ function SignupHome() {
       // 토큰 만료시간 설정
       dispatch(islogin(formData.email));
       dispatch(setExpiryDate(payload.exp));
-      setLogin(formData.email, response.headers.authorization, payload.exp);
+      setLogin(formData.email, response.headers.authorization);
 
       router.back();
     } catch (e: any) {

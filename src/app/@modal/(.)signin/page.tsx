@@ -12,7 +12,7 @@ import BlankBar from "@/components/atoms/BlankBar";
 import { validateEmail, validatePassword } from "@/utils/validation";
 
 import { login } from "@/apis/postUser";
-import { setLogin, getTokenPayload, logout } from "@/utils/user";
+import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
 import { islogin, setExpiryDate } from "@/redux/features/counterSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -75,11 +75,11 @@ function SigninHome() {
       dispatch(islogin(formData.email));
       dispatch(setExpiryDate(payload.exp));
       if (payload === null) {
-        logout();
+        deleteToken();
         return;
       }
       console.log(payload.exp);
-      setLogin(formData.email, response.headers.authorization, payload.exp);
+      setLogin(formData.email, response.headers.authorization);
 
       router.back();
     } catch (e: any) {
