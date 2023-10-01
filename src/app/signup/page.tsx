@@ -41,10 +41,6 @@ function SignupHome() {
   const firstErrorMessage = errorMessagesArray[0];
 
   const handleInputChange = (fieldName: any, value: any) => {
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   [fieldName]: value,
-    // }));
     if (fieldName === "confirmPassword") {
       // 'confirmpassword' 필드의 값을 설정합니다.
       setConfirmPassword(value);
@@ -54,6 +50,8 @@ function SignupHome() {
         [fieldName]: value,
       }));
     }
+
+    formData.districtId = regionIds.districtId;
   };
 
   const handleSubmit = async () => {

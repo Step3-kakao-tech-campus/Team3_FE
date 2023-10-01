@@ -53,7 +53,6 @@ function SignupHome() {
       }));
     }
     formData.districtId = regionIds.districtId;
-    console.log(formData);
   };
 
   const handleSubmit = async () => {
