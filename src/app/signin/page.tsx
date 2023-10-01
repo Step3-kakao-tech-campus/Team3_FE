@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import InputBox from "@/components/molecules/InputBox";
@@ -8,9 +8,86 @@ import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
+import { validateEmail, validatePassword } from "@/utils/validation";
+
+import { login } from "@/apis/postUser";
+import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
+import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { useAppDispatch } from "@/stores/hooks";
 
 function SigninHome() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState({
+    email: "",
+    password: "",
+    required: "",
+  });
+
+  const errorMessagesArray = Object.values(errorMessage).filter((message) => message);
+  const firstErrorMessage = errorMessagesArray[0];
+
+  const handleInputChange = (fieldName: any, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.email || !formData.password) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        required: "모든 항목을 입력해주세요.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, required: "" }));
+
+    if (!validateEmail(formData.email)) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        email: "이메일 형식이 올바르지 않습니다.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, email: "" }));
+
+    if (!validatePassword(formData.password)) {
+      setErrorMessage((prevData) => ({
+        ...prevData,
+        password: "비밀번호는 8자 이상이어야 합니다.",
+      }));
+      return;
+    }
+    setErrorMessage((prev) => ({ ...prev, password: "" }));
+
+    try {
+      const response = await login(formData);
+      const payload = getTokenPayload(response.headers.authorization);
+      // 토큰 만료시간 설정
+      dispatch(islogin(formData.email));
+      dispatch(setExpiryDate(payload.exp));
+      if (payload === null) {
+        deleteToken();
+        return;
+      }
+      setLogin(formData.email, response.headers.authorization);
+
+      router.back();
+    } catch (e: any) {
+      if (e.response) {
+        alert(e.response.data.errorMessage);
+      }
+      router.back();
+    }
+    router.refresh();
+  };
 
   return (
     <div>
@@ -34,7 +111,11 @@ function SigninHome() {
               className: "w-full py-2 px-3 rounded-lg border border-gray-400",
             },
           ]}
+          onInputChange={handleInputChange}
         />
+      </div>
+      <div>
+        <p className="text-red-500 text-sm whitespace-pre-line">{firstErrorMessage}</p>
       </div>
       <BlankBar />
 
@@ -58,7 +139,9 @@ function SigninHome() {
       {/* 제출 버튼 */}
       <BlankBar />
       <div className="flex justify-center ">
-        <Button styleType="thunder_full">로그인</Button>
+        <Button styleType="thunder_full" onClick={handleSubmit}>
+          로그인
+        </Button>
       </div>
       <BlankBar />
       <div className="flex justify-center ">
