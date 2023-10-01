@@ -7,8 +7,8 @@ import Link from "next/link";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
 import { authentication } from "@/apis/postUser";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { islogout, setExpiryDate } from "@/redux/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "@/stores/hooks";
+import { islogout, setExpiryDate } from "@/stores/features/counterSlice";
 import { useEffect } from "react";
 import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
 
