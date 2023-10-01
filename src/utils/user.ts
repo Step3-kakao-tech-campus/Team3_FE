@@ -18,8 +18,6 @@ export const getTokenPayload = (token: string) => {
   const currentTimestamp = Date.now();
 
   if (currentTimestamp > expirationTime) {
-    console.log("token expired");
-
     return null;
   }
 

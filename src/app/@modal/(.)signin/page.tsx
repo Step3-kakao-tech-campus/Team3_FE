@@ -78,7 +78,6 @@ function SigninHome() {
         deleteToken();
         return;
       }
-      console.log(payload.exp);
       setLogin(formData.email, response.headers.authorization);
 
       router.back();

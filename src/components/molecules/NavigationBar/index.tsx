@@ -40,7 +40,6 @@ function NavigationBar() {
   };
 
   useEffect(() => {
-    console.log("islogin", isLoggedIn);
     if (isLoggedIn && expiryDate) {
       const currentTime = Date.now() / 1000; // 현재 시간(UNIX 타임스탬프)
 
@@ -49,7 +48,7 @@ function NavigationBar() {
         router.push("/", { scroll: false });
       }
     }
-  }, [isLoggedIn, expiryDate]);
+  });
 
   return (
     <nav className="fixed top-0 inset-x-0 z-999 bg-white">
