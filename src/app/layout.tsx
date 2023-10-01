@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Background from "@/components/atoms/Background";
 import NavigationBar from "@/components/molecules/NavigationBar";
+import InnerContainer from "@/components/atoms/InnerContainer";
 import Provider from "@/utils/provider";
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       <body className="bg-[#F6F6F6]">
         <Provider>
           <NavigationBar />
-          <Background>{children}</Background>
+          <Background>
+            <InnerContainer>{children}</InnerContainer>
+          </Background>
           {modal}
         </Provider>
       </body>
