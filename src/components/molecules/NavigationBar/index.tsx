@@ -43,7 +43,7 @@ function NavigationBar() {
     if (isLoggedIn && expiryDate) {
       const currentTime = Date.now() / 1000; // 현재 시간(UNIX 타임스탬프)
 
-      if (currentTime >= expiryDate - 595) {
+      if (currentTime >= expiryDate) {
         auth();
         router.push("/", { scroll: false });
       }

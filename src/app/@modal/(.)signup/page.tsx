@@ -44,7 +44,7 @@ function SignupHome() {
 
   const handleInputChange = (fieldName: any, value: any) => {
     if (fieldName === "confirmPassword") {
-      // 'confirmpassword' 필드의 값을 설정합니다.
+      // 'confirmpassword' 필드의 값을 설정
       setConfirmPassword(value);
     } else {
       setFormData((prevData) => ({
@@ -56,9 +56,6 @@ function SignupHome() {
   };
 
   const handleSubmit = async () => {
-    // 버튼 누를고 api보내지전 유효성 검사 실행
-    // 그리고 빨간 글씨로 Input 밑에 표시
-    // AuthInput 컴포넌트에 props로 넘겨줘서 div 안에 string과 함께 넣어주기
     if (!formData.email || !formData.password || !formData.name || !confirmPassword) {
       setErrorMessage((prev) => ({ ...prev, email: "모든 항목을 입력해주세요." }));
       return;
