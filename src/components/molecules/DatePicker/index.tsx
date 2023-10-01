@@ -4,20 +4,21 @@ import Button from "@/components/atoms/Button";
 import Dropdown from "@/components/atoms/Dropdown";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import formatDateToString from "@/utils/formatDateToString";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { GiAlarmClock } from "react-icons/gi";
 
 interface Props {
   title: string;
+  value: Date | null;
+  setValue: React.Dispatch<SetStateAction<Date | null>>;
 }
 
-function DatePicker({ title }: Props) {
+function DatePicker({ title, value, setValue }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isTimeOpen, setIsTimeOpen] = useState(false);
 
-  const [value, setValue] = useState<null | Date>(null);
   const minDate = new Date();
 
   const [selectedHours, setSelectedHours] = useState(-1);
