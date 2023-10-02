@@ -9,12 +9,13 @@ import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams) {
   const getPostList = async ({ pageParam = 0 }, URLSearchParams: URLSearchParams) => {
-    const cityId = parseInt(URLSearchParams?.get("cityId") || "0", 10);
-    const countryId = parseInt(URLSearchParams?.get("countryId") || "0", 10);
-    const districtId = parseInt(URLSearchParams?.get("districtId") || "0", 10);
+    const cityId = parseInt(URLSearchParams.get("cityId") || "0", 10);
+    const countryId = parseInt(URLSearchParams.get("countryId") || "0", 10);
+    const districtId = parseInt(URLSearchParams.get("districtId") || "0", 10);
+    const all = URLSearchParams.get("all");
     const queryString = `?${cityId ? `cityId=${cityId}` : ""}${countryId ? `&countryId=${countryId}` : ""}${
       districtId ? `&districtId=${districtId}` : ""
-    }`;
+    }${all === "true" || all === "false" ? `&all=${all}` : ""}`;
     return (await getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`)).json();
   };
 
