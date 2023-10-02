@@ -5,6 +5,7 @@ import getCountries from "@/apis/getCountries";
 import getDistricts from "@/apis/getDistricts";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useQueries } from "@tanstack/react-query";
+import { MdLocationOn } from "react-icons/md";
 
 function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
   const cityId = searchParams?.cityId ? parseInt(searchParams?.cityId, 10) || 0 : 0;
@@ -60,7 +61,12 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
     cityName !== "전체" && countryName !== "전체" ? districtName : ""
   }`;
 
-  return <p>{searchedRegion}</p>;
+  return (
+    <p className="searched-location flex items-center">
+      <MdLocationOn className="inline text-red-500" size={20} />
+      {searchedRegion}
+    </p>
+  );
 }
 
 export default SearchedLocationDisplay;
