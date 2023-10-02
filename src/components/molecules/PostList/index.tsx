@@ -59,6 +59,15 @@ function PostList({ searchParams }: PageSearchParams) {
           return <PostCard data={post} key={post.id} />;
         });
       })}
+      {data?.pages[0]?.response?.posts?.length ? (
+        data?.pages?.map((page) => {
+          return page?.response?.posts?.map((post: PostData) => {
+            return <PostCard data={post} key={post.id} />;
+          });
+        })
+      ) : (
+        <p>검색된 글이 없습니다. 더 넓은 범위로 검색해 보세요.</p>
+      )}
       {hasNextPage && <div className="observe-area" ref={target} />}
     </div>
   );
