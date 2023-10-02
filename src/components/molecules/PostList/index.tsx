@@ -4,14 +4,12 @@ import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { PostData } from "@/types/postData";
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import getPosts from "@/apis/getPosts";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams) {
   const getPostList = async ({ pageParam = 0 }, queryString?: string) => {
-    const res = await fetch(
-      `https://server.jagaldol.dev:8080/api/posts${queryString}&size=1${pageParam ? `&key=${pageParam}` : ""}`,
-    );
-    return res.json();
+    return (await getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`)).json();
   };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
