@@ -52,11 +52,6 @@ function PostList({ searchParams }: PageSearchParams) {
 
   return (
     <div className="posts flex flex-col gap-5">
-      {data?.pages?.map((page) => {
-        return page?.response?.posts?.map((post: PostData) => {
-          return <PostCard data={post} key={post.id} />;
-        });
-      })}
       {data?.pages[0]?.response?.posts?.length ? (
         data?.pages?.map((page) => {
           return page?.response?.posts?.map((post: PostData) => {
