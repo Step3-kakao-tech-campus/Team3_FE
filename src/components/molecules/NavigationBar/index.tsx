@@ -79,7 +79,7 @@ function NavigationBar() {
                 </Button>
               </div>
             ) : (
-              <div>
+              <>
                 <Button
                   styleType="white"
                   onClick={() => {
@@ -96,7 +96,7 @@ function NavigationBar() {
                 >
                   회원가입
                 </Button>
-              </div>
+              </>
             )}
           </div>
         </div>
