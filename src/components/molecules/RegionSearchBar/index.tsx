@@ -10,9 +10,9 @@ import DropdownBox from "../DropdownBox";
 function RegionSearchBar({ searchParams }: PageSearchParams) {
   const searchParamsToState = useCallback((param: URLSearchParams) => {
     return {
-      cityId: param.get("cityId") ? parseInt(param.get("cityId")!, 10) || -1 : -1,
-      countryId: param.get("countryId") ? parseInt(param.get("countryId")!, 10) || -1 : -1,
-      districtId: param.get("districtId") ? parseInt(param.get("districtId")!, 10) || -1 : -1,
+      cityId: !Number.isNaN(parseInt(param.get("cityId")!, 10)) ? parseInt(param.get("cityId")!, 10) : -1,
+      countryId: !Number.isNaN(parseInt(param.get("countryId")!, 10)) ? parseInt(param.get("countryId")!, 10) : -1,
+      districtId: !Number.isNaN(parseInt(param.get("districtId")!, 10)) ? parseInt(param.get("districtId")!, 10) : -1,
     };
   }, []);
 
