@@ -29,13 +29,13 @@ function RegionSearchBar({ searchParams }: PageSearchParams) {
   const router = useRouter();
   const queryString = objectToQueryString(regionIds);
   return (
-    <div className="region-search-bar flex items-center">
+    <div className="region-search-bar flex items-center gap-5">
       <div className="drop-box-wrapper grow">
         <DropdownBox styleType="big" selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} />
       </div>
       <button
         type="button"
-        className="w-10 h-10 ml-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
+        className="min-w-[40px] h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
         onClick={() => {
           router.push(`/${queryString}`);
         }}
