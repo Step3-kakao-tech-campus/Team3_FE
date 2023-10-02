@@ -59,7 +59,9 @@ function PostList({ searchParams }: PageSearchParams) {
           });
         })
       ) : (
-        <p>검색된 글이 없습니다. 더 넓은 범위로 검색해 보세요.</p>
+        <p className="no-post-search-result my-10 text-center center text-2xl text-neutral-500">
+          검색된 글이 없습니다. 더 넓은 범위로 검색해 보세요.
+        </p>
       )}
       {hasNextPage && <div className="observe-area" ref={target} />}
     </div>
