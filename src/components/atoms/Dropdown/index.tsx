@@ -11,7 +11,7 @@ interface Props {
 function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId }: Props) {
   const styleObj = {
     small: "rounded-full p-1 min-w-[130px]",
-    big: "rounded-3xl p-5 min-w-[230px] text-2xl text-center shadow-lg",
+    big: "rounded-3xl p-4 w-[180px] text-xl text-center shadow-lg",
   };
   return (
     <select

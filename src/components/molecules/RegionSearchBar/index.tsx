@@ -10,9 +10,9 @@ import DropdownBox from "../DropdownBox";
 function RegionSearchBar({ searchParams }: PageSearchParams) {
   const searchParamsToState = useCallback((param: URLSearchParams) => {
     return {
-      cityId: param.get("cityId") ? parseInt(param.get("cityId")!, 10) || -1 : -1,
-      countryId: param.get("countryId") ? parseInt(param.get("countryId")!, 10) || -1 : -1,
-      districtId: param.get("districtId") ? parseInt(param.get("districtId")!, 10) || -1 : -1,
+      cityId: !Number.isNaN(parseInt(param.get("cityId")!, 10)) ? parseInt(param.get("cityId")!, 10) : -1,
+      countryId: !Number.isNaN(parseInt(param.get("countryId")!, 10)) ? parseInt(param.get("countryId")!, 10) : -1,
+      districtId: !Number.isNaN(parseInt(param.get("districtId")!, 10)) ? parseInt(param.get("districtId")!, 10) : -1,
     };
   }, []);
 
@@ -29,13 +29,13 @@ function RegionSearchBar({ searchParams }: PageSearchParams) {
   const router = useRouter();
   const queryString = objectToQueryString(regionIds);
   return (
-    <div className="region-search-bar flex items-center">
+    <div className="region-search-bar flex items-center gap-5">
       <div className="drop-box-wrapper grow">
         <DropdownBox styleType="big" selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} />
       </div>
       <button
         type="button"
-        className="w-10 h-10 ml-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
+        className="min-w-[40px] h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
         onClick={() => {
           router.push(`/${queryString}`);
         }}
