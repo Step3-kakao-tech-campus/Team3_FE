@@ -26,40 +26,26 @@ function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Pro
     queries: [
       {
         queryKey: ["cityId"],
-        queryFn: async () => {
-          const response = await getCities();
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
+        queryFn: getCities,
       },
       {
         queryKey: ["countryId", selectedOptionIds.cityId],
-        queryFn: async () => {
-          const response = await getCountries(selectedOptionIds.cityId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+        queryFn: () => {
+          return getCountries(selectedOptionIds.cityId);
         },
       },
       {
         queryKey: ["districtId", selectedOptionIds.countryId],
-        queryFn: async () => {
-          const response = await getDistricts(selectedOptionIds.countryId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+        queryFn: () => {
+          return getDistricts(selectedOptionIds.countryId);
         },
       },
     ],
   });
 
-  const options1 = queries[0]?.data?.response?.cities || [];
-  const options2 = queries[1]?.data?.response?.countries || [];
-  const options3 = queries[2]?.data?.response?.districts || [];
+  const options1 = queries[0]?.data?.data?.response?.cities || [];
+  const options2 = queries[1]?.data?.data?.response?.countries || [];
+  const options3 = queries[2]?.data?.data?.response?.districts || [];
 
   const handleDropdownChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>, dropdownType: "cityId" | "countryId" | "districtId") => {
