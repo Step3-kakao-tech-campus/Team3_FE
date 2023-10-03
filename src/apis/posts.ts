@@ -1,7 +1,8 @@
 import client from "./instance";
 
 export async function getPosts(queryString?: string) {
-  return fetch(`https://server.jagaldol.dev:8080/api/posts${queryString || ""}`);
+  const res = await client.get(`/api/posts${queryString || ""}`);
+  return res;
 }
 
 interface PostOption {
