@@ -65,7 +65,7 @@ function NavigationBar() {
 
           <div className="flex items-center space-x-4">
             {email ? (
-              <div>
+              <>
                 <span className="mr-2 text-sm text-gray-500">{email.split("@")[0]}님</span>
                 <Button
                   styleType="white"
@@ -77,7 +77,7 @@ function NavigationBar() {
                 >
                   로그아웃
                 </Button>
-              </div>
+              </>
             ) : (
               <>
                 <Button
