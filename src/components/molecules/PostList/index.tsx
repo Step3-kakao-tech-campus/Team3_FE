@@ -16,7 +16,7 @@ function PostList({ searchParams }: PageSearchParams) {
     const queryString = `?${cityId > 0 ? `cityId=${cityId}` : ""}${countryId > 0 ? `&countryId=${countryId}` : ""}${
       districtId > 0 ? `&districtId=${districtId}` : ""
     }${all === "true" || all === "false" ? `&all=${all}` : ""}`;
-    return (await getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`)).json();
+    return getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`);
   };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
@@ -27,7 +27,7 @@ function PostList({ searchParams }: PageSearchParams) {
     {
       retry: 2,
       getNextPageParam: (lastPage) => {
-        const newKey = lastPage?.response?.nextCursorRequest?.key;
+        const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined; // 이전 페이지에서 받은 key값이 -1이면 undefined를 리턴하여 hasnextPage를 false로 설정
       },
     },
@@ -59,9 +59,9 @@ function PostList({ searchParams }: PageSearchParams) {
 
   return (
     <div className="posts flex flex-col gap-5">
-      {data?.pages[0]?.response?.posts?.length ? (
+      {data?.pages[0]?.data?.response?.posts?.length ? (
         data?.pages?.map((page) => {
-          return page?.response?.posts?.map((post: PostData) => {
+          return page?.data?.response?.posts?.map((post: PostData) => {
             return <PostCard data={post} key={post.id} />;
           });
         })
