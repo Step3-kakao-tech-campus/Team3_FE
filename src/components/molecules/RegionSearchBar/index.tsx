@@ -37,7 +37,8 @@ function RegionSearchBar({ searchParams }: PageSearchParams) {
         type="button"
         className="min-w-[40px] h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl"
         onClick={() => {
-          router.push(`/${queryString}`);
+          if (regionIds.cityId >= 0 && regionIds.countryId >= 0 && regionIds.districtId >= 0)
+            router.push(`/${queryString}`);
         }}
       >
         <MdSearch size={28} color="white" className="m-auto" />

@@ -22,7 +22,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
       <option key="placeholder" value={-1} hidden>
         {placeholder}
       </option>
-      {(placeholder === "시 / 군 / 구" || placeholder === "읍 / 면 / 동") && (
+      {(placeholder === "시 / 군 / 구" || placeholder === "읍 / 면 / 동") && options.length && (
         <option key="select_all" value={0}>
           전체
         </option>
