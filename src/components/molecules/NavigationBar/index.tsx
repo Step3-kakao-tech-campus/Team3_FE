@@ -7,8 +7,8 @@ import Link from "next/link";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
 import { authentication } from "@/apis/postUser";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { islogout, setExpiryDate } from "@/redux/features/counterSlice";
+import { useAppDispatch, useAppSelector } from "@/stores/hooks";
+import { islogout, setExpiryDate } from "@/stores/features/counterSlice";
 import { useEffect } from "react";
 import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
 
@@ -65,7 +65,7 @@ function NavigationBar() {
 
           <div className="flex items-center space-x-4">
             {email ? (
-              <div>
+              <>
                 <span className="mr-2 text-sm text-gray-500">{email.split("@")[0]}님</span>
                 <Button
                   styleType="white"
@@ -77,9 +77,9 @@ function NavigationBar() {
                 >
                   로그아웃
                 </Button>
-              </div>
+              </>
             ) : (
-              <div>
+              <>
                 <Button
                   styleType="white"
                   onClick={() => {
@@ -96,7 +96,7 @@ function NavigationBar() {
                 >
                   회원가입
                 </Button>
-              </div>
+              </>
             )}
           </div>
         </div>
