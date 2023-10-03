@@ -11,10 +11,10 @@ import Logo from "public/images/bowling_logo.png";
 import BlankBar from "@/components/atoms/BlankBar";
 import { useRouter } from "next/navigation";
 
-import { register, login } from "@/apis/postUser";
 import { setLogin, getTokenPayload } from "@/utils/user";
-import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
 import { useAppDispatch } from "@/stores/hooks";
+import { postLogin, postRegister } from "@/apis/sign";
 
 function SignupForm() {
   const dispatch = useAppDispatch();
@@ -60,11 +60,11 @@ function SignupForm() {
     } else {
       try {
         errRef.current!.innerHTML = "";
-        await register(formData);
-        const response = await login(formData);
+        await postRegister(formData);
+        const response = await postLogin(formData);
         const payload = getTokenPayload(response.headers.authorization);
         // 토큰 만료시간 설정
-        dispatch(islogin(formData.email));
+        dispatch(isLogin(formData.email));
         dispatch(setExpiryDate(payload.exp));
         setLogin(formData.email, response.headers.authorization);
 
