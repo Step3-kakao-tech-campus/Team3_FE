@@ -14,40 +14,26 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
     queries: [
       {
         queryKey: ["cityId"],
-        queryFn: async () => {
-          const response = await getCities();
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
+        queryFn: getCities,
       },
       {
         queryKey: ["countryId", cityId],
-        queryFn: async () => {
-          const response = await getCountries(cityId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+        queryFn: () => {
+          return getCountries(cityId);
         },
       },
       {
         queryKey: ["districtId", countryId],
-        queryFn: async () => {
-          const response = await getDistricts(countryId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+        queryFn: () => {
+          return getDistricts(countryId);
         },
       },
     ],
   });
 
-  const cities = queries[0]?.data?.response?.cities || [];
-  const countries = queries[1]?.data?.response?.countries || [];
-  const districts = queries[2]?.data?.response?.districts || [];
+  const cities = queries[0]?.data?.data?.response?.cities || [];
+  const countries = queries[1]?.data?.data?.response?.countries || [];
+  const districts = queries[2]?.data?.data?.response?.districts || [];
 
   const cityName = cities.filter((option: { id: number; name: string }) => option.id === cityId)[0]?.name || "전체";
   const countryName =
