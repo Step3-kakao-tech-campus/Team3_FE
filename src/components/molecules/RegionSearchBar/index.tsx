@@ -29,8 +29,8 @@ function RegionSearchBar({ searchParams }: PageSearchParams) {
   const router = useRouter();
   const queryString = objectToQueryString(regionIds);
   return (
-    <div className="region-search-bar flex items-center gap-5">
-      <div className="drop-box-wrapper grow">
+    <div className="region-search-bar flex justify-evenly items-center gap-5">
+      <div className="drop-box-wrapper max-w-3xl grow">
         <DropdownBox styleType="big" selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} />
       </div>
       <button
