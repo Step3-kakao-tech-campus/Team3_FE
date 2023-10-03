@@ -13,8 +13,8 @@ function PostList({ searchParams }: PageSearchParams) {
     const countryId = parseInt(URLSearchParams.get("countryId") || "0", 10);
     const districtId = parseInt(URLSearchParams.get("districtId") || "0", 10);
     const all = URLSearchParams.get("all");
-    const queryString = `?${cityId ? `cityId=${cityId}` : ""}${countryId ? `&countryId=${countryId}` : ""}${
-      districtId ? `&districtId=${districtId}` : ""
+    const queryString = `?${cityId > 0 ? `cityId=${cityId}` : ""}${countryId > 0 ? `&countryId=${countryId}` : ""}${
+      districtId > 0 ? `&districtId=${districtId}` : ""
     }${all === "true" || all === "false" ? `&all=${all}` : ""}`;
     return (await getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`)).json();
   };
