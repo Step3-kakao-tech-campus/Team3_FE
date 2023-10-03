@@ -3,9 +3,7 @@
 import React, { useCallback } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
 import { useQueries } from "@tanstack/react-query";
-import getCities from "@/apis/getCities";
-import getCountries from "@/apis/getCountries";
-import getDistricts from "@/apis/getDistricts";
+import { getCities, getCountries, getDistricts } from "@/apis/district";
 
 interface Props {
   selectedOptionIds: {

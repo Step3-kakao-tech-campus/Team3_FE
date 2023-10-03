@@ -4,7 +4,7 @@ import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { PostData } from "@/types/postData";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import getPosts from "@/apis/getPosts";
+import { getPosts } from "@/apis/posts";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams) {

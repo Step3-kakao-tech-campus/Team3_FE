@@ -10,10 +10,10 @@ import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
 import { validateEmail, validatePassword } from "@/utils/validation";
 
-import { login } from "@/apis/postUser";
 import { setLogin, getTokenPayload } from "@/utils/user";
-import { islogin, setExpiryDate } from "@/stores/features/counterSlice";
+import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
 import { useAppDispatch } from "@/stores/hooks";
+import { postLogin } from "@/apis/sign";
 
 function SigninForm() {
   const dispatch = useAppDispatch();
@@ -41,10 +41,10 @@ function SigninForm() {
     } else {
       try {
         errRef.current!.innerHTML = "";
-        const response = await login(formData);
+        const response = await postLogin(formData);
         const payload = getTokenPayload(response.headers.authorization);
         // 토큰 만료시간 설정
-        dispatch(islogin(formData.email));
+        dispatch(isLogin(formData.email));
         dispatch(setExpiryDate(payload.exp));
 
         setLogin(formData.email, response.headers.authorization);

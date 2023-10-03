@@ -7,7 +7,7 @@ import Button from "@/components/atoms/Button";
 import DatePicker from "@/components/molecules/DatePicker";
 import { useRouter } from "next/navigation";
 import DropdownBox from "@/components/molecules/DropdownBox";
-import postRegisterPosts from "@/apis/postRegisterPosts";
+import { postRegisterPosts } from "@/apis/posts";
 import { useMutation } from "@tanstack/react-query";
 
 function CreatePostForm() {

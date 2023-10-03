@@ -1,8 +1,6 @@
 "use client";
 
-import getCities from "@/apis/getCities";
-import getCountries from "@/apis/getCountries";
-import getDistricts from "@/apis/getDistricts";
+import { getCities, getCountries, getDistricts } from "@/apis/district";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useQueries } from "@tanstack/react-query";
 import { MdLocationOn } from "react-icons/md";
