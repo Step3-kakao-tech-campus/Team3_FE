@@ -2,8 +2,7 @@
 
 import React, { useCallback } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
-import { useQueries } from "@tanstack/react-query";
-import { getCities, getCountries, getDistricts } from "@/apis/district";
+import useRegionQueries from "@/hooks/useRegionQueries";
 
 interface Props {
   selectedOptionIds: {
@@ -22,26 +21,7 @@ interface Props {
 }
 
 function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Props) {
-  const queries = useQueries({
-    queries: [
-      {
-        queryKey: ["cityId"],
-        queryFn: getCities,
-      },
-      {
-        queryKey: ["countryId", selectedOptionIds.cityId],
-        queryFn: () => {
-          return getCountries(selectedOptionIds.cityId);
-        },
-      },
-      {
-        queryKey: ["districtId", selectedOptionIds.countryId],
-        queryFn: () => {
-          return getDistricts(selectedOptionIds.countryId);
-        },
-      },
-    ],
-  });
+  const queries = useRegionQueries({ cityId: selectedOptionIds.cityId, countryId: selectedOptionIds.countryId });
 
   const options1 = queries[0]?.data?.data?.response?.cities || [];
   const options2 = queries[1]?.data?.data?.response?.countries || [];
