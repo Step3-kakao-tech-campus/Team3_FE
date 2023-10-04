@@ -3,7 +3,7 @@
 import Button from "@/components/atoms/Button";
 import Dropdown from "@/components/atoms/Dropdown";
 import OptionTitle from "@/components/atoms/OptionTitle";
-import formatDateToString from "@/utils/formatDateToString";
+import { formatDateToString } from "@/utils/formatDateToString";
 import { SetStateAction, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";

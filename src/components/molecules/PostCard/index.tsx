@@ -1,6 +1,6 @@
 import { MdAlarm, MdLocationPin } from "react-icons/md";
 import Badge from "@/components/atoms/Badge";
-import formatDateToString from "@/utils/formatDateToString";
+import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { PostData } from "@/types/postData";
 import Participant from "@/components/atoms/Participant";
