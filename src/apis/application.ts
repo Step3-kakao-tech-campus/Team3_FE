@@ -1,13 +1,7 @@
 import client from "./instance";
 
-interface Param {
-  postId: number;
-  accessToken: string;
-}
-
-export default async function getApplicants({ postId, accessToken }: Param) {
-  const res = await client.get(`/api/posts/${postId}/applicants`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+export default async function getApplicants(postId: number) {
+  if (!postId) throw new Error("postId 또는 accessToken이 유효하지 않습니다.");
+  const res = await client.get(`/api/posts/${postId}/applicants`);
   return res;
 }
