@@ -2,7 +2,7 @@ import Image from "next/image";
 
 interface Props {
   src: string | null;
-  className?: string;
+  styleType?: "md" | "sm" | "lg";
 }
 
 /**
@@ -10,9 +10,14 @@ interface Props {
  * className으로 tailwind 키워드를 전달받을 수 있어, 추후 반응형 스타일 적용이 원활하도록 했다.
  * 기본 사이즈는 32*32px이다.
  */
-function CircularProfileImage({ src, className = "h-8 w-8" }: Props) {
+function CircularProfileImage({ src, styleType = "md" }: Props) {
+  const styles = {
+    lg: "w-10 h-10",
+    md: "w-8 h-8",
+    sm: "w-6 h-6",
+  };
   return (
-    <div className={`profile-image rounded-full overflow-hidden ${className}`}>
+    <div className={`profile-image rounded-full overflow-hidden roun ${styles[styleType]}`}>
       <Image
         alt="유저 프로필 이미지"
         src={src ? `임시APIURL${src}` : "/images/default_profile_image.png"}
