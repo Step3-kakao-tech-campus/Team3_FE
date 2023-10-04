@@ -11,7 +11,7 @@ function ApplicantBlock({ name, profileImage, rating }: UserInfo) {
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
       <div className="user-info flex gap-2 items-center">
-        <CircularProfileImage src={profileImage} className="w-10 h-10" />
+        <CircularProfileImage src={profileImage} styleType="lg" />
         <div className="user-info-text flex flex-col justify-start">
           <span className="block w-fit font-bold text-slate-700">{name}</span>
           <span className="block w-fit text-sm text-neutral-500">{`매너점수 ★ ${
