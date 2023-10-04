@@ -1,11 +1,16 @@
+import client from "./instance";
+
 export async function getCities() {
-  return fetch("https://server.jagaldol.dev:8080/api/cities");
+  const res = await client.get("/api/cities");
+  return res;
 }
 
 export async function getCountries(cityId: number) {
-  return fetch(`https://server.jagaldol.dev:8080/api/cities/${cityId}/countries`);
+  const res = await client.get(`/api/cities/${cityId}/countries`);
+  return res;
 }
 
 export async function getDistricts(countryId: number) {
-  return fetch(`https://server.jagaldol.dev:8080/api/cities/countries/${countryId}/districts`);
+  const res = await client.get(`/api/cities/countries/${countryId}/districts`);
+  return res;
 }

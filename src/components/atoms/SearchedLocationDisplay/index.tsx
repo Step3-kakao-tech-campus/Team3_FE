@@ -1,8 +1,7 @@
 "use client";
 
-import { getCities, getCountries, getDistricts } from "@/apis/district";
+import useRegionQueries from "@/hooks/useRegionQueries";
 import { PageSearchParams } from "@/types/pageSearchParams";
-import { useQueries } from "@tanstack/react-query";
 import { MdLocationOn } from "react-icons/md";
 
 function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
@@ -10,44 +9,11 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
   const countryId = searchParams?.countryId ? parseInt(searchParams?.countryId, 10) || 0 : 0;
   const districtId = searchParams?.districtId ? parseInt(searchParams?.districtId, 10) || 0 : 0;
 
-  const queries = useQueries({
-    queries: [
-      {
-        queryKey: ["cityId"],
-        queryFn: async () => {
-          const response = await getCities();
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-      {
-        queryKey: ["countryId", cityId],
-        queryFn: async () => {
-          const response = await getCountries(cityId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-      {
-        queryKey: ["districtId", countryId],
-        queryFn: async () => {
-          const response = await getDistricts(countryId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-    ],
-  });
+  const queries = useRegionQueries({ cityId, countryId });
 
-  const cities = queries[0]?.data?.response?.cities || [];
-  const countries = queries[1]?.data?.response?.countries || [];
-  const districts = queries[2]?.data?.response?.districts || [];
+  const cities = queries[0]?.data?.data?.response?.cities || [];
+  const countries = queries[1]?.data?.data?.response?.countries || [];
+  const districts = queries[2]?.data?.data?.response?.districts || [];
 
   const cityName = cities.filter((option: { id: number; name: string }) => option.id === cityId)[0]?.name || "전체";
   const countryName =
