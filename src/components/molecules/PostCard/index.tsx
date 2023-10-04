@@ -1,6 +1,5 @@
 import { MdAlarm, MdLocationPin } from "react-icons/md";
 import Badge from "@/components/atoms/Badge";
-import Image from "next/image";
 import formatDateToString from "@/utils/formatDateToString";
 import Link from "next/link";
 import { PostData } from "@/types/postData";
@@ -40,13 +39,11 @@ function PostCard({ data }: Props) {
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
-          <div className="profile-image relative h-8 w-8 rounded-full overflow-hidden">
-            <Image
-              alt="유저 프로필 이미지"
-              src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
-              fill
-            />
-          </div>
+          <RoundImage
+            className="w-8 h-8"
+            src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
+            alt="프로필 이미지"
+          />
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
       </div>
