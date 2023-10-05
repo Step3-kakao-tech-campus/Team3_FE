@@ -6,7 +6,7 @@ import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 function ApplicantConfirmTemplate() {
   const pageParam = useParams();
@@ -17,27 +17,42 @@ function ApplicantConfirmTemplate() {
 
   const response = data?.data?.response;
 
+  const loadingComponent = useMemo(
+    () => <span className="loading text-xl text-neutral-400 my-auto">로딩중입니다.</span>,
+    [],
+  );
+  const errorComponent = useMemo(
+    () => (
+      <span className="error-message text-xl text-neutral-400 my-auto">
+        {error?.response?.data?.errorMessage || "에러가 발생했습니다."}
+      </span>
+    ),
+    [error?.response?.data?.errorMessage],
+  );
+  const noApplicantComponent = useMemo(
+    () => <div className="no-applicant text-xl text-neutral-400 my-auto">신청자가 없습니다.</div>,
+    [],
+  );
+
   const renderComponent = useCallback(() => {
     if (isLoading) {
-      return <span className="loading text-xl text-neutral-400 my-auto">로딩중입니다.</span>;
+      return loadingComponent;
     }
     if (isError) {
-      return (
-        <span className="error-message text-xl text-neutral-400 my-auto">
-          {error?.response?.data?.errorMessage || "에러가 발생했습니다."}
-        </span>
-      );
+      return errorComponent;
     }
     if (response?.participantNumber === 0) {
-      return <div className="no-applicant text-xl text-neutral-400 my-auto">신청자가 없습니다.</div>;
+      return noApplicantComponent;
     }
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
   }, [
-    error?.response?.data?.errorMessage,
+    errorComponent,
     isError,
     isLoading,
+    loadingComponent,
+    noApplicantComponent,
     postId,
     response?.applicants,
     response?.participantNumber,
