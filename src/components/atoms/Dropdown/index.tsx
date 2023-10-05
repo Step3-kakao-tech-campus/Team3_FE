@@ -16,7 +16,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
   return (
     <select
       onChange={onChange}
-      className={`border text-neutral-500 ${styleObj[styleType]}`}
+      className={`border text-neutral-500 appearance-none ${styleObj[styleType]}`}
       value={typeof selectedOptionId !== undefined ? selectedOptionId : -1}
     >
       <option key="placeholder" value={-1} hidden>
