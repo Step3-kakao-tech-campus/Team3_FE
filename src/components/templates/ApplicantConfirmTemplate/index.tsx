@@ -1,6 +1,6 @@
 "use client";
 
-import getApplicants from "@/apis/application";
+import { getApplicants } from "@/apis/application";
 import Button from "@/components/atoms/Button";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import { useQuery } from "@tanstack/react-query";
