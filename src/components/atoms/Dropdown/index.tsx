@@ -27,6 +27,16 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
           전체
         </option>
       )}
+      {placeholder === "시 / 군 / 구" && options.length === 0 && (
+        <option key="required" value={-1} disabled>
+          광역시 / 도를 먼저 선택해 주세요
+        </option>
+      )}
+      {placeholder === "읍 / 면 / 동" && options.length === 0 && (
+        <option key="required" value={-1} disabled>
+          시 / 군 / 구를 먼저 선택해 주세요
+        </option>
+      )}
       {options?.map((option) => {
         return (
           <option key={option.id} value={option.id}>
