@@ -20,8 +20,9 @@ interface Applicant {
 
 function ApplicantConfirmTemplate() {
   const pageParam = useParams();
+  const postId = parseInt(pageParam.post_id as string, 10);
   const { data, isLoading, isError, error }: any = useQuery(["getApplicants", pageParam.post_id], {
-    queryFn: () => getApplicants(parseInt(pageParam.post_id as string, 10)),
+    queryFn: () => getApplicants(postId),
   });
 
   const response = data?.data?.response;
@@ -43,10 +44,23 @@ function ApplicantConfirmTemplate() {
     return response?.applicants?.map((applicant: Applicant) => {
       const user = applicant?.user;
       return (
-        <ApplicantBlock key={applicant.id} name={user.name} profileImage={user.profileImage} rating={user.rating} />
+        <ApplicantBlock
+          key={applicant.id}
+          name={user.name}
+          profileImage={user.profileImage}
+          rating={user.rating}
+          postId={postId}
+        />
       );
     });
-  }, [error?.response?.data?.errorMessage, isError, isLoading, response?.applicants, response?.participantNumber]);
+  }, [
+    error?.response?.data?.errorMessage,
+    isError,
+    isLoading,
+    postId,
+    response?.applicants,
+    response?.participantNumber,
+  ]);
 
   return (
     <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px]">
