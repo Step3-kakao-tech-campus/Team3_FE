@@ -19,7 +19,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
       className={`border text-neutral-500 appearance-none ${styleObj[styleType]}`}
       value={typeof selectedOptionId !== undefined ? selectedOptionId : -1}
     >
-      <option key="placeholder" value={-1} hidden>
+      <option key="placeholder" value={-1} hidden disabled>
         {placeholder}
       </option>
       {(placeholder === "시 / 군 / 구" || placeholder === "읍 / 면 / 동") && options.length && (
