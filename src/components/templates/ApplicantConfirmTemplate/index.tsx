@@ -3,25 +3,15 @@
 import { getApplicants } from "@/apis/application";
 import Button from "@/components/atoms/Button";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
+import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useCallback } from "react";
 
-interface Applicant {
-  id: number;
-  user: {
-    id: number;
-    name: string;
-    profileImage: string;
-    rating: number;
-  };
-  status: boolean;
-}
-
 function ApplicantConfirmTemplate() {
   const pageParam = useParams();
   const postId = parseInt(pageParam.post_id as string, 10);
-  const { data, isLoading, isError, error }: any = useQuery(["getApplicants", pageParam.post_id], {
+  const { data, isLoading, isError, error }: any = useQuery(["getApplicants", postId], {
     queryFn: () => getApplicants(postId),
   });
 
@@ -42,16 +32,7 @@ function ApplicantConfirmTemplate() {
       return <div className="no-applicant text-xl text-neutral-400 my-auto">신청자가 없습니다.</div>;
     }
     return response?.applicants?.map((applicant: Applicant) => {
-      const user = applicant?.user;
-      return (
-        <ApplicantBlock
-          key={applicant.id}
-          name={user.name}
-          profileImage={user.profileImage}
-          rating={user.rating}
-          postId={postId}
-        />
-      );
+      return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
   }, [
     error?.response?.data?.errorMessage,
