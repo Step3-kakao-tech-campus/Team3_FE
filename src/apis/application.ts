@@ -21,3 +21,9 @@ export async function deleteRejectApplicant(postId: number, applicantId: number)
   const res = await client.delete(`/api/posts/${postId}/applicants/${applicantId}`);
   return res;
 }
+
+export async function postApply(postId: number) {
+  if (!postId) throw new Error("postApply: postId 또는 accessToken이 유효하지 않습니다.");
+  const res = await client.post(`/api/posts/${postId}/applicants`);
+  return res;
+}
