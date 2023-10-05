@@ -5,6 +5,7 @@ import Button from "@/components/atoms/Button";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useCallback } from "react";
 
 interface Applicant {
   id: number;
@@ -19,19 +20,34 @@ interface Applicant {
 
 function ApplicantConfirmTemplate() {
   const pageParam = useParams();
-  const { data, isError, error }: any = useQuery(["getApplicants", pageParam.post_id], {
+  const { data, isLoading, isError, error }: any = useQuery(["getApplicants", pageParam.post_id], {
     queryFn: () => getApplicants(parseInt(pageParam.post_id as string, 10)),
   });
 
   const response = data?.data?.response;
 
-  if (isError) {
-    return (
-      <div className="applicant-confirm-error py-6 px-2 min-w-[400px] text-center items-center  ">
-        <span className="error-message text-2xl">{error?.response?.data?.errorMessage}</span>
-      </div>
-    );
-  }
+  const renderComponent = useCallback(() => {
+    if (isLoading) {
+      return <span className="loading text-xl text-neutral-400 my-auto">로딩중입니다.</span>;
+    }
+    if (isError) {
+      return (
+        <span className="error-message text-xl text-neutral-400 my-auto">
+          {error?.response?.data?.errorMessage || "에러가 발생했습니다."}
+        </span>
+      );
+    }
+    if (response?.participantNumber === 0) {
+      return <div className="no-applicant text-xl text-neutral-400 my-auto">신청자가 없습니다.</div>;
+    }
+    return response?.applicants?.map((applicant: Applicant) => {
+      const user = applicant?.user;
+      return (
+        <ApplicantBlock key={applicant.id} name={user.name} profileImage={user.profileImage} rating={user.rating} />
+      );
+    });
+  }, [error?.response?.data?.errorMessage, isError, isLoading, response?.applicants, response?.participantNumber]);
+
   return (
     <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px]">
       <h1 className="text-2xl">신청자 확인</h1>
@@ -39,22 +55,8 @@ function ApplicantConfirmTemplate() {
         <span>총 {response?.participantNumber}건의 신청 요청이 있습니다.</span>
         <Button styleType="thunder_full_sm">마감하기</Button>
       </div>
-      <div className="applicant-list flex flex-col gap-3 max-h-[400px] overflow-auto">
-        {response?.participantNumber ? (
-          response?.applicants?.map((applicant: Applicant) => {
-            const user = applicant?.user;
-            return (
-              <ApplicantBlock
-                key={applicant.id}
-                name={user.name}
-                profileImage={user.profileImage}
-                rating={user.rating}
-              />
-            );
-          })
-        ) : (
-          <span className="text-xl text-neutral-400">신청자가 없습니다.</span>
-        )}
+      <div className="applicant-list flex flex-col gap-3 max-h-[400px] min-h-[100px] overflow-y-auto">
+        {renderComponent()}
       </div>
     </div>
   );
