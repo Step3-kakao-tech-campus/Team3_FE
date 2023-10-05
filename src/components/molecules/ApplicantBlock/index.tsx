@@ -9,9 +9,10 @@ interface ApplicantData {
   rating: number;
   postId: number;
   applicantId: number;
+  isAccept: boolean;
 }
 
-function ApplicantBlock({ name, profileImage, rating, postId, applicantId }: ApplicantData) {
+function ApplicantBlock({ name, profileImage, rating, postId, applicantId, isAccept }: ApplicantData) {
   const handleAcceptReject = useCallback(
     (type: "accept" | "reject") => {
       if (type === "accept") {
@@ -43,12 +44,18 @@ function ApplicantBlock({ name, profileImage, rating, postId, applicantId }: App
         </div>
       </div>
       <div className="confirm-control flex gap-3">
-        <Button styleType="outlined_gray_full_sm" onClick={() => handleAcceptReject("reject")}>
-          <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
-        </Button>
-        <Button styleType="thunder_full_sm" onClick={() => handleAcceptReject("accept")}>
-          <span className="block text-sm font-normal min-w-[40px]">수락</span>
-        </Button>
+        {isAccept ? (
+          <>
+            <Button styleType="outlined_gray_full_sm" onClick={() => handleAcceptReject("reject")}>
+              <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
+            </Button>
+            <Button styleType="thunder_full_sm" onClick={() => handleAcceptReject("accept")}>
+              <span className="block text-sm font-normal min-w-[40px]">수락</span>
+            </Button>
+          </>
+        ) : (
+          <span>수락됨</span>
+        )}
       </div>
     </div>
   );
