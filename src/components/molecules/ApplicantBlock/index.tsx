@@ -1,13 +1,14 @@
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
-interface UserInfo {
+interface ApplicantData {
   name: string;
   profileImage: string;
   rating: number;
+  postId: number;
 }
 
-function ApplicantBlock({ name, profileImage, rating }: UserInfo) {
+function ApplicantBlock({ name, profileImage, rating, postId }: ApplicantData) {
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
       <div className="user-info flex gap-2 items-center">
