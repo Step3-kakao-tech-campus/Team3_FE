@@ -8,8 +8,8 @@ export async function getPosts(queryString?: string) {
 interface PostOption {
   title: string;
   districtId: number;
-  startTime: Date;
-  dueTime: Date;
+  startTime: string;
+  dueTime: string;
   content: string;
 }
 
@@ -18,7 +18,7 @@ export async function postRegisterPosts(postOption: PostOption) {
   return response;
 }
 
-export async function getPostById(id: string) {
+export async function getPostById(id: number) {
   const response = await client.get(`/api/posts/${id}`);
   return response;
 }
