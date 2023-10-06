@@ -1,4 +1,4 @@
-import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/application";
+import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import { Applicant } from "@/types/applicant";
