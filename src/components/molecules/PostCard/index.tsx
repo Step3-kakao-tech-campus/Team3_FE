@@ -4,7 +4,7 @@ import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { PostData } from "@/types/postData";
 import Participant from "@/components/atoms/Participant";
-import RoundImage from "@/components/atoms/RoundImage";
+import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 interface Props {
   data: PostData;
@@ -39,10 +39,9 @@ function PostCard({ data }: Props) {
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
-          <RoundImage
-            className="w-8 h-8"
+          <CircularProfileImage
             src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
-            alt="프로필 이미지"
+            styleType="md"
           />
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
