@@ -10,7 +10,7 @@ function LoadingSpinner({ styleType = "md" }: Prop) {
     sm: "w-6 h-6",
   };
   return (
-    <div role="status" className="loading-spinner w-fit mx-auto">
+    <div role="status" className="loading-spinner w-fit h-fit m-auto">
       <svg
         aria-hidden="true"
         className={`${tailwindKeyword[styleType]} mr-2 text-neutral-400 animate-spin fill-thunderOrange`}
