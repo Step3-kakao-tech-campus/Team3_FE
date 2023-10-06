@@ -7,7 +7,7 @@ interface Props {
     md: "w-8 h-8",
     sm: "w-6 h-6",
    */
-  styleType?: "lg" | "md" | "sm";
+  styleType?: "huge" | "lg" | "md" | "sm";
 }
 
 /**
@@ -17,12 +17,13 @@ interface Props {
  */
 function CircularProfileImage({ src, styleType = "md" }: Props) {
   const styles = {
+    huge: "w-20 h-20",
     lg: "w-10 h-10",
     md: "w-8 h-8",
     sm: "w-6 h-6",
   };
   return (
-    <div className={`profile-image rounded-full overflow-hidden roun ${styles[styleType]}`}>
+    <div className={`profile-image rounded-full overflow-hidden ${styles[styleType]}`}>
       <Image
         alt="유저 프로필 이미지"
         src={src || "/images/default_profile_image.png"}
