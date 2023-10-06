@@ -2,7 +2,12 @@ import Image from "next/image";
 
 interface Props {
   src: string | null;
-  styleType?: "md" | "sm" | "lg";
+  /**
+    lg: "w-10 h-10",
+    md: "w-8 h-8",
+    sm: "w-6 h-6",
+   */
+  styleType?: "lg" | "md" | "sm";
 }
 
 /**
