@@ -2,6 +2,7 @@
 
 import { getApplicants } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
+import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
@@ -17,10 +18,6 @@ function ApplicantConfirmTemplate() {
 
   const response = data?.data?.response;
 
-  const loadingComponent = useMemo(
-    () => <span className="loading text-xl text-neutral-400 my-auto">로딩중입니다.</span>,
-    [],
-  );
   const errorComponent = useMemo(
     () => (
       <span className="error-message text-xl text-neutral-400 my-auto">
@@ -36,7 +33,7 @@ function ApplicantConfirmTemplate() {
 
   const renderComponent = useCallback(() => {
     if (isLoading) {
-      return loadingComponent;
+      return <LoadingSpinner />;
     }
     if (isError) {
       return errorComponent;
@@ -51,7 +48,6 @@ function ApplicantConfirmTemplate() {
     errorComponent,
     isError,
     isLoading,
-    loadingComponent,
     noApplicantComponent,
     postId,
     response?.applicants,
