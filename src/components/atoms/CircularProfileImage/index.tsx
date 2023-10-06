@@ -25,7 +25,7 @@ function CircularProfileImage({ src, styleType = "md" }: Props) {
     <div className={`profile-image rounded-full overflow-hidden roun ${styles[styleType]}`}>
       <Image
         alt="유저 프로필 이미지"
-        src={src ? `임시APIURL${src}` : "/images/default_profile_image.png"}
+        src={src || "/images/default_profile_image.png"}
         width={100}
         height={100}
         style={{ objectFit: "cover" }}
