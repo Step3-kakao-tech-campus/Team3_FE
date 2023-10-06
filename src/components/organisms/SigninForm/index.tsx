@@ -110,7 +110,7 @@ function SigninForm() {
       {/* 제출 버튼 */}
       <BlankBar />
       <div className="flex justify-center ">
-        <Button styleType="thunder_full" onClick={handleSubmit}>
+        <Button styleType="thunder" rounded="full" size="lg" onClick={handleSubmit}>
           로그인
         </Button>
       </div>
