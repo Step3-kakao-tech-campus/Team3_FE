@@ -10,25 +10,25 @@ interface Prop {
 }
 
 function ApplicantBlock({ postId, applicantData }: Prop) {
-  const { user, status: isAccept } = applicantData;
+  const { user, status: isAccept, id: applicantId } = applicantData;
 
   const handleAcceptReject = useCallback(
     (type: "accept" | "reject") => {
       if (type === "accept") {
         try {
-          putAcceptApplicant(postId, user.id);
+          putAcceptApplicant(postId, applicantId);
         } catch {
           alert("수락 요청이 실패했습니다.");
         }
       } else {
         try {
-          deleteRejectApplicant(postId, user.id);
+          deleteRejectApplicant(postId, applicantId);
         } catch {
           alert("거절 요청이 실패했습니다.");
         }
       }
     },
-    [postId, user.id],
+    [postId, applicantId],
   );
 
   return (
