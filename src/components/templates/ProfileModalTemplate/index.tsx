@@ -30,7 +30,7 @@ function ProfileModalTemplate() {
           </p>
           <div className="rating flex justify-between items-center">
             <span>매너점수</span>
-            <span>{`★ ${user?.rating ? `${user?.rating}/5` : "없음"}`}</span>
+            <span>{`★ ${user?.rating ? `${user?.rating} / 5` : "없음"}`}</span>
           </div>
           {/* 내 프로필이라면 내 정보 수정 페이지 Link 추가 */}
         </div>
