@@ -34,7 +34,9 @@ function Modal({ children, noPadding }: Props) {
     <div ref={overlay} className="fixed z-10 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
       <div
         ref={wrapper}
-        className={`relative bg-white rounded-2xl border-[#868484] shadow-2xl ${noPadding ? "p-0" : "p-6"}`}
+        className={`relative bg-white rounded-2xl border-[#868484] shadow-2xl overflow-clip ${
+          noPadding ? "p-0" : "p-6"
+        }`}
       >
         <button
           type="button"
