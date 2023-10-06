@@ -17,3 +17,8 @@ export async function postRegisterPosts(postOption: PostOption) {
   const response = await client.post("/api/posts", postOption);
   return response;
 }
+
+export async function getPostById(id: string) {
+  const response = await client.get(`/api/posts/${id}`);
+  return response;
+}
