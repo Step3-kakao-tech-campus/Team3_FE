@@ -2,7 +2,8 @@ import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import { Applicant } from "@/types/applicant";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { MdCheck, MdClose } from "react-icons/md";
 
 interface Prop {
   postId: number;
@@ -11,18 +12,21 @@ interface Prop {
 
 function ApplicantBlock({ postId, applicantData }: Prop) {
   const { user, status: isAccept, id: applicantId } = applicantData;
+  const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
   const handleAcceptReject = useCallback(
-    (type: "accept" | "reject") => {
+    async (type: "accept" | "reject") => {
       if (type === "accept") {
         try {
-          putAcceptApplicant(postId, applicantId);
+          await putAcceptApplicant(postId, applicantId);
+          setApprovalStatus("accepted");
         } catch {
           alert("수락 요청이 실패했습니다.");
         }
       } else {
         try {
-          deleteRejectApplicant(postId, applicantId);
+          await deleteRejectApplicant(postId, applicantId);
+          setApprovalStatus("rejected");
         } catch {
           alert("거절 요청이 실패했습니다.");
         }
@@ -43,7 +47,19 @@ function ApplicantBlock({ postId, applicantData }: Prop) {
         </div>
       </div>
       <div className="confirm-control flex gap-3">
-        {isAccept ? (
+        {approvalStatus === "accepted" && (
+          <span className="text-green-500 flex items-center">
+            <MdCheck className="inline" />
+            수락됨
+          </span>
+        )}
+        {approvalStatus === "rejected" && (
+          <span className="text-red-500 flex items-center">
+            <MdClose className="inline" />
+            거절됨
+          </span>
+        )}
+        {approvalStatus === "pending" && (
           <>
             <Button styleType="outlined-gray" size="sm" rounded="full" onClick={() => handleAcceptReject("reject")}>
               <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
@@ -52,8 +68,6 @@ function ApplicantBlock({ postId, applicantData }: Prop) {
               <span className="block text-sm font-normal min-w-[40px]">수락</span>
             </Button>
           </>
-        ) : (
-          <span>수락됨</span>
         )}
       </div>
     </div>
