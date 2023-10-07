@@ -69,6 +69,8 @@ function NavigationBar() {
                 <span className="mr-2 text-sm text-gray-500">{email.split("@")[0]}님</span>
                 <Button
                   styleType="white"
+                  rounded="md"
+                  size="sm"
                   onClick={async () => {
                     await dispatch(isLogout());
                     deleteToken();
@@ -82,6 +84,8 @@ function NavigationBar() {
               <>
                 <Button
                   styleType="white"
+                  rounded="md"
+                  size="sm"
                   onClick={() => {
                     router.push("/signin", { scroll: false });
                   }}
@@ -90,6 +94,8 @@ function NavigationBar() {
                 </Button>
                 <Button
                   styleType="thunder"
+                  rounded="md"
+                  size="sm"
                   onClick={() => {
                     router.push("/signup", { scroll: false });
                   }}

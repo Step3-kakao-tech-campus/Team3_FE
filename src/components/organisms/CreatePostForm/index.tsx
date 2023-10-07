@@ -92,7 +92,7 @@ function CreatePostForm() {
       />
       <p className="mt-2 text-[#ff003e]" ref={errRef} />
       <div className="flex justify-center mt-6">
-        <Button styleType="thunder_full" onClick={handleSubmit}>
+        <Button styleType="thunder" rounded="full" size="lg" onClick={handleSubmit}>
           업로드
         </Button>
       </div>

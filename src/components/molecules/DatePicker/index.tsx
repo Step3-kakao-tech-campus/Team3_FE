@@ -64,7 +64,9 @@ function DatePicker({ title, value, setValue }: Props) {
       <div className="relative flex items-center gap-6">
         <OptionTitle>{title} 일시</OptionTitle>
         <Button
-          styleType="thunder_full_sm"
+          styleType="thunder"
+          rounded="full"
+          size="sm"
           onClick={() => {
             if (!isTimeOpen) {
               setIsOpen((prev) => !prev);

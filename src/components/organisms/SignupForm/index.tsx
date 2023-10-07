@@ -129,7 +129,7 @@ function SignupForm() {
 
       {/* 제출 버튼 */}
       <div className="flex justify-center">
-        <Button styleType="thunder_full" onClick={handleSubmit}>
+        <Button styleType="thunder" rounded="full" size="lg" onClick={handleSubmit}>
           회원가입
         </Button>
       </div>

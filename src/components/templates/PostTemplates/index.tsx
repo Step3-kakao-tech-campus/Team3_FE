@@ -77,7 +77,9 @@ function PostTemplates({ id }: Props) {
       </p>
       <pre className="whitespace-pre-wrap mt-4 break-all">{post.content}</pre>
       <div className="mt-4 flex flex-row-reverse">
-        <Button styleType="thunder">신청하기</Button>
+        <Button styleType="thunder" rounded="md" size="sm">
+          신청하기
+        </Button>
       </div>
       <hr className="mt-6" />
       <CommentForm id={id} />
