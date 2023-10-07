@@ -31,10 +31,10 @@ function SignupForm() {
     districtId: regionIds.districtId,
   });
 
-  const handleInputChange = useCallback((fieldName: any, value: any) => {
+  const handleInputChange = useCallback((fieldName: string, value: string | number) => {
     if (fieldName === "confirmPassword") {
       // 'confirmpassword' 필드의 값을 설정
-      setConfirmPassword(value);
+      setConfirmPassword(value as string);
     } else {
       setFormData((prevData) => ({
         ...prevData,
@@ -74,7 +74,6 @@ function SignupForm() {
         if (e.response) {
           alert(e.response.data.errorMessage);
         }
-        router.back();
       }
       router.refresh();
     }
