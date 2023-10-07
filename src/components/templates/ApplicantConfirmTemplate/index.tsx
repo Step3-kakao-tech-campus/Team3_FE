@@ -60,7 +60,9 @@ function ApplicantConfirmTemplate() {
       {!isError && (
         <div className="applicant-number-with-button flex justify-between items-center">
           <span>총 {response?.participantNumber}건의 신청 요청이 있습니다.</span>
-          <Button styleType="thunder_full_sm">마감하기</Button>
+          <Button styleType="thunder" size="sm" rounded="full">
+            마감하기
+          </Button>
         </div>
       )}
       <div className="applicant-list flex flex-col gap-3 max-h-[400px] min-h-[100px] overflow-y-auto">
