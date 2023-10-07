@@ -18,7 +18,7 @@ interface Props {
 function PostTemplates({ id }: Props) {
   const router = useRouter();
 
-  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(id), {
+  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(Number(id)), {
     onError: (error) => {
       console.log(error);
     },
