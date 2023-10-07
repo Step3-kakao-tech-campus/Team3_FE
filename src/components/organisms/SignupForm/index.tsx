@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import AuthCheckbox from "@/components/atoms/AuthCheckBox";
@@ -31,7 +31,7 @@ function SignupForm() {
     districtId: regionIds.districtId,
   });
 
-  const handleInputChange = (fieldName: any, value: any) => {
+  const handleInputChange = useCallback((fieldName: any, value: any) => {
     if (fieldName === "confirmPassword") {
       // 'confirmpassword' 필드의 값을 설정
       setConfirmPassword(value);
@@ -41,8 +41,7 @@ function SignupForm() {
         [fieldName]: value,
       }));
     }
-    formData.districtId = regionIds.districtId;
-  };
+  }, []);
 
   const handleSubmit = async () => {
     if (!formData.email || !formData.password || !formData.name || !confirmPassword) {
@@ -55,6 +54,8 @@ function SignupForm() {
       errRef.current!.innerHTML = "비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.";
     } else if (!validatePasswordConfirm(formData.password, confirmPassword)) {
       errRef.current!.innerHTML = "비밀번호가 일치하지 않습니다.";
+    } else if (regionIds.districtId <= 0) {
+      errRef.current!.innerHTML = "읍/면/동 단위까지 지역 선택이 필요합니다.";
     } else if (!consentChecked) {
       errRef.current!.innerHTML = "개인정보 수집 및 이용에 동의해주세요.";
     } else {
@@ -78,6 +79,11 @@ function SignupForm() {
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    handleInputChange("districtId", regionIds.districtId);
+  }, [handleInputChange, regionIds.districtId]);
+
   return (
     <div>
       <div className="flex items-center justify-center pb-[22px]">
