@@ -43,7 +43,7 @@ function SignupForm() {
     }
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!formData.email || !formData.password || !formData.name || !confirmPassword) {
       errRef.current!.innerHTML = "모든 항목을 입력해주세요.";
     } else if (!validateEmail(formData.email)) {
@@ -77,11 +77,23 @@ function SignupForm() {
       }
       router.refresh();
     }
-  };
+  }, [confirmPassword, consentChecked, dispatch, formData, regionIds.districtId, router]);
 
   useEffect(() => {
     handleInputChange("districtId", regionIds.districtId);
   }, [handleInputChange, regionIds.districtId]);
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Enter") handleSubmit();
+    },
+    [handleSubmit],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown]);
 
   return (
     <div>
