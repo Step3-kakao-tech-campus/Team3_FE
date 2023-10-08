@@ -1,7 +1,7 @@
 import React from "react";
 import { CommentData } from "@/types/commentData";
-import ChildComment from "../ChildComment";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import ChildComment from "../ChildComment";
 
 export interface CommentWithChild extends CommentData {
   childComments: CommentData[];
