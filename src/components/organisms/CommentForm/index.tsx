@@ -52,6 +52,8 @@ function CommentForm({ id }: Props) {
       onSuccess: () => {
         queryClient.invalidateQueries(["/comments", id]);
         commentRef.current!.value = "";
+        commentRef.current!.style.height = "40px";
+        commentRef.current!.style.overflowY = "hidden";
       },
       onError: (error) => {
         console.log(error);
