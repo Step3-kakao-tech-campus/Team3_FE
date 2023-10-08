@@ -16,15 +16,25 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
   return (
     <select
       onChange={onChange}
-      className={`border text-neutral-500 ${styleObj[styleType]}`}
+      className={`border text-neutral-500 appearance-none ${styleObj[styleType]}`}
       value={typeof selectedOptionId !== undefined ? selectedOptionId : -1}
     >
-      <option key="placeholder" value={-1} hidden>
+      <option key="placeholder" value={-1} hidden disabled>
         {placeholder}
       </option>
       {(placeholder === "시 / 군 / 구" || placeholder === "읍 / 면 / 동") && options.length && (
         <option key="select_all" value={0}>
           전체
+        </option>
+      )}
+      {placeholder === "시 / 군 / 구" && options.length === 0 && (
+        <option key="required" value={-1} disabled>
+          광역시 / 도를 먼저 선택해 주세요
+        </option>
+      )}
+      {placeholder === "읍 / 면 / 동" && options.length === 0 && (
+        <option key="required" value={-1} disabled>
+          시 / 군 / 구를 먼저 선택해 주세요
         </option>
       )}
       {options?.map((option) => {

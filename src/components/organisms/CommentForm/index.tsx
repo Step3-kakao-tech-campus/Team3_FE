@@ -1,12 +1,12 @@
 "use client";
 
-import RoundImage from "@/components/atoms/RoundImage";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
 import CommentSubmit from "@/components/molecules/CommentSubmit";
 import useCommentsMutation from "@/hooks/useCommentsMutation";
+import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 interface Props {
   id: string;
@@ -72,7 +72,7 @@ function CommentForm({ id }: Props) {
     <div>
       <h2 className="mt-4 text-xl">댓글</h2>
       <div className="mt-6 flex items-center justify-between">
-        <RoundImage alt="유저 프로필 이미지" src="/images/default_profile_image.png" className="w-10 h-10" />
+        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <CommentSubmit commentRef={commentRef} onClick={handleSubmit} />
       </div>
       <div className="mt-6">
