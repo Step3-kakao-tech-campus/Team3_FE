@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import InputBox from "@/components/molecules/InputBox";
@@ -31,7 +31,7 @@ function SigninForm() {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!formData.email || !formData.password) {
       errRef.current!.innerHTML = "모든 항목을 입력해주세요.";
     } else if (!validateEmail(formData.email)) {
@@ -54,11 +54,22 @@ function SigninForm() {
         if (e.response) {
           alert(e.response.data.errorMessage);
         }
-        router.back();
       }
       router.refresh();
     }
-  };
+  }, [dispatch, formData, router]);
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Enter") handleSubmit();
+    },
+    [handleSubmit],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown]);
 
   return (
     <div>
