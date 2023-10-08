@@ -6,10 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
-import RoundImage from "@/components/atoms/RoundImage";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
 import Button from "@/components/atoms/Button";
 import CommentForm from "@/components/organisms/CommentForm";
+import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 interface Props {
   id: string;
@@ -47,10 +47,9 @@ function PostTemplates({ id }: Props) {
       <h1 className="mt-4 text-2xl">{post.title}</h1>
       <div className="mt-4 flex justify-between">
         <div className="flex items-center">
-          <RoundImage
-            alt="유저 프로필 이미지"
+          <CircularProfileImage
             src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
-            className="w-6 h-6"
+            styleType="sm"
           />
           <span className="ml-1">{post.userName}</span>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
