@@ -10,7 +10,7 @@ function Button({ styleType, rounded, size, onClick, children }: Props) {
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
-    "outlined-gray": "border border-neutral-400 text-neutral-400 hover:bg-neutral-100",
+    "outlined-gray": "border border-neutral-400 text-neutral-400 bg-white",
   };
   const sizeObj = {
     lg: "w-[546px] h-[40px] text-xl",
