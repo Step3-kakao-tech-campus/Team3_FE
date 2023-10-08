@@ -17,8 +17,9 @@ interface Props {
 
 function PostTemplates({ id }: Props) {
   const router = useRouter();
+  const parameter = parseInt(id, 10);
 
-  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(Number(id)), {
+  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
     onError: (error) => {
       console.log(error);
     },
@@ -81,7 +82,7 @@ function PostTemplates({ id }: Props) {
         </Button>
       </div>
       <hr className="mt-6" />
-      <CommentForm id={id} />
+      <CommentForm id={parameter} />
     </div>
   );
 }

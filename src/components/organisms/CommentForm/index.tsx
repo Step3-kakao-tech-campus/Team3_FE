@@ -9,7 +9,7 @@ import useCommentsMutation from "@/hooks/useCommentsMutation";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 interface Props {
-  id: string;
+  id: number;
 }
 
 function CommentForm({ id }: Props) {
