@@ -6,11 +6,11 @@ import Logo from "public/images/bowling_logo.png";
 import Link from "next/link";
 import Button from "@/components/atoms/Button";
 import { useRouter } from "next/navigation";
-import { authentication } from "@/apis/postUser";
 import { useAppDispatch, useAppSelector } from "@/stores/hooks";
-import { islogout, setExpiryDate } from "@/stores/features/counterSlice";
+import { isLogout, setExpiryDate } from "@/stores/features/counterSlice";
 import { useEffect } from "react";
 import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
+import { postAuthentication } from "@/apis/sign";
 
 function NavigationBar() {
   const router = useRouter();
@@ -22,12 +22,12 @@ function NavigationBar() {
   const auth = async () => {
     alert("만료되었습니다. 토큰을 재 요청합니다.");
     try {
-      const res = await authentication();
+      const res = await postAuthentication();
       const payload = getTokenPayload(res.headers.authorization);
       const expire = payload.exp;
       if (payload === null) {
         deleteToken();
-        dispatch(islogout());
+        dispatch(isLogout());
         return;
       }
       dispatch(setExpiryDate(expire));
@@ -65,23 +65,27 @@ function NavigationBar() {
 
           <div className="flex items-center space-x-4">
             {email ? (
-              <div>
+              <>
                 <span className="mr-2 text-sm text-gray-500">{email.split("@")[0]}님</span>
                 <Button
                   styleType="white"
+                  rounded="md"
+                  size="sm"
                   onClick={async () => {
-                    await dispatch(islogout());
+                    await dispatch(isLogout());
                     deleteToken();
                     router.push("/", { scroll: false });
                   }}
                 >
                   로그아웃
                 </Button>
-              </div>
+              </>
             ) : (
-              <div>
+              <>
                 <Button
                   styleType="white"
+                  rounded="md"
+                  size="sm"
                   onClick={() => {
                     router.push("/signin", { scroll: false });
                   }}
@@ -90,13 +94,15 @@ function NavigationBar() {
                 </Button>
                 <Button
                   styleType="thunder"
+                  rounded="md"
+                  size="sm"
                   onClick={() => {
                     router.push("/signup", { scroll: false });
                   }}
                 >
                   회원가입
                 </Button>
-              </div>
+              </>
             )}
           </div>
         </div>

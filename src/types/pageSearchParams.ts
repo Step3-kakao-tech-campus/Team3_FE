@@ -1,5 +1,7 @@
 export interface PageSearchParams {
   searchParams?: {
-    search?: string;
+    cityId?: string;
+    countryId?: string;
+    districtId?: string;
   };
 }

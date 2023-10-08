@@ -7,8 +7,9 @@ import Button from "@/components/atoms/Button";
 import DatePicker from "@/components/molecules/DatePicker";
 import { useRouter } from "next/navigation";
 import DropdownBox from "@/components/molecules/DropdownBox";
-import postRegisterPosts from "@/apis/postRegisterPosts";
+import { postRegisterPosts } from "@/apis/posts";
 import { useMutation } from "@tanstack/react-query";
+import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 
 function CreatePostForm() {
   const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
@@ -51,8 +52,8 @@ function CreatePostForm() {
       const payload = {
         title: titleRef.current!.value,
         districtId: regionIds.districtId,
-        startTime,
-        dueTime,
+        startTime: formatDateToKoreanTime(startTime),
+        dueTime: formatDateToKoreanTime(dueTime),
         content: contentRef.current!.value,
       };
       mutate(payload, {
@@ -91,7 +92,7 @@ function CreatePostForm() {
       />
       <p className="mt-2 text-[#ff003e]" ref={errRef} />
       <div className="flex justify-center mt-6">
-        <Button styleType="thunder_full" onClick={handleSubmit}>
+        <Button styleType="thunder" rounded="full" size="lg" onClick={handleSubmit}>
           업로드
         </Button>
       </div>
