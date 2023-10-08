@@ -1,7 +1,7 @@
-import RoundImage from "@/components/atoms/RoundImage";
 import React from "react";
 import { CommentData } from "@/types/commentData";
 import ChildComment from "../ChildComment";
+import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 export interface CommentWithChild extends CommentData {
   childComments: CommentData[];
@@ -15,7 +15,7 @@ function Comment({ comment }: Props) {
   return (
     <>
       <div className="flex items-center gap-3">
-        <RoundImage alt="유저 프로필 이미지" src="/images/default_profile_image.png" className="w-9 h-9" />
+        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <span className="text-[#2a5885]">{comment.userName}</span>
