@@ -1,16 +1,16 @@
 import axios from "axios";
 import { getCookie } from "@/utils/Cookie";
 
-const instance = axios.create({
+const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 1000,
+  timeout: 3000,
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true, // 다른 도메인(Cross Origin)에 요청을 보낼 때 http -> https
 });
 
-instance.interceptors.request.use((config) => {
+client.interceptors.request.use((config) => {
   const { headers } = config;
   const token = getCookie("token");
   if (token) {
@@ -19,7 +19,7 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-instance.interceptors.response.use(
+client.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -28,4 +28,4 @@ instance.interceptors.response.use(
   },
 );
 
-export default instance;
+export default client;

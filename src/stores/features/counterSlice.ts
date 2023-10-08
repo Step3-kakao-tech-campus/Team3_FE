@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { logout } from "@/apis/postUser";
+import { postLogout } from "@/apis/sign";
 
 interface AuthState {
   email: string;
@@ -17,11 +17,11 @@ const counterSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    islogin: (state, action: PayloadAction<string>) => {
+    isLogin: (state, action: PayloadAction<string>) => {
       return { ...state, isLoggedIn: true, email: action.payload };
     },
-    islogout: (state) => {
-      logout();
+    isLogout: (state) => {
+      postLogout();
       return { ...state, isLoggedIn: false, expiryDate: null, email: "" };
     },
     setExpiryDate: (state, action: PayloadAction<number | null>) => {
@@ -30,6 +30,6 @@ const counterSlice = createSlice({
   },
 });
 
-export const { islogin, islogout, setExpiryDate } = counterSlice.actions;
+export const { isLogin, isLogout, setExpiryDate } = counterSlice.actions;
 
 export default counterSlice.reducer;

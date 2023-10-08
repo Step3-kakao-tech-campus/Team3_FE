@@ -14,12 +14,6 @@ export const getTokenPayload = (token: string) => {
   const Parts = token.split(".")[1];
   const decoded = atob(Parts);
   const payload = JSON.parse(decoded);
-  const expirationTime = payload.exp * 1000;
-  const currentTimestamp = Date.now();
-
-  if (currentTimestamp > expirationTime) {
-    return null;
-  }
 
   return payload;
 };

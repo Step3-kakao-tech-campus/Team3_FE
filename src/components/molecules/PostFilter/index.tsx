@@ -29,7 +29,7 @@ function PostFilter({ searchParams }: PageSearchParams) {
   const nonSelectedButtonStyle = "border-neutral-400 text-neutral-400";
 
   return (
-    <div className="post-filter flex w-fit">
+    <div className="post-filter flex w-fit gap-2">
       <button
         type="button"
         onClick={() => {

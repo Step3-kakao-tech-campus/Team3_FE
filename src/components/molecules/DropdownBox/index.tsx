@@ -2,10 +2,7 @@
 
 import React, { useCallback } from "react";
 import Dropdown from "@/components/atoms/Dropdown";
-import { useQueries } from "@tanstack/react-query";
-import getCities from "@/apis/getCities";
-import getCountries from "@/apis/getCountries";
-import getDistricts from "@/apis/getDistricts";
+import useRegionQueries from "@/hooks/useRegionQueries";
 
 interface Props {
   selectedOptionIds: {
@@ -24,44 +21,11 @@ interface Props {
 }
 
 function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Props) {
-  const queries = useQueries({
-    queries: [
-      {
-        queryKey: ["cityId"],
-        queryFn: async () => {
-          const response = await getCities();
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-      {
-        queryKey: ["countryId", selectedOptionIds.cityId],
-        queryFn: async () => {
-          const response = await getCountries(selectedOptionIds.cityId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-      {
-        queryKey: ["districtId", selectedOptionIds.countryId],
-        queryFn: async () => {
-          const response = await getDistricts(selectedOptionIds.countryId);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        },
-      },
-    ],
-  });
+  const queries = useRegionQueries({ cityId: selectedOptionIds.cityId, countryId: selectedOptionIds.countryId });
 
-  const options1 = queries[0]?.data?.response?.cities || [];
-  const options2 = queries[1]?.data?.response?.countries || [];
-  const options3 = queries[2]?.data?.response?.districts || [];
+  const options1 = queries[0]?.data?.data?.response?.cities || [];
+  const options2 = queries[1]?.data?.data?.response?.countries || [];
+  const options3 = queries[2]?.data?.data?.response?.districts || [];
 
   const handleDropdownChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>, dropdownType: "cityId" | "countryId" | "districtId") => {
