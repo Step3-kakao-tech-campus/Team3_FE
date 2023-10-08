@@ -20,7 +20,7 @@ function ChildComment({ childComment }: Props) {
               <span className="text-sm">답글 달기</span>
             </div>
           </div>
-          <div>{childComment.content}</div>
+          <pre className="whitespace-pre-wrap break-all">{childComment.content}</pre>
         </div>
       </div>
       <hr className="mt-2" />

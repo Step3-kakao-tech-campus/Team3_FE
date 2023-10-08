@@ -23,7 +23,7 @@ function Comment({ comment }: Props) {
               <span className="text-sm">답글 달기</span>
             </div>
           </div>
-          <div>{comment.content}</div>
+          <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
         </div>
       </div>
       <hr className="mt-2" />
