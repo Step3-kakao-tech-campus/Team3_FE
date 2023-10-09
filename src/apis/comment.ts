@@ -16,3 +16,8 @@ export async function postComments({ id, content }: { id: number; content: strin
   });
   return response;
 }
+
+export async function deleteComments({ postId, commentId }: { postId: number; commentId: number }) {
+  const response = await client.delete(`/api/posts/${postId}/comments/${commentId}`);
+  return response;
+}
