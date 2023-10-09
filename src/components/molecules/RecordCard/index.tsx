@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import Badge from "@/components/atoms/Badge";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import Participant from "@/components/atoms/Participant";
@@ -8,7 +9,7 @@ import { getCookie } from "@/utils/Cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import MiniProfile from "../MiniProfile";
 
@@ -22,8 +23,8 @@ function RecordCard({ data }: Props) {
 
   const members = data?.members;
   const scores = data?.scores;
-  const myId = getCookie("userId");
-  const isMyRecord = myId === parseInt(params.user_id as string, 10);
+  const clientUserId = getCookie("userId");
+  const isMyRecord = clientUserId === parseInt(params.user_id as string, 10);
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
@@ -39,101 +40,35 @@ function RecordCard({ data }: Props) {
         <h1 className="record-title text-2xl">{data.title}</h1>
       </Link>
       <div className="record-card-lower flex flex-col gap-2">
-        <div className="record-info-wrapper flex gap-4 text-neutral-400">
-          <p className="district-name">
-            <MdLocationPin className="inline" />
-            <span>{data.districtName}</span>
-          </p>
-          <p className="start-time">
-            <MdAlarm className="inline" />
-            <span>{formatDateToString(data.startTime)}</span>
-          </p>
-        </div>
+        <RecordTimeWithLocation districtName={data.districtName} startTime={data.startTime} />
         <div className="scores">
           {scores.map((score) => (
-            <div key={`${data.id}:${score.id}`} className="score flex gap-2">
-              <span>{`스코어 ${score.id} | ${score.score}`}</span>
-              {score.scoreImage && (
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-x-0.5 border border-thunderOrange text-thunderOrange text-sm rounded-full px-2 py-[3px] bg-white hover:brightness-95"
-                >
-                  <MdCameraAlt className="inline" />
-                  <span className="leading-none">이미지 보기</span>
-                </button>
-              )}
-            </div>
+            <ScoreWithImageButton
+              key={`${data.id}:${score.id}`}
+              scoreId={score.id}
+              score={score.score}
+              scoreImage={score.scoreImage}
+            />
           ))}
         </div>
         <div className="expand-button-with-member-image flex w-full justify-between items-center">
           <div className="member-image-preview flex gap-2 items-center">
-            {!isExpand &&
-              (members.length > 3 ? (
-                <>
-                  {members.slice(0, 3).map((member) => (
-                    <CircularProfileImage key={member.id} src={member.profileImage} styleType="md" />
-                  ))}
-                  <MdMoreHoriz className="text-neutral-400 w-8 h-8" />
-                </>
-              ) : (
-                members.map((member) => (
-                  <CircularProfileImage key={member.id} src={member.profileImage} styleType="md" />
-                ))
-              ))}
+            {!isExpand && <MembersImagePreview members={members} />}
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              setIsExpand((prev) => !prev);
-            }}
-          >
-            {isExpand ? (
-              <MdArrowDropUp className="h-12 w-12 hover:scale-125 transition" />
-            ) : (
-              <MdArrowDropDown className="h-12 w-12 hover:scale-125 transition" />
-            )}
-          </button>
+          <ExpandButton isExpand={isExpand} setIsExpand={setIsExpand} />
         </div>
         {isExpand &&
           (members.length ? (
             <div className="members grid grid-cols-2 gap-2">
-              {members.map((member) => {
-                const commonButtonStyle =
-                  "h-fit min-w-[70px] border text-sm leading-none rounded-full px-2 py-[3px] hover:brightness-95";
-                const buttonStyles = {
-                  "outlined-gray": `border-neutral-400 text-neutral-400 bg-white ${commonButtonStyle}`,
-                  "outlined-orange": `border-thunderOrange text-thunderOrange bg-white ${commonButtonStyle}`,
-                  "outlined-blue": `border-blue-400 text-blue-400 bg-white ${commonButtonStyle}`,
-                  "filled-blue": `text-white bg-blue-500 ${commonButtonStyle}`,
-                };
-                return (
-                  <div key={`${data.id}:${member.id}`} className="member flex gap-4 items-center">
-                    <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
-                    {isMyRecord &&
-                      myId === member.id &&
-                      (scores.length ? (
-                        <button type="button" className={buttonStyles["outlined-blue"]}>
-                          수정하기
-                        </button>
-                      ) : (
-                        <button type="button" className={buttonStyles["filled-blue"]}>
-                          점수등록
-                        </button>
-                      ))}
-                    {isMyRecord &&
-                      myId !== member.id &&
-                      (member.isRated ? (
-                        <button type="button" className={buttonStyles["outlined-gray"]}>
-                          완료
-                        </button>
-                      ) : (
-                        <button type="button" className={buttonStyles["outlined-orange"]}>
-                          별점주기
-                        </button>
-                      ))}
-                  </div>
-                );
-              })}
+              {members.map((member) => (
+                <Member
+                  key={`${data.id}:${member.id}`}
+                  clientUserId={clientUserId}
+                  isMyRecord={isMyRecord}
+                  member={member}
+                  scores={scores}
+                />
+              ))}
             </div>
           ) : (
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
@@ -144,3 +79,145 @@ function RecordCard({ data }: Props) {
 }
 
 export default RecordCard;
+
+function RecordTimeWithLocation({ districtName, startTime }: { districtName: string; startTime: Date }) {
+  return (
+    <div className="record-info-wrapper flex gap-4 text-neutral-400">
+      <p className="district-name">
+        <MdLocationPin className="inline" />
+        <span>{districtName}</span>
+      </p>
+      <p className="start-time">
+        <MdAlarm className="inline" />
+        <span>{formatDateToString(startTime)}</span>
+      </p>
+    </div>
+  );
+}
+
+function ScoreWithImageButton({
+  scoreId,
+  score,
+  scoreImage,
+}: {
+  scoreId: number;
+  score: number;
+  scoreImage: string | null;
+}) {
+  return (
+    <div className="score flex gap-2">
+      <span>{`스코어 ${scoreId} | ${score}`}</span>
+      {scoreImage && (
+        <button
+          type="button"
+          className="inline-flex items-center gap-x-0.5 border border-thunderOrange text-thunderOrange text-sm rounded-full px-2 py-[3px] bg-white hover:brightness-95"
+        >
+          <MdCameraAlt className="inline" />
+          <span className="leading-none">이미지 보기</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
+function MembersImagePreview({
+  members,
+}: {
+  members: {
+    id: number;
+    name: string;
+    profileImage: string | null;
+    isRated: boolean;
+  }[];
+}) {
+  return members.length > 3 ? (
+    <>
+      {members.slice(0, 3).map((member) => (
+        <CircularProfileImage key={member.id} src={member.profileImage} styleType="md" />
+      ))}
+      <MdMoreHoriz className="text-neutral-400 w-8 h-8" />
+    </>
+  ) : (
+    members.map((member) => <CircularProfileImage key={member.id} src={member.profileImage} styleType="md" />)
+  );
+}
+
+function ExpandButton({
+  isExpand,
+  setIsExpand,
+}: {
+  isExpand: boolean;
+  setIsExpand: Dispatch<SetStateAction<boolean>>;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        setIsExpand((prev: boolean) => !prev);
+      }}
+    >
+      {isExpand ? (
+        <MdArrowDropUp className="h-12 w-12 hover:scale-125 transition" />
+      ) : (
+        <MdArrowDropDown className="h-12 w-12 hover:scale-125 transition" />
+      )}
+    </button>
+  );
+}
+
+function Member({
+  member,
+  isMyRecord,
+  clientUserId,
+  scores,
+}: {
+  member: {
+    id: number;
+    name: string;
+    profileImage: string | null;
+    isRated: boolean;
+  };
+  isMyRecord: boolean;
+  clientUserId: number;
+  scores: {
+    id: number;
+    score: number;
+    scoreImage: string | null;
+  }[];
+}) {
+  const commonButtonStyle =
+    "h-fit min-w-[70px] border text-sm leading-none rounded-full px-2 py-[3px] hover:brightness-95";
+  const buttonStyles = {
+    "outlined-gray": `border-neutral-400 text-neutral-400 bg-white ${commonButtonStyle}`,
+    "outlined-orange": `border-thunderOrange text-thunderOrange bg-white ${commonButtonStyle}`,
+    "outlined-blue": `border-blue-400 text-blue-400 bg-white ${commonButtonStyle}`,
+    "filled-blue": `text-white bg-blue-500 ${commonButtonStyle}`,
+  };
+  return (
+    <div className="member flex gap-4 items-center">
+      <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
+      {isMyRecord &&
+        clientUserId === member.id &&
+        (scores.length ? (
+          <button type="button" className={buttonStyles["outlined-blue"]}>
+            수정하기
+          </button>
+        ) : (
+          <button type="button" className={buttonStyles["filled-blue"]}>
+            점수등록
+          </button>
+        ))}
+      {isMyRecord &&
+        clientUserId !== member.id &&
+        (member.isRated ? (
+          <button type="button" className={buttonStyles["outlined-gray"]}>
+            완료
+          </button>
+        ) : (
+          <button type="button" className={buttonStyles["outlined-orange"]}>
+            별점주기
+          </button>
+        ))}
+    </div>
+  );
+}
