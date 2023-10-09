@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
+import MiniProfile from "../MiniProfile";
 
 interface Props {
   data: RecordData;
@@ -107,10 +108,7 @@ function RecordCard({ data }: Props) {
                 };
                 return (
                   <div key={`${data.id}:${member.id}`} className="member flex gap-4 items-center">
-                    <Link href={`/user_profile/${member.id}`} className="flex gap-1 items-center">
-                      <CircularProfileImage src={member.profileImage} />
-                      <span className="member-name text-xl">{member.name}</span>
-                    </Link>
+                    <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
                     {isMyRecord &&
                       myId === member.id &&
                       (scores.length ? (
