@@ -66,7 +66,7 @@ function RecordCard({ data }: Props) {
                   clientUserId={clientUserId}
                   isMyRecord={isMyRecord}
                   member={member}
-                  scores={scores}
+                  scoresLength={scores.length}
                 />
               ))}
             </div>
@@ -169,7 +169,7 @@ function Member({
   member,
   isMyRecord,
   clientUserId,
-  scores,
+  scoresLength,
 }: {
   member: {
     id: number;
@@ -179,11 +179,7 @@ function Member({
   };
   isMyRecord: boolean;
   clientUserId: number;
-  scores: {
-    id: number;
-    score: number;
-    scoreImage: string | null;
-  }[];
+  scoresLength: number;
 }) {
   const commonButtonStyle =
     "h-fit min-w-[70px] border text-sm leading-none rounded-full px-2 py-[3px] hover:brightness-95";
@@ -198,7 +194,7 @@ function Member({
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
       {isMyRecord &&
         clientUserId === member.id &&
-        (scores.length ? (
+        (scoresLength ? (
           <button type="button" className={buttonStyles["outlined-blue"]}>
             수정하기
           </button>
