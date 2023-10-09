@@ -43,12 +43,7 @@ function RecordCard({ data }: Props) {
         <RecordTimeWithLocation districtName={data.districtName} startTime={data.startTime} />
         <div className="scores">
           {scores.map((score) => (
-            <ScoreWithImageButton
-              key={`${data.id}:${score.id}`}
-              scoreId={score.id}
-              score={score.score}
-              scoreImage={score.scoreImage}
-            />
+            <ScoreWithImageButton key={`${data.id}:${score.id}`} scoreObj={score} />
           ))}
         </div>
         <div className="expand-button-with-member-image flex w-full justify-between items-center">
@@ -95,19 +90,11 @@ function RecordTimeWithLocation({ districtName, startTime }: { districtName: str
   );
 }
 
-function ScoreWithImageButton({
-  scoreId,
-  score,
-  scoreImage,
-}: {
-  scoreId: number;
-  score: number;
-  scoreImage: string | null;
-}) {
+function ScoreWithImageButton({ scoreObj }: { scoreObj: { id: number; score: number; scoreImage: string | null } }) {
   return (
     <div className="score flex gap-2">
-      <span>{`스코어 ${scoreId} | ${score}`}</span>
-      {scoreImage && (
+      <span>{`스코어 ${scoreObj.id} | ${scoreObj.score}`}</span>
+      {scoreObj.scoreImage && (
         <button
           type="button"
           className="inline-flex items-center gap-x-0.5 border border-thunderOrange text-thunderOrange text-sm rounded-full px-2 py-[3px] bg-white hover:brightness-95"
