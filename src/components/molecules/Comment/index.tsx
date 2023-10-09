@@ -64,7 +64,9 @@ function Comment({ comment, id }: Props) {
       </div>
       <hr className="mt-2" />
       {comment.childComments &&
-        comment.childComments.map((childComment) => <ChildComment childComment={childComment} key={childComment.id} />)}
+        comment.childComments.map((childComment) => (
+          <ChildComment childComment={childComment} key={childComment.id} id={id} />
+        ))}
     </>
   );
 }
