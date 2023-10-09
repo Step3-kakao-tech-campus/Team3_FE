@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 interface Props {
-  game: 20;
-  average: 160;
-  maximum: 180;
-  minimum: 110;
+  data: {
+    game: number;
+    average: number;
+    maximum: number;
+    minimum: number;
+  };
 }
-function RecordSummary({ game, average, maximum, minimum }: Props) {
+function RecordSummary({ data }: Props) {
   return (
     <div className="record-summary grid gap-[5%] grid-cols-2 md:grid-cols-4 sm">
-      <Card text="Game" number={game} />
-      <Card text="Average" number={average} />
-      <Card text="Maximum" number={maximum} />
-      <Card text="Minimum" number={minimum} />
+      <Card text="Game" number={data.game} />
+      <Card text="Average" number={data.average} />
+      <Card text="Maximum" number={data.maximum} />
+      <Card text="Minimum" number={data.minimum} />
     </div>
   );
 }
