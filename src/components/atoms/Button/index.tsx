@@ -21,6 +21,7 @@ function Button({
   fontSize = "md",
   padding = "px-2_py-1",
 }: Props) {
+  const commonStyle = "ring-gray-400 ring-inset filter hover:brightness-95";
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
@@ -55,9 +56,9 @@ function Button({
   return (
     <button
       type="button"
-      className={`ring-gray-400 ring-inset filter hover:brightness-95 ${styleObj[styleType]} ${roundedObj[rounded]} ${
-        sizeObj[size]
-      } ${fontWeightObj[fontWeight]} ${fontSizeObj[fontSize]} ${paddingObj[padding]} ${noLineHeight && "leading-none"}`}
+      className={`${commonStyle} ${styleObj[styleType]} ${roundedObj[rounded]} ${sizeObj[size]} ${
+        fontWeightObj[fontWeight]
+      } ${fontSizeObj[fontSize]} ${paddingObj[padding]} ${noLineHeight && "leading-none"}`}
       onClick={onClick}
     >
       {children}
