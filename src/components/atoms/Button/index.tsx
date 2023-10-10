@@ -1,5 +1,5 @@
 interface Props {
-  styleType: "white" | "thunder" | "outlined-gray";
+  styleType: "white" | "thunder" | "outlined-gray" | "outlined-orange" | "outlined-blue" | "filled-blue";
   rounded: "full" | "md";
   size: "lg" | "sm";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -12,6 +12,9 @@ function Button({ styleType, rounded, size, onClick, children, noLineHeight }: P
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
     "outlined-gray": "border border-neutral-400 text-neutral-400 bg-white",
+    "outlined-orange": `border-thunderOrange text-thunderOrange bg-white`,
+    "outlined-blue": `border-blue-400 text-blue-400 bg-white`,
+    "filled-blue": `text-white bg-blue-500`,
   };
   const sizeObj = {
     lg: "w-[546px] h-[40px] text-xl",
