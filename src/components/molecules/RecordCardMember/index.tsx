@@ -1,23 +1,16 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Button, { ButtonProps } from "@/components/atoms/Button";
+import { RecordData } from "@/types/recordData";
 import MiniProfile from "../MiniProfile";
 
-function RecordCardMember({
-  member,
-  isMyRecord,
-  clientUserId,
-  scoresLength,
-}: {
-  member: {
-    id: number;
-    name: string;
-    profileImage: string | null;
-    isRated: boolean;
-  };
+interface Prop {
+  member: RecordData["members"][number];
   isMyRecord: boolean;
   clientUserId: number;
   scoresLength: number;
-}) {
+}
+
+function RecordCardMember({ member, isMyRecord, clientUserId, scoresLength }: Prop) {
   return (
     <div className="member flex gap-4 items-center">
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
