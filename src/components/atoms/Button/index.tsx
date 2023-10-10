@@ -6,9 +6,19 @@ interface Props {
   children: React.ReactNode;
   noLineHeight?: boolean;
   fontWeight?: "bold" | "semibold" | "normal";
+  fontSize?: "sm" | "md" | "lg";
 }
 
-function Button({ styleType, rounded, size, onClick, children, noLineHeight, fontWeight = "bold" }: Props) {
+function Button({
+  styleType,
+  rounded,
+  size,
+  onClick,
+  children,
+  noLineHeight,
+  fontWeight = "bold",
+  fontSize = "md",
+}: Props) {
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
@@ -30,13 +40,18 @@ function Button({ styleType, rounded, size, onClick, children, noLineHeight, fon
     semibold: "font-semibold",
     normal: "font-normal",
   };
+  const fontSizeObj = {
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+  };
 
   return (
     <button
       type="button"
       className={`px-2 py-1 ring-gray-400 ring-inset filter hover:brightness-95 ${styleObj[styleType]} ${
         roundedObj[rounded]
-      } ${sizeObj[size]} ${fontWeightObj[fontWeight]} ${noLineHeight && "leading-none"}`}
+      } ${sizeObj[size]} ${fontWeightObj[fontWeight]} ${fontSizeObj[fontSize]} ${noLineHeight && "leading-none"}`}
       onClick={onClick}
     >
       {children}
