@@ -8,6 +8,7 @@ interface Props {
   fontWeight?: "bold" | "semibold" | "normal";
   fontSize?: "sm" | "md" | "lg";
   padding?: "px-2_py-1" | "px-2_py-[3px]";
+  minWidth?: "70px";
 }
 
 function Button({
@@ -20,6 +21,7 @@ function Button({
   fontWeight = "bold",
   fontSize = "md",
   padding = "px-2_py-1",
+  minWidth,
 }: Props) {
   const commonStyle = "ring-gray-400 ring-inset filter hover:brightness-95";
   const styleObj = {
@@ -52,13 +54,18 @@ function Button({
     "px-2_py-1": "px-2 py-1",
     "px-2_py-[3px]": "px-2 py-[3px]",
   };
+  const minWidthObj = {
+    "70px": "min-w-[70px]",
+  };
 
   return (
     <button
       type="button"
       className={`${commonStyle} ${styleObj[styleType]} ${roundedObj[rounded]} ${sizeObj[size]} ${
         fontWeightObj[fontWeight]
-      } ${fontSizeObj[fontSize]} ${paddingObj[padding]} ${noLineHeight && "leading-none"}`}
+      } ${fontSizeObj[fontSize]} ${paddingObj[padding]} ${minWidth && minWidthObj[minWidth]} ${
+        noLineHeight && "leading-none"
+      }`}
       onClick={onClick}
     >
       {children}
