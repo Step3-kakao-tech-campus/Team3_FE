@@ -31,7 +31,6 @@ function PostTemplates({ id }: Props) {
     router.refresh();
     router.push("/");
   };
-
   return (
     <div>
       <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />
@@ -54,6 +53,9 @@ function PostTemplates({ id }: Props) {
           />
           <span className="ml-1">{post.userName}</span>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
+          <span className="ml-2 text-neutral-400 text-sm">
+            조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
+          </span>
         </div>
         <div className="flex text-neutral-500 gap-3">
           <span className="flex items-center cursor-pointer">
