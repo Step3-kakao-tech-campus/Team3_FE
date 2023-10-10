@@ -42,10 +42,10 @@ function ChildComment({ childComment, id }: Props) {
             <div className="flex items-center gap-2 text-neutral-400 text-sm">
               {childComment.userId === userId && (
                 <>
-                  <span className="flex items-center cursor-pointer">
+                  <button type="button" className="flex items-center cursor-pointer">
                     <MdOutlineEdit />
                     수정
-                  </span>
+                  </button>
                   <button type="button" onClick={handleDeleteComment} className="flex items-center cursor-pointer">
                     <MdOutlineDelete />
                     삭제

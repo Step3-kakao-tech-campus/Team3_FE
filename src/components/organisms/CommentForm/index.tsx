@@ -73,7 +73,7 @@ function CommentForm({ id }: Props) {
   return (
     <div>
       <h2 className="mt-4 text-xl">댓글</h2>
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between gap-3">
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <CommentSubmit commentRef={commentRef} onClick={handleSubmit} />
       </div>
