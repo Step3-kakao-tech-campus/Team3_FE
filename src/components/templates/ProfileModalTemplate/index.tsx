@@ -9,7 +9,7 @@ import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
 function ProfileModalTemplate() {
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
   const pageParam = useParams();
-  const { data, isLoading, isError } = useQuery({
+  const { data } = useQuery({
     queryFn: () => getProfileById(parseInt(pageParam.user_id as string, 10)),
   });
 
