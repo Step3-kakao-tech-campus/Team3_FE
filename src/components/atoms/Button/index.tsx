@@ -1,4 +1,4 @@
-interface Props {
+export interface ButtonProps {
   styleType: "white" | "thunder" | "outlined-gray" | "outlined-orange" | "outlined-blue" | "filled-blue";
   rounded: "full" | "md";
   size: "lg" | "sm";
@@ -22,7 +22,7 @@ function Button({
   fontSize = "md",
   padding = "px-2_py-1",
   minWidth,
-}: Props) {
+}: ButtonProps) {
   const commonStyle = "ring-gray-400 ring-inset filter hover:brightness-95";
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
