@@ -6,9 +6,17 @@ interface Props {
   placeholder: string;
   styleType: "big" | "small";
   selectedOptionId?: number;
+  useNameToValue?: boolean;
 }
 
-function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId = -1 }: Props): JSX.Element {
+function Dropdown({
+  options,
+  onChange,
+  placeholder,
+  styleType,
+  selectedOptionId = -1,
+  useNameToValue,
+}: Props): JSX.Element {
   const styleObj = {
     small: "rounded-full text-center p-1 w-[150px]",
     big: "rounded-3xl p-4 w-[180px] text-xl text-center shadow-lg",
@@ -39,7 +47,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
       )}
       {options?.map((option) => {
         return (
-          <option key={option.id} value={option.id}>
+          <option key={option.id} value={useNameToValue ? option.name : option.id}>
             {option.name}
           </option>
         );
