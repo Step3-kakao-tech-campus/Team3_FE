@@ -39,7 +39,6 @@ function RecordSearchBar(): JSX.Element {
           onChange={(e) => handleOnChange(e, "start")}
           styleType="small"
           options={[{ id: 0, name: "1111년 11월" }]}
-          useNameToValue
         />
         <span className="leading-none">~</span>
         <Dropdown
@@ -47,7 +46,6 @@ function RecordSearchBar(): JSX.Element {
           onChange={(e) => handleOnChange(e, "end")}
           styleType="small"
           options={[{ id: 0, name: "9999년 9월" }]}
-          useNameToValue
         />
       </div>
       <Button styleType="thunder" fontWeight="normal" size="sm" rounded="full">
