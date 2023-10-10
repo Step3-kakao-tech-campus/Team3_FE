@@ -7,6 +7,7 @@ interface Props {
   noLineHeight?: boolean;
   fontWeight?: "bold" | "semibold" | "normal";
   fontSize?: "sm" | "md" | "lg";
+  padding?: "px-2_py-1" | "px-2_py-[3px]";
 }
 
 function Button({
@@ -18,6 +19,7 @@ function Button({
   noLineHeight,
   fontWeight = "bold",
   fontSize = "md",
+  padding = "px-2_py-1",
 }: Props) {
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
@@ -45,13 +47,17 @@ function Button({
     md: "text-base",
     lg: "text-lg",
   };
+  const paddingObj = {
+    "px-2_py-1": "px-2 py-1",
+    "px-2_py-[3px]": "px-2 py-[3px]",
+  };
 
   return (
     <button
       type="button"
-      className={`px-2 py-1 ring-gray-400 ring-inset filter hover:brightness-95 ${styleObj[styleType]} ${
-        roundedObj[rounded]
-      } ${sizeObj[size]} ${fontWeightObj[fontWeight]} ${fontSizeObj[fontSize]} ${noLineHeight && "leading-none"}`}
+      className={`ring-gray-400 ring-inset filter hover:brightness-95 ${styleObj[styleType]} ${roundedObj[rounded]} ${
+        sizeObj[size]
+      } ${fontWeightObj[fontWeight]} ${fontSizeObj[fontSize]} ${paddingObj[padding]} ${noLineHeight && "leading-none"}`}
       onClick={onClick}
     >
       {children}
