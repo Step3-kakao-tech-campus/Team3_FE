@@ -4,9 +4,10 @@ interface Props {
   size: "lg" | "sm";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   children: React.ReactNode;
+  noLineHeight?: boolean;
 }
 
-function Button({ styleType, rounded, size, onClick, children }: Props) {
+function Button({ styleType, rounded, size, onClick, children, noLineHeight }: Props) {
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
@@ -24,7 +25,9 @@ function Button({ styleType, rounded, size, onClick, children }: Props) {
   return (
     <button
       type="button"
-      className={`px-2 py-1 ring-gray-400 ring-inset font-bold filter hover:brightness-95 ${styleObj[styleType]} ${roundedObj[rounded]} ${sizeObj[size]}`}
+      className={`px-2 py-1 ring-gray-400 ring-inset font-bold filter hover:brightness-95 ${styleObj[styleType]} ${
+        roundedObj[rounded]
+      } ${sizeObj[size]} ${noLineHeight && "leading-none"}`}
       onClick={onClick}
     >
       {children}
