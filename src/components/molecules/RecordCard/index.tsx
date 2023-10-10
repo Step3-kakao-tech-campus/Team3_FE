@@ -75,7 +75,13 @@ function RecordCard({ data }: Props) {
 
 export default RecordCard;
 
-function RecordTimeWithLocation({ districtName, startTime }: { districtName: string; startTime: Date }) {
+function RecordTimeWithLocation({
+  districtName,
+  startTime,
+}: {
+  districtName: RecordData["districtName"];
+  startTime: RecordData["startTime"];
+}) {
   return (
     <div className="record-info-wrapper flex gap-4 text-neutral-400">
       <p className="district-name">
@@ -90,7 +96,7 @@ function RecordTimeWithLocation({ districtName, startTime }: { districtName: str
   );
 }
 
-function ScoreWithImageButton({ scoreObj }: { scoreObj: { id: number; score: number; scoreImage: string | null } }) {
+function ScoreWithImageButton({ scoreObj }: { scoreObj: RecordData["scores"][number] }) {
   return (
     <div className="score flex gap-2">
       <span>{`스코어 ${scoreObj.id} | ${scoreObj.score}`}</span>
@@ -107,16 +113,7 @@ function ScoreWithImageButton({ scoreObj }: { scoreObj: { id: number; score: num
   );
 }
 
-function MembersImagePreview({
-  members,
-}: {
-  members: {
-    id: number;
-    name: string;
-    profileImage: string | null;
-    isRated: boolean;
-  }[];
-}) {
+function MembersImagePreview({ members }: { members: RecordData["members"] }) {
   return members.length > 3 ? (
     <>
       {members.slice(0, 3).map((member) => (
