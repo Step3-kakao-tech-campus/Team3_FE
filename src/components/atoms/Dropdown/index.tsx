@@ -6,7 +6,6 @@ interface Props {
   placeholder: string;
   styleType: "big" | "small";
   selectedOptionId?: number;
-  useNameToValue?: boolean;
 }
 
 function Dropdown({
@@ -47,7 +46,7 @@ function Dropdown({
       )}
       {options?.map((option) => {
         return (
-          <option key={option.id} value={useNameToValue ? option.name : option.id}>
+          <option key={option.id} value={option.id}>
             {option.name}
           </option>
         );
