@@ -21,3 +21,18 @@ export async function deleteComments({ postId, commentId }: { postId: number; co
   const response = await client.delete(`/api/posts/${postId}/comments/${commentId}`);
   return response;
 }
+
+export async function putComments({
+  postId,
+  commentId,
+  content,
+}: {
+  postId: number;
+  commentId: number;
+  content: string;
+}) {
+  const response = await client.put(`/api/posts/${postId}/comments/${commentId}`, {
+    content,
+  });
+  return response;
+}
