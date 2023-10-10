@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import Button, { ButtonProps } from "@/components/atoms/Button";
 import MiniProfile from "../MiniProfile";
 
 function RecordCardMember({
@@ -16,41 +18,49 @@ function RecordCardMember({
   clientUserId: number;
   scoresLength: number;
 }) {
-  const commonButtonStyle =
-    "h-fit min-w-[70px] border text-sm leading-none rounded-full px-2 py-[3px] hover:brightness-95";
-  const buttonStyles = {
-    "outlined-gray": `border-neutral-400 text-neutral-400 bg-white ${commonButtonStyle}`,
-    "outlined-orange": `border-thunderOrange text-thunderOrange bg-white ${commonButtonStyle}`,
-    "outlined-blue": `border-blue-400 text-blue-400 bg-white ${commonButtonStyle}`,
-    "filled-blue": `text-white bg-blue-500 ${commonButtonStyle}`,
-  };
   return (
     <div className="member flex gap-4 items-center">
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
       {isMyRecord &&
         clientUserId === member.id &&
         (scoresLength ? (
-          <button type="button" className={buttonStyles["outlined-blue"]}>
-            수정하기
-          </button>
+          <MyButton styleType="outlined-blue">수정하기</MyButton>
         ) : (
-          <button type="button" className={buttonStyles["filled-blue"]}>
-            점수등록
-          </button>
+          <MyButton styleType="filled-blue">점수등록</MyButton>
         ))}
       {isMyRecord &&
         clientUserId !== member.id &&
         (member.isRated ? (
-          <button type="button" className={buttonStyles["outlined-gray"]}>
-            완료
-          </button>
+          <MyButton styleType="outlined-gray">완료</MyButton>
         ) : (
-          <button type="button" className={buttonStyles["outlined-orange"]}>
-            별점주기
-          </button>
+          <MyButton styleType="outlined-orange">별점주기</MyButton>
         ))}
     </div>
   );
 }
 
 export default RecordCardMember;
+
+interface MyButtonProp {
+  children: ButtonProps["children"];
+  styleType: ButtonProps["styleType"];
+  onClick?: ButtonProps["onClick"];
+}
+
+function MyButton({ children, styleType, onClick }: MyButtonProp) {
+  return (
+    <Button
+      size="sm"
+      rounded="full"
+      styleType={styleType}
+      fontSize="sm"
+      fontWeight="normal"
+      minWidth="70px"
+      padding="px-2_py-[3px]"
+      noLineHeight
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  );
+}
