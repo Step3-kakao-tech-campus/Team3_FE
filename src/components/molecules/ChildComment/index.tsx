@@ -6,17 +6,16 @@ import CommentBlock from "../CommentBlock";
 
 interface Props {
   childComment: CommentData;
-  id: number;
 }
 
-function ChildComment({ childComment, id }: Props) {
+function ChildComment({ childComment }: Props) {
   return (
     <>
       <div className="flex items-center gap-3">
         <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
-          <CommentBlock comment={childComment} id={id} />
+          <CommentBlock comment={childComment} />
         </div>
       </div>
       <hr className="mt-2" />

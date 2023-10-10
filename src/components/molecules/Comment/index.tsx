@@ -10,23 +10,20 @@ export interface CommentWithChild extends CommentData {
 
 interface Props {
   comment: CommentWithChild;
-  id: number;
 }
 
-function Comment({ comment, id }: Props) {
+function Comment({ comment }: Props) {
   return (
     <>
       <div className="flex items-center gap-3">
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
-          <CommentBlock comment={comment} id={id} />
+          <CommentBlock comment={comment} />
         </div>
       </div>
       <hr className="mt-2" />
       {comment.childComments &&
-        comment.childComments.map((childComment) => (
-          <ChildComment childComment={childComment} key={childComment.id} id={id} />
-        ))}
+        comment.childComments.map((childComment) => <ChildComment childComment={childComment} key={childComment.id} />)}
     </>
   );
 }

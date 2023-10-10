@@ -81,7 +81,7 @@ function CommentForm({ id }: Props) {
         {data?.pages?.map(
           (page) =>
             page?.data?.response?.comments.map((comment: CommentWithChild) => (
-              <Comment comment={comment} key={comment.id} id={id} />
+              <Comment comment={comment} key={comment.id} />
             )),
         )}
       </div>

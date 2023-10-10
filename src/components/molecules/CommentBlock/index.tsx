@@ -5,15 +5,17 @@ import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import CommentSubmit from "../CommentSubmit";
 
 interface Props {
   comment: CommentData;
-  id: number;
 }
 
-function CommentBlock({ comment, id }: Props) {
+function CommentBlock({ comment }: Props) {
   const userId = parseInt(getCookie("userId"), 10);
+  const params = useParams();
+  const id = parseInt(params.id as string, 10);
 
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
