@@ -63,7 +63,7 @@ function Comment({ comment }: Props) {
         <>
           <div className="flex items-center gap-1">
             <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
-            <p>대댓글 등록</p>
+            <p>답글 달기</p>
           </div>
           <div className="flex items-center gap-3 mt-2">
             <CommentSubmit
