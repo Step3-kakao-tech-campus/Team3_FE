@@ -1,11 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { MdArrowBack } from "react-icons/md";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import Button from "@/components/atoms/Button";
 import DatePicker from "@/components/molecules/DatePicker";
-import { useRouter } from "next/navigation";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { postRegisterPosts } from "@/apis/posts";
 import { useMutation } from "@tanstack/react-query";
@@ -20,14 +18,7 @@ function CreatePostForm() {
 
   const errRef = useRef<HTMLParagraphElement>(null);
 
-  const router = useRouter();
-
   const { mutate } = useMutation({ mutationFn: postRegisterPosts });
-
-  const handleBack = () => {
-    router.refresh();
-    router.push("/");
-  };
 
   const handleSubmit = () => {
     const currentTime = new Date();
@@ -69,7 +60,6 @@ function CreatePostForm() {
 
   return (
     <div>
-      <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />
       <h2 className="my-4 font-bold text-2xl">모집글 작성</h2>
       <OptionTitle>제목</OptionTitle>
       <input

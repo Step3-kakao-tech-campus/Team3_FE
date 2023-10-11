@@ -1,7 +1,6 @@
 "use client";
 
-import { MdArrowBack, MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
@@ -16,7 +15,6 @@ interface Props {
 }
 
 function PostTemplates({ id }: Props) {
-  const router = useRouter();
   const parameter = parseInt(id, 10);
 
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
@@ -27,13 +25,8 @@ function PostTemplates({ id }: Props) {
 
   const post = data?.data?.response.post || {};
 
-  const handleBack = () => {
-    router.refresh();
-    router.push("/");
-  };
   return (
     <div>
-      <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />
       <div className="flex justify-between mt-6">
         <Badge isClose={post.isClose} />
         <div className="flex items-center">
