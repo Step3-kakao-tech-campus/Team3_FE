@@ -36,3 +36,18 @@ export async function putComments({
   });
   return response;
 }
+
+export async function postReply({
+  postId,
+  commentId,
+  content,
+}: {
+  postId: number;
+  commentId: number;
+  content: string;
+}) {
+  const response = await client.post(`/api/posts/${postId}/comments/${commentId}/reply`, {
+    content,
+  });
+  return response;
+}
