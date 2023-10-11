@@ -36,13 +36,13 @@ function RecordFilter() {
 
   return (
     <div className="post-filter flex flex-col gap-2">
-      <div className="post-filter-condition flex w-fit gap-2">
+      <div className="post-filter-condition flex w-fit gap-2 h-7">
         <Button
           onClick={() => {
             handleCondition("all");
           }}
           styleType={condition === "all" ? "thunder-w-20" : "outlined-gray"}
-          size="sm"
+          size="xs"
           rounded="full"
           fontWeight="normal"
         >
@@ -53,7 +53,7 @@ function RecordFilter() {
             handleCondition("created");
           }}
           styleType={condition === "created" ? "thunder-w-20" : "outlined-gray"}
-          size="sm"
+          size="xs"
           rounded="full"
           fontWeight="normal"
         >
@@ -64,20 +64,20 @@ function RecordFilter() {
             handleCondition("participated");
           }}
           styleType={condition === "participated" ? "thunder-w-20" : "outlined-gray"}
-          size="sm"
+          size="xs"
           rounded="full"
           fontWeight="normal"
         >
           참여한 글
         </Button>
       </div>
-      <div className="post-filter-status flex w-fit gap-2">
+      <div className="post-filter-status flex w-fit gap-2 h-7">
         <Button
           onClick={() => {
             handleStatus("all");
           }}
           styleType={status === "all" ? "thunder-w-20" : "outlined-gray"}
-          size="sm"
+          size="xs"
           rounded="full"
           fontWeight="normal"
         >
@@ -88,7 +88,7 @@ function RecordFilter() {
             handleStatus("closed");
           }}
           styleType={status === "closed" ? "thunder" : "outlined-gray"}
-          size="sm"
+          size="xs"
           rounded="full"
           fontWeight="normal"
         >
