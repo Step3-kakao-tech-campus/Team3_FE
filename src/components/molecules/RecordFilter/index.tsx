@@ -41,7 +41,7 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("all");
           }}
-          styleType={condition === "all" ? "thunder-w-20" : "outlined-gray"}
+          styleType={condition === "all" ? "thunder" : "outlined-gray"}
           size="xs"
           rounded="full"
           fontWeight="normal"
@@ -52,7 +52,7 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("created");
           }}
-          styleType={condition === "created" ? "thunder-w-20" : "outlined-gray"}
+          styleType={condition === "created" ? "thunder" : "outlined-gray"}
           size="xs"
           rounded="full"
           fontWeight="normal"
@@ -63,7 +63,7 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("participated");
           }}
-          styleType={condition === "participated" ? "thunder-w-20" : "outlined-gray"}
+          styleType={condition === "participated" ? "thunder" : "outlined-gray"}
           size="xs"
           rounded="full"
           fontWeight="normal"
@@ -76,7 +76,7 @@ function RecordFilter() {
           onClick={() => {
             handleStatus("all");
           }}
-          styleType={status === "all" ? "thunder-w-20" : "outlined-gray"}
+          styleType={status === "all" ? "thunder" : "outlined-gray"}
           size="xs"
           rounded="full"
           fontWeight="normal"
