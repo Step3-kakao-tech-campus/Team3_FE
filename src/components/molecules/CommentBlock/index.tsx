@@ -10,9 +10,11 @@ import CommentSubmit from "../CommentSubmit";
 
 interface Props {
   comment: CommentData;
+  isChild: boolean;
+  handleReplyForm?: any;
 }
 
-function CommentBlock({ comment }: Props) {
+function CommentBlock({ comment, isChild, handleReplyForm }: Props) {
   const userId = parseInt(getCookie("userId"), 10);
   const params = useParams();
   const id = parseInt(params.id as string, 10);
@@ -79,7 +81,11 @@ function CommentBlock({ comment }: Props) {
               </button>
             </>
           )}
-          <span>답글 달기</span>
+          {isChild && (
+            <button type="button" onClick={handleReplyForm}>
+              답글 달기
+            </button>
+          )}
         </div>
       </div>
       {update ? (

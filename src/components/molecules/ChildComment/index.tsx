@@ -15,7 +15,7 @@ function ChildComment({ childComment }: Props) {
         <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
-          <CommentBlock comment={childComment} />
+          <CommentBlock comment={childComment} isChild={false} />
         </div>
       </div>
       <hr className="mt-2" />
