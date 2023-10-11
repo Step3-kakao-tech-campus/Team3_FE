@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
+import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
 
 interface Props {
@@ -101,13 +102,12 @@ function ScoreWithImageButton({ scoreObj }: { scoreObj: RecordData["scores"][num
     <div className="score flex gap-2">
       <span>{`스코어 ${scoreObj.id} | ${scoreObj.score}`}</span>
       {scoreObj.scoreImage && (
-        <button
-          type="button"
-          className="inline-flex items-center gap-x-0.5 border border-thunderOrange text-thunderOrange text-sm rounded-full px-2 py-[3px] bg-white hover:brightness-95"
-        >
-          <MdCameraAlt className="inline" />
-          <span className="leading-none">이미지 보기</span>
-        </button>
+        <Button rounded="full" size="xs" styleType="outlined-orange" fontWeight="normal">
+          <div className="inline-flex items-center gap-x-0.5 ">
+            <MdCameraAlt className="inline" />
+            <span className="leading-none">이미지 보기</span>
+          </div>
+        </Button>
       )}
     </div>
   );

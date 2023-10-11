@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import Button, { ButtonProps } from "@/components/atoms/Button";
+import Button from "@/components/atoms/Button";
 import { RecordData } from "@/types/recordData";
 import MiniProfile from "../MiniProfile";
 
@@ -17,43 +17,27 @@ function RecordCardMember({ member, isMyRecord, clientUserId, scoresLength }: Pr
       {isMyRecord &&
         clientUserId === member.id &&
         (scoresLength ? (
-          <MyButton styleType="outlined-blue">수정하기</MyButton>
+          <Button size="xs" rounded="full" styleType="outlined-blue" fontWeight="normal">
+            수정하기
+          </Button>
         ) : (
-          <MyButton styleType="filled-blue">점수등록</MyButton>
+          <Button size="xs" rounded="full" styleType="filled-blue" fontWeight="normal">
+            점수등록
+          </Button>
         ))}
       {isMyRecord &&
         clientUserId !== member.id &&
         (member.isRated ? (
-          <MyButton styleType="outlined-gray">완료</MyButton>
+          <Button size="xs" rounded="full" styleType="outlined-gray" fontWeight="normal">
+            완료
+          </Button>
         ) : (
-          <MyButton styleType="outlined-orange">별점주기</MyButton>
+          <Button size="xs" rounded="full" styleType="outlined-orange" fontWeight="normal">
+            별점주기
+          </Button>
         ))}
     </div>
   );
 }
 
 export default RecordCardMember;
-
-interface MyButtonProp {
-  children: ButtonProps["children"];
-  styleType: ButtonProps["styleType"];
-  onClick?: ButtonProps["onClick"];
-}
-
-function MyButton({ children, styleType, onClick }: MyButtonProp) {
-  return (
-    <Button
-      size="sm"
-      rounded="full"
-      styleType={styleType}
-      fontSize="sm"
-      fontWeight="normal"
-      minWidth="70px"
-      padding="px-2_py-[3px]"
-      noLineHeight
-      onClick={onClick}
-    >
-      {children}
-    </Button>
-  );
-}

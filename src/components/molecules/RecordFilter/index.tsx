@@ -41,9 +41,10 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("all");
           }}
-          styleType={condition === "all" ? "thunder" : "outlined-gray"}
+          styleType={condition === "all" ? "thunder-w-20" : "outlined-gray"}
           size="sm"
           rounded="full"
+          fontWeight="normal"
         >
           전체 보기
         </Button>
@@ -51,9 +52,10 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("created");
           }}
-          styleType={condition === "created" ? "thunder" : "outlined-gray"}
+          styleType={condition === "created" ? "thunder-w-20" : "outlined-gray"}
           size="sm"
           rounded="full"
+          fontWeight="normal"
         >
           작성한 글
         </Button>
@@ -61,9 +63,10 @@ function RecordFilter() {
           onClick={() => {
             handleCondition("participated");
           }}
-          styleType={condition === "participated" ? "thunder" : "outlined-gray"}
+          styleType={condition === "participated" ? "thunder-w-20" : "outlined-gray"}
           size="sm"
           rounded="full"
+          fontWeight="normal"
         >
           참여한 글
         </Button>
@@ -73,9 +76,10 @@ function RecordFilter() {
           onClick={() => {
             handleStatus("all");
           }}
-          styleType={status === "all" ? "thunder" : "outlined-gray"}
+          styleType={status === "all" ? "thunder-w-20" : "outlined-gray"}
           size="sm"
           rounded="full"
+          fontWeight="normal"
         >
           전체
         </Button>
@@ -86,6 +90,7 @@ function RecordFilter() {
           styleType={status === "closed" ? "thunder" : "outlined-gray"}
           size="sm"
           rounded="full"
+          fontWeight="normal"
         >
           모집 완료
         </Button>
