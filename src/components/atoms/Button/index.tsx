@@ -19,16 +19,16 @@ function Button({ styleType, rounded, size, onClick, children, fontWeight = "bol
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",
     thunder: "bg-thunder text-white",
-    "thunder-w-20": "bg-thunder text-white min-w-[80px]",
-    "outlined-gray": "border border-neutral-400 text-neutral-400 bg-white min-w-[80px]",
-    "outlined-orange": `border border-thunderOrange text-thunderOrange bg-white min-w-[80px]`,
-    "outlined-blue": `border border-blue-400 text-blue-400 bg-white min-w-[80px]`,
-    "filled-blue": `border text-white bg-blue-500 min-w-[80px]`,
+    "thunder-w-20": "bg-thunder text-white",
+    "outlined-gray": "border border-neutral-400 text-neutral-400 bg-white",
+    "outlined-orange": `border border-thunderOrange text-thunderOrange bg-white`,
+    "outlined-blue": `border border-blue-400 text-blue-400 bg-white`,
+    "filled-blue": `border text-white bg-blue-500`,
   };
   const sizeObj = {
     lg: "w-[546px] h-[40px] text-xl",
     sm: "px-2 py-1",
-    xs: "px-2 py-[3px] leading-none text-sm",
+    xs: "px-2 py-[3px] leading-none text-sm min-w-[80px]",
   };
   const roundedObj = {
     full: "rounded-full",
