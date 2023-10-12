@@ -59,7 +59,7 @@ function PostList({ searchParams }: PageSearchParams) {
     if (target.current) {
       observer.observe(target.current);
     }
-    return () => observer && observer.disconnect();
+    return () => observer.disconnect();
   }, [target, data, observer]);
 
   return (
