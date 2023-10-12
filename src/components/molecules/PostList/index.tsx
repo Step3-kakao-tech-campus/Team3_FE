@@ -5,6 +5,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { PostData } from "@/types/postData";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { getPosts } from "@/apis/posts";
+import objectToQueryString from "@/utils/objectToQueryString";
+import { PostSearchParam } from "@/types/postSearchParam";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams) {
@@ -13,9 +15,12 @@ function PostList({ searchParams }: PageSearchParams) {
     const countryId = parseInt(URLSearchParams.get("countryId") || "0", 10);
     const districtId = parseInt(URLSearchParams.get("districtId") || "0", 10);
     const all = URLSearchParams.get("all");
-    const queryString = `?${cityId > 0 ? `cityId=${cityId}` : ""}${countryId > 0 ? `&countryId=${countryId}` : ""}${
-      districtId > 0 ? `&districtId=${districtId}` : ""
-    }${all === "true" || all === "false" ? `&all=${all}` : ""}`;
+    const queryParams: PostSearchParam = {};
+    if (cityId) queryParams.cityId = cityId;
+    if (countryId) queryParams.countryId = countryId;
+    if (districtId) queryParams.districtId = districtId;
+    if (all === "true" || all === "false") queryParams.all = all as string;
+    const queryString = objectToQueryString(queryParams as Record<string, string | number>);
     return getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`);
   };
 
