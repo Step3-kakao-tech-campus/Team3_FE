@@ -8,6 +8,7 @@ import DropdownBox from "@/components/molecules/DropdownBox";
 import { postRegisterPosts } from "@/apis/posts";
 import { useMutation } from "@tanstack/react-query";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
+import { useRouter } from "next/navigation";
 
 function CreatePostForm() {
   const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
@@ -17,6 +18,8 @@ function CreatePostForm() {
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
   const errRef = useRef<HTMLParagraphElement>(null);
+
+  const router = useRouter();
 
   const { mutate } = useMutation({ mutationFn: postRegisterPosts });
 
