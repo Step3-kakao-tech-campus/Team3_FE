@@ -2,7 +2,7 @@ import React from "react";
 import { MdSend } from "react-icons/md";
 
 interface Props {
-  commentRef: React.RefObject<HTMLTextAreaElement>;
+  commentRef?: React.RefObject<HTMLTextAreaElement>;
   value?: string;
   setValue?: React.Dispatch<React.SetStateAction<string>>;
   onClick: () => void;

@@ -1,6 +1,6 @@
 import { CommentData } from "@/types/commentData";
 import { getCookie } from "@/utils/Cookie";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
@@ -11,7 +11,7 @@ import CommentSubmit from "../CommentSubmit";
 interface Props {
   comment: CommentData;
   isChild: boolean;
-  handleReplyForm?: any;
+  handleReplyForm?: () => void;
 }
 
 function CommentBlock({ comment, isChild, handleReplyForm }: Props) {
@@ -21,8 +21,6 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props) {
 
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
-
-  const commentRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate, queryClient } = useMutateWithQueryClient(deleteComments);
   const { mutate: putMutate } = useMutation(putComments);
@@ -90,12 +88,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props) {
       </div>
       {update ? (
         <div className="flex items-center gap-3 mt-2">
-          <CommentSubmit
-            commentRef={commentRef}
-            onClick={handleUpdate}
-            value={commentContent}
-            setValue={setCommentContent}
-          />
+          <CommentSubmit onClick={handleUpdate} value={commentContent} setValue={setCommentContent} />
         </div>
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
