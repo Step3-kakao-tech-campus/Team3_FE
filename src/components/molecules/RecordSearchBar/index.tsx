@@ -12,7 +12,7 @@ function RecordSearchBar() {
         <span className="leading-none">~</span>
         <Dropdown placeholder="" onChange={() => {}} styleType="small" options={[{ id: 0, name: "9999년 9월" }]} />
       </div>
-      <Button styleType="thunder-w-20" fontWeight="normal" size="sm" rounded="full">
+      <Button styleType="thunder" fontWeight="normal" size="sm" rounded="full">
         조회
       </Button>
     </div>

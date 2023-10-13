@@ -8,7 +8,7 @@ interface Props {
   selectedOptionId?: number;
 }
 
-function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId }: Props) {
+function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId = -1 }: Props) {
   const styleObj = {
     small: "rounded-full text-center p-1 w-[150px]",
     big: "rounded-3xl p-4 w-[180px] text-xl text-center shadow-lg",
@@ -17,7 +17,7 @@ function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId 
     <select
       onChange={onChange}
       className={`border text-neutral-500 appearance-none ${styleObj[styleType]}`}
-      value={typeof selectedOptionId !== undefined ? selectedOptionId : -1}
+      value={selectedOptionId}
     >
       <option key="placeholder" value={-1} hidden disabled>
         {placeholder}

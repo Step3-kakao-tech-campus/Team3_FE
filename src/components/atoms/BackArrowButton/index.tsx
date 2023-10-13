@@ -7,7 +7,7 @@ function BackArrowButton() {
   const router = useRouter();
   const handleBack = () => {
     router.refresh();
-    router.push("/");
+    router.back();
   };
   return <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />;
 }
