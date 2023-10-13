@@ -10,6 +10,7 @@ function ProfileModalTemplate(): JSX.Element {
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
   const pageParam = useParams();
   const { data } = useQuery({
+    queryKey: ["userProfile", pageParam.user_id],
     queryFn: () => getProfileById(parseInt(pageParam.user_id as string, 10)),
   });
 
