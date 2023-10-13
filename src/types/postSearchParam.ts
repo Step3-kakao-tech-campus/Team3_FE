@@ -3,4 +3,6 @@ export interface PostSearchParam {
   countryId?: number;
   districtId?: number;
   all?: string;
+  key?: number;
+  size?: number;
 }
