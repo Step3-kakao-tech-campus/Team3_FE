@@ -9,7 +9,7 @@ function BackArrowButton() {
     router.refresh();
     router.back();
   };
-  return <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />;
+  return <MdArrowBack onClick={handleBack} className="w-[30px] h-[30px] cursor-pointer" />;
 }
 
 export default BackArrowButton;
