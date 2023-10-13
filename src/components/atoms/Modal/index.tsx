@@ -9,7 +9,7 @@ interface Props {
   noPadding?: boolean;
 }
 
-function Modal({ children, noPadding }: Props) {
+function Modal({ children, noPadding }: Props): JSX.Element {
   const router = useRouter();
 
   const onDismiss = useCallback(() => {

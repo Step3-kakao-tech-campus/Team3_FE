@@ -4,7 +4,7 @@ import Button from "@/components/atoms/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-function RecordFilter() {
+function RecordFilter(): JSX.Element {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [condition, setCondition] = useState(searchParams.get("condition") || "all");

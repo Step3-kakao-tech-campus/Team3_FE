@@ -3,7 +3,7 @@
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { usePathname, useRouter } from "next/navigation";
 
-function PostFilter({ searchParams }: PageSearchParams) {
+function PostFilter({ searchParams }: PageSearchParams): JSX.Element {
   const pathname = usePathname();
   const searchParamsState = new URLSearchParams(searchParams);
   const isAll = searchParamsState.get("all") !== "false";

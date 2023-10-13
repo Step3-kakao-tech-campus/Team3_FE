@@ -10,7 +10,7 @@ interface Prop {
   applicantData: Applicant;
 }
 
-function ApplicantBlock({ postId, applicantData }: Prop) {
+function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 

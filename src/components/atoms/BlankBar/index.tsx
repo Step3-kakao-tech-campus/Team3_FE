@@ -1,4 +1,4 @@
-function BlankBar() {
+function BlankBar(): JSX.Element {
   return <div className="pb-[16px]" />;
 }
 

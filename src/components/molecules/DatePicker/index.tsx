@@ -15,7 +15,7 @@ interface Props {
   setValue: React.Dispatch<SetStateAction<Date | null>>;
 }
 
-function DatePicker({ title, value, setValue }: Props) {
+function DatePicker({ title, value, setValue }: Props): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [isTimeOpen, setIsTimeOpen] = useState(false);
 

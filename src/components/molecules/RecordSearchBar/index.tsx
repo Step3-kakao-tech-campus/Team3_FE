@@ -3,7 +3,7 @@
 import Button from "@/components/atoms/Button";
 import Dropdown from "@/components/atoms/Dropdown";
 
-function RecordSearchBar() {
+function RecordSearchBar(): JSX.Element {
   return (
     <div className="record-search-bar flex gap-4">
       <Dropdown placeholder="" onChange={() => {}} styleType="small" options={[{ id: 0, name: "전체 지역" }]} />

@@ -14,7 +14,7 @@ interface Props {
   handleReplyForm?: () => void;
 }
 
-function CommentBlock({ comment, isChild, handleReplyForm }: Props) {
+function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element {
   const userId = parseInt(getCookie("userId"), 10);
   const params = useParams();
   const id = parseInt(params.id as string, 10);

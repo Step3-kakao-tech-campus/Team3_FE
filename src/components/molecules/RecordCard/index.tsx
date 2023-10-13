@@ -18,7 +18,7 @@ interface Props {
   data: RecordData;
 }
 
-function RecordCard({ data }: Props) {
+function RecordCard({ data }: Props): JSX.Element {
   const params = useParams();
   const [isExpand, setIsExpand] = useState(false);
 

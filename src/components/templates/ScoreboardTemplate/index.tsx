@@ -3,7 +3,7 @@ import RecordCard from "@/components/molecules/RecordCard";
 import RecordFilter from "@/components/molecules/RecordFilter";
 import RecordSearchBar from "@/components/molecules/RecordSearchBar";
 
-function ScoreboardTemplate() {
+function ScoreboardTemplate(): JSX.Element {
   const dummy = {
     id: 2,
     title: "오늘 7시에 부산대 락볼링장에서 게임하실분~~",

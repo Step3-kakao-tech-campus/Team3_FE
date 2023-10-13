@@ -4,7 +4,7 @@ import useRegionQueries from "@/hooks/useRegionQueries";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { MdLocationOn } from "react-icons/md";
 
-function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
+function SearchedLocationDisplay({ searchParams }: PageSearchParams): JSX.Element {
   const cityId = searchParams?.cityId ? parseInt(searchParams?.cityId, 10) || 0 : 0;
   const countryId = searchParams?.countryId ? parseInt(searchParams?.countryId, 10) || 0 : 0;
   const districtId = searchParams?.districtId ? parseInt(searchParams?.districtId, 10) || 0 : 0;

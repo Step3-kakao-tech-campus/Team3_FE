@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
 
-function ProfileModalTemplate() {
+function ProfileModalTemplate(): JSX.Element {
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
   const pageParam = useParams();
   const { data } = useQuery({

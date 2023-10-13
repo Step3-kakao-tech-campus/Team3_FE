@@ -8,7 +8,7 @@ interface Props {
   onClick: () => void;
 }
 
-function CommentSubmit({ commentRef, value, setValue, onClick }: Props) {
+function CommentSubmit({ commentRef, value, setValue, onClick }: Props): JSX.Element {
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
 

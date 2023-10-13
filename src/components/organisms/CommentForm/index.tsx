@@ -12,7 +12,7 @@ interface Props {
   id: number;
 }
 
-function CommentForm({ id }: Props) {
+function CommentForm({ id }: Props): JSX.Element {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
     ({ pageParam = null }) => getComments(id, pageParam),

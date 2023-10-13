@@ -8,7 +8,7 @@ interface Props {
   childComment: CommentData;
 }
 
-function ChildComment({ childComment }: Props) {
+function ChildComment({ childComment }: Props): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-3">

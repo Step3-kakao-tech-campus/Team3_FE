@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-function ApplicantConfirmTemplate() {
+function ApplicantConfirmTemplate(): JSX.Element {
   const pageParam = useParams();
   const postId = parseInt(pageParam.post_id as string, 10);
   const { data, isLoading, isError, error }: any = useQuery(["getApplicants", postId], {

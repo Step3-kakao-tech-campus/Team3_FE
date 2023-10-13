@@ -12,7 +12,7 @@ interface Props {
   onInputChange: (fieldName: string, value: string) => void; // Include onInputChange prop here
 }
 
-function InputBox({ inputs, onInputChange }: Props) {
+function InputBox({ inputs, onInputChange }: Props): JSX.Element {
   return (
     <div>
       {inputs.map((input, index) => (

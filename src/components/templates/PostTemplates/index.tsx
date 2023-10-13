@@ -14,7 +14,7 @@ interface Props {
   id: string;
 }
 
-function PostTemplates({ id }: Props) {
+function PostTemplates({ id }: Props): JSX.Element {
   const parameter = parseInt(id, 10);
 
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {

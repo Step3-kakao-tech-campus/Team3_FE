@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useRouter } from "next/navigation";
 
-function CreatePostForm() {
+function CreatePostForm(): JSX.Element {
   const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);

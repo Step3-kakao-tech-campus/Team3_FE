@@ -7,7 +7,7 @@ interface Prop {
   userName: string;
 }
 
-function MiniProfile({ userId, imageSrc, userName }: Prop) {
+function MiniProfile({ userId, imageSrc, userName }: Prop): JSX.Element {
   return (
     <Link href={`/user_profile/${userId}`} className="inline-flex gap-1 items-center">
       <CircularProfileImage src={imageSrc} />

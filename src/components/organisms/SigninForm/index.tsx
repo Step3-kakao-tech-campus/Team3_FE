@@ -15,7 +15,7 @@ import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
 import { useAppDispatch } from "@/stores/hooks";
 import { postLogin } from "@/apis/sign";
 
-function SigninForm() {
+function SigninForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const errRef = useRef<HTMLParagraphElement>(null);

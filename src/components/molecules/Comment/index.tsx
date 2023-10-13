@@ -17,7 +17,7 @@ interface Props {
   comment: CommentWithChild;
 }
 
-function Comment({ comment }: Props) {
+function Comment({ comment }: Props): JSX.Element {
   const params = useParams();
   const id = parseInt(params.id as string, 10);
 

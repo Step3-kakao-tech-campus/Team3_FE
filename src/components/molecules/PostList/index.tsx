@@ -9,7 +9,7 @@ import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
 import PostCard from "../PostCard";
 
-function PostList({ searchParams }: PageSearchParams) {
+function PostList({ searchParams }: PageSearchParams): JSX.Element {
   const getPostList = async ({ pageParam = 0 }, URLSearchParams: URLSearchParams) => {
     const cityId = parseInt(URLSearchParams.get("cityId") || "0", 10);
     const countryId = parseInt(URLSearchParams.get("countryId") || "0", 10);

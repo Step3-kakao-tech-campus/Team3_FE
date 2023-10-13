@@ -7,7 +7,7 @@ import objectToQueryString from "@/utils/objectToQueryString";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import DropdownBox from "../DropdownBox";
 
-function RegionSearchBar({ searchParams }: PageSearchParams) {
+function RegionSearchBar({ searchParams }: PageSearchParams): JSX.Element {
   const searchParamsToState = useCallback((param: URLSearchParams) => {
     return {
       cityId: !Number.isNaN(parseInt(param.get("cityId")!, 10)) ? parseInt(param.get("cityId")!, 10) : -1,

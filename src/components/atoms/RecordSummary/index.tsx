@@ -7,7 +7,7 @@ interface Props {
     minimum: number;
   };
 }
-function RecordSummary({ data }: Props) {
+function RecordSummary({ data }: Props): JSX.Element {
   return (
     <div className="record-summary grid gap-[5%] grid-cols-2 md:grid-cols-4 sm">
       <Card text="Game" number={data.game} />

@@ -6,7 +6,7 @@ interface Props {
   onChange: (isChecked: boolean) => void;
 }
 
-function AuthCheckbox({ checked, onChange }: Props) {
+function AuthCheckbox({ checked, onChange }: Props): JSX.Element {
   return (
     <button
       type="button"

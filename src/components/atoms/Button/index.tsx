@@ -7,7 +7,7 @@ export interface ButtonProps {
   fontWeight?: "bold" | "semibold" | "normal";
 }
 
-function Button({ styleType, rounded, size, onClick, children, fontWeight = "bold" }: ButtonProps) {
+function Button({ styleType, rounded, size, onClick, children, fontWeight = "bold" }: ButtonProps): JSX.Element {
   const commonStyle = "ring-gray-400 ring-inset filter hover:brightness-95";
   const styleObj = {
     white: "text-gray-600 ring-1 bg-white",

@@ -9,7 +9,7 @@ interface InputProps {
   onInputChange: (value: string) => void;
 }
 
-function AuthInput({ type, placeholder, className, onInputChange }: InputProps) {
+function AuthInput({ type, placeholder, className, onInputChange }: InputProps): JSX.Element {
   const [isVisible, setIsVisible] = useState(false);
   const [value, setValue] = useState("");
 

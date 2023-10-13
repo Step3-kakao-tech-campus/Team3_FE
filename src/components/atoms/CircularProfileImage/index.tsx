@@ -19,7 +19,7 @@ interface Props {
  * sm: "w-6 h-6",
  * 기본 사이즈는 'md': 32*32px이다.
  */
-function CircularProfileImage({ src, styleType = "md" }: Props) {
+function CircularProfileImage({ src, styleType = "md" }: Props): JSX.Element {
   const styles = {
     huge: "w-20 h-20",
     lg: "w-10 h-10",

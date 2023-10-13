@@ -10,7 +10,7 @@ interface Prop {
   scoresLength: number;
 }
 
-function RecordCardMember({ member, isMyRecord, clientUserId, scoresLength }: Prop) {
+function RecordCardMember({ member, isMyRecord, clientUserId, scoresLength }: Prop): JSX.Element {
   return (
     <div className="member flex gap-4 items-center">
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
