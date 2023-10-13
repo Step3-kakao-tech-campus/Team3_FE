@@ -2,10 +2,10 @@
 
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getComments } from "@/apis/comment";
+import { getComments, postComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
 import CommentSubmit from "@/components/molecules/CommentSubmit";
-import useCommentsMutation from "@/hooks/useCommentsMutation";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 
 interface Props {
@@ -25,7 +25,7 @@ function CommentForm({ id }: Props) {
     },
   );
 
-  const { mutate, queryClient } = useCommentsMutation();
+  const { mutate, queryClient } = useMutateWithQueryClient(postComments);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const target = useRef<HTMLDivElement>(null);
@@ -73,7 +73,7 @@ function CommentForm({ id }: Props) {
   return (
     <div>
       <h2 className="mt-4 text-xl">댓글</h2>
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between gap-3">
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <CommentSubmit commentRef={commentRef} onClick={handleSubmit} />
       </div>

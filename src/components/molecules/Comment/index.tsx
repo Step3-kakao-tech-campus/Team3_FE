@@ -1,7 +1,13 @@
-import React from "react";
+import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import React, { useRef, useState } from "react";
+import { useParams } from "next/navigation";
 import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
+import { postReply } from "@/apis/comment";
+import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
+import CommentSubmit from "../CommentSubmit";
 
 export interface CommentWithChild extends CommentData {
   childComments: CommentData[];
@@ -12,21 +18,64 @@ interface Props {
 }
 
 function Comment({ comment }: Props) {
+  const params = useParams();
+  const id = parseInt(params.id as string, 10);
+
+  const [reply, setReply] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
+
+  const commentRef = useRef<HTMLTextAreaElement>(null);
+
+  const { mutate, queryClient } = useMutateWithQueryClient(postReply);
+
+  const handleReplyForm = () => {
+    setReply((prev) => !prev);
+    setCommentContent("");
+  };
+
+  const handleReply = () => {
+    const payload = {
+      postId: id,
+      commentId: comment.id,
+      content: commentContent,
+    };
+    mutate(payload, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["/comments", id]);
+        setReply(false);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
+
   return (
     <>
       <div className="flex items-center gap-3">
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <span className="text-[#2a5885]">{comment.userName}</span>
-            <div className="text-neutral-400">
-              <span className="text-sm">답글 달기</span>
-            </div>
-          </div>
-          <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
+          <CommentBlock comment={comment} isChild handleReplyForm={handleReplyForm} />
         </div>
       </div>
       <hr className="mt-2" />
+      {reply && (
+        <>
+          <div className="flex items-center gap-1">
+            <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
+            <p>답글 달기</p>
+          </div>
+          <div className="flex items-center gap-3 mt-2">
+            <CommentSubmit
+              commentRef={commentRef}
+              onClick={handleReply}
+              value={commentContent}
+              setValue={setCommentContent}
+            />
+          </div>
+          <hr className="mt-2" />
+        </>
+      )}
       {comment.childComments?.map((childComment) => <ChildComment childComment={childComment} key={childComment.id} />)}
     </>
   );
