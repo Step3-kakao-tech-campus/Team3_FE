@@ -21,7 +21,7 @@ function InputBox({ inputs, onInputChange }: Props) {
           type={input.type}
           placeholder={input.placeholder}
           className={input.className}
-          onInputChange={(value: any) => onInputChange(input.type, value)} // Pass input value to parent component
+          onInputChange={(value: string) => onInputChange(input.type, value)} // Pass input value to parent component
         />
       ))}
     </div>

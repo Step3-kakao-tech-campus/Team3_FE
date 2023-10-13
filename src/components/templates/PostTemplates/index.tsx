@@ -1,7 +1,6 @@
 "use client";
 
-import { MdArrowBack, MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
@@ -16,7 +15,6 @@ interface Props {
 }
 
 function PostTemplates({ id }: Props) {
-  const router = useRouter();
   const parameter = parseInt(id, 10);
 
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
@@ -27,14 +25,8 @@ function PostTemplates({ id }: Props) {
 
   const post = data?.data?.response.post || {};
 
-  const handleBack = () => {
-    router.refresh();
-    router.push("/");
-  };
-
   return (
     <div>
-      <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />
       <div className="flex justify-between mt-6">
         <Badge isClose={post.isClose} />
         <div className="flex items-center">
@@ -54,6 +46,9 @@ function PostTemplates({ id }: Props) {
           />
           <span className="ml-1">{post.userName}</span>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
+          <span className="ml-2 text-neutral-400 text-sm">
+            조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
+          </span>
         </div>
         <div className="flex text-neutral-500 gap-3">
           <span className="flex items-center cursor-pointer">

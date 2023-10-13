@@ -24,7 +24,7 @@ function SigninForm() {
     password: "",
   });
 
-  const handleInputChange = (fieldName: any, value: any) => {
+  const handleInputChange = (fieldName: any, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: value,

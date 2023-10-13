@@ -1,3 +1,4 @@
+import BackArrowContainer from "@/components/atoms/BackArrowContainer";
 import PostTemplates from "@/components/templates/PostTemplates";
 import React from "react";
 
@@ -9,9 +10,9 @@ interface Props {
 
 function PostHome({ params }: Props) {
   return (
-    <div className="mt-8 p-16 bg-white lg:mx-28">
+    <BackArrowContainer>
       <PostTemplates id={params.id} />
-    </div>
+    </BackArrowContainer>
   );
 }
 

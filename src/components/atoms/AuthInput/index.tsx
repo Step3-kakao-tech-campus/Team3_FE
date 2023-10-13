@@ -6,7 +6,7 @@ interface InputProps {
   type: string;
   placeholder: string;
   className: string;
-  onInputChange: (value: any) => void;
+  onInputChange: (value: string) => void;
 }
 
 function AuthInput({ type, placeholder, className, onInputChange }: InputProps) {

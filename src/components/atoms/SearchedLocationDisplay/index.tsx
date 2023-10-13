@@ -16,10 +16,9 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
   const districts = queries[2]?.data?.data?.response?.districts || [];
 
   const cityName = cities.filter((option: { id: number; name: string }) => option.id === cityId)[0]?.name || "전체";
-  const countryName =
-    countries.filter((option: { id: number; name: string }) => option.id === countryId)[0]?.name || "전체";
+  const countryName = countries.find((option: { id: number; name: string }) => option.id === countryId)?.name || "전체";
   const districtName =
-    districts.filter((option: { id: number; name: string }) => option.id === districtId)[0]?.name || "전체";
+    districts.find((option: { id: number; name: string }) => option.id === districtId)?.name || "전체";
 
   const searchedRegion = `${cityName} ${cityName !== "전체" ? countryName : ""} ${
     cityName !== "전체" && countryName !== "전체" ? districtName : ""

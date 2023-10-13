@@ -1,5 +1,5 @@
 function BlankBar() {
-  return <p className="pb-[16px]" />;
+  return <div className="pb-[16px]" />;
 }
 
 export default BlankBar;
