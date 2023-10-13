@@ -1,5 +1,5 @@
 export interface ButtonProps {
-  styleType: "white" | "thunder" | "outlined-gray" | "outlined-orange" | "outlined-blue" | "filled-blue";
+  styleType: "white" | "thunder" | "outlined-gray" | "outlined-orange" | "outlined-blue" | "filled-blue" | "filled-red";
   rounded: "full" | "md";
   size: "lg" | "sm" | "xs";
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -16,6 +16,7 @@ function Button({ styleType, rounded, size, onClick, children, fontWeight = "bol
     "outlined-orange": `border border-thunderOrange text-thunderOrange bg-white`,
     "outlined-blue": `border border-blue-400 text-blue-400 bg-white`,
     "filled-blue": `border text-white bg-blue-500`,
+    "filled-red": "bg-[#FF2E2E] text-white",
   };
   const sizeObj = {
     lg: "w-[546px] h-[40px] text-xl",
