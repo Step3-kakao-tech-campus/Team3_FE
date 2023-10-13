@@ -32,7 +32,7 @@ function PostTemplates({ id }: Props) {
         <div className="flex items-center">
           <Participant currentNumber={post.currentNumber} />
           <p className="searched-location flex items-center">
-            <MdLocationOn className="inline text-red-500" size={20} />
+            <MdLocationOn className="inline text-red-500 w-5 h-5" />
             {post.districtName}
           </p>
         </div>

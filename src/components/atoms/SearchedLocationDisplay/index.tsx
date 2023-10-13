@@ -26,7 +26,7 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
 
   return (
     <p className="searched-location flex items-center">
-      <MdLocationOn className="inline text-red-500" size={20} />
+      <MdLocationOn className="inline text-red-500 w-5 h-5" size={20} />
       {searchedRegion}
     </p>
   );

@@ -62,7 +62,7 @@ function Comment({ comment }: Props) {
       {reply && (
         <>
           <div className="flex items-center gap-1">
-            <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
+            <MdOutlineSubdirectoryArrowRight className="h-8 w-8 text-neutral-400" />
             <p>답글 달기</p>
           </div>
           <div className="flex items-center gap-3 mt-2">

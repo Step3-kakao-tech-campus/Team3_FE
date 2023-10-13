@@ -41,7 +41,7 @@ function RegionSearchBar({ searchParams }: PageSearchParams) {
             router.push(`/${queryString}`);
         }}
       >
-        <MdSearch size={28} color="white" className="m-auto" />
+        <MdSearch className="w-7 h-7 text-white m-auto" />
       </button>
     </div>
   );

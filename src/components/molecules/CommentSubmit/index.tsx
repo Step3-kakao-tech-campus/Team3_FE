@@ -35,7 +35,7 @@ function CommentSubmit({ commentRef, value, setValue, onClick }: Props) {
         value={value}
         onChange={handleOnChange}
       />
-      <MdSend size="36" className="text-neutral-400 cursor-pointer" onClick={onClick} />
+      <MdSend className="w-9 h-9 text-neutral-400 cursor-pointer" onClick={onClick} />
     </>
   );
 }
