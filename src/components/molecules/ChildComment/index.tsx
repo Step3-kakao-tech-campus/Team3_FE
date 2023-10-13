@@ -12,7 +12,7 @@ function ChildComment({ childComment }: Props): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-3">
-        <MdOutlineSubdirectoryArrowRight size="32" className="text-neutral-400" />
+        <MdOutlineSubdirectoryArrowRight className="w-8 h-8 text-neutral-400" />
         <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         <div className="flex-1">
           <CommentBlock comment={childComment} isChild={false} />

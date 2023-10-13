@@ -42,12 +42,8 @@ function AuthInput({ type, placeholder, className, onInputChange }: InputProps):
         {isPasswordField && (
           <button
             type="button"
-            className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 cursor-pointer"
+            className="w-6 h-6 absolute top-2 right-2 text-gray-600 hover:text-gray-800 cursor-pointer"
             onClick={toggleVisibility}
-            style={{
-              width: "24px",
-              height: "24px",
-            }}
           >
             {isVisible ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
           </button>

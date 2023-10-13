@@ -20,8 +20,9 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     if (countryId) queryParams.countryId = countryId;
     if (districtId) queryParams.districtId = districtId;
     if (all === "true" || all === "false") queryParams.all = all as string;
+    if (pageParam) queryParams.key = pageParam;
     const queryString = objectToQueryString(queryParams as Record<string, string | number>);
-    return getPosts(`${queryString}${pageParam ? `&key=${pageParam}` : ""}`);
+    return getPosts(queryString);
   };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
