@@ -7,15 +7,21 @@ import { useQuery } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateToStringByDash } from "@/utils/formatDateToString";
+import formatStringToDateByDash from "@/utils/formatStringToDate";
 import SimpleDatePicker from "../SimpleDatePicker";
 
 function RecordSearchBar(): JSX.Element {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const currentDate = new Date();
-  const threeMonthsAgoDate = new Date(currentDate);
+  const threeMonthsAgoDate = new Date();
   threeMonthsAgoDate.setMonth(currentDate.getMonth() - 3);
+  const searchParamStartDate = formatStringToDateByDash(searchParams.get("start") as string);
+  const searchParamEndDate = formatStringToDateByDash(searchParams.get("end") as string);
   const [cityId, setCityId] = useState(0);
-  const [startDate, setStartDate] = useState(threeMonthsAgoDate);
-  const [endDate, setEndDate] = useState(currentDate);
+  const [startDate, setStartDate] = useState(searchParamStartDate || threeMonthsAgoDate);
+  const [endDate, setEndDate] = useState(searchParamEndDate || currentDate);
 
   const { data } = useQuery({
     queryKey: ["cityId"],
@@ -23,8 +29,6 @@ function RecordSearchBar(): JSX.Element {
   });
   const cities = data?.data?.response?.cities ?? [];
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const handleOnClick = useCallback(() => {
     const searchParamObj = new URLSearchParams(searchParams);
     if (cityId) searchParamObj.set("cityId", cityId.toString());
