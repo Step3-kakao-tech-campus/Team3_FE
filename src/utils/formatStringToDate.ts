@@ -1,3 +1,8 @@
+/**
+ * "YYYY-MM-DD" 형식의 문자열을 해당 하는 날짜의 Date 객체로 변환하는 함수
+ * @param dateString Date 객체로 변환할 string
+ * @returns 변환된 Date || null
+ */
 function formatStringToDateByDash(dateString: string): Date | null {
   if (typeof dateString !== "string") return null;
 
