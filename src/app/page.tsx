@@ -10,7 +10,6 @@ import { BsPen } from "react-icons/bs";
 export default function Home({ searchParams }: PageSearchParams) {
   return (
     <main>
-      <Link href="/user_profile/1">프로필조회</Link>
       <InnerContainer>
         {/* 배너 이미지 추가 */}
         <div className="main-contents flex flex-col gap-2 m-10">
