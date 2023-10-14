@@ -1,6 +1,6 @@
 "use client";
 
-import { MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
+import { MdLocationOn, MdAlarm } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
@@ -9,6 +9,8 @@ import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateT
 import Button from "@/components/atoms/Button";
 import CommentForm from "@/components/organisms/CommentForm";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import PostEditor from "@/components/molecules/PostEditor";
+import { getCookie } from "@/utils/Cookie";
 
 interface Props {
   id: string;
@@ -16,6 +18,7 @@ interface Props {
 
 function PostTemplates({ id }: Props): JSX.Element {
   const parameter = parseInt(id, 10);
+  const userId = parseInt(getCookie("userId"), 10);
 
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
     onError: (error) => {
@@ -50,16 +53,7 @@ function PostTemplates({ id }: Props): JSX.Element {
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
-        <div className="flex text-neutral-500 gap-3">
-          <span className="flex items-center cursor-pointer">
-            <MdOutlineEdit />
-            수정
-          </span>
-          <span className="flex items-center cursor-pointer">
-            <MdOutlineDelete />
-            삭제
-          </span>
-        </div>
+        {userId === post.userId && <PostEditor id={parameter} />}
       </div>
       <hr className="mt-6" />
       <p className="flex mt-4 items-center gap-3">
