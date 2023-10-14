@@ -2,6 +2,7 @@
 
 import { deleteRejectApplicant, getCheckStatus, postApply } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { getCookie } from "@/utils/Cookie";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -17,9 +18,9 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
 
   const router = useRouter();
 
-  const { data } = useQuery([`/api/posts${postId}/applicants/check-status`, postId], () => getCheckStatus(postId));
+  const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId));
 
-  const { mutate: applyMutate } = useMutation({ mutationFn: postApply });
+  const { mutate: applyMutate, queryClient } = useMutateWithQueryClient(postApply);
   const { mutate: deleteMutate } = useMutation({ mutationFn: deleteRejectApplicant });
 
   const [isApplied, setIsApplied] = useState<boolean | null>(null);
@@ -31,6 +32,7 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
   const handleApply = () => {
     applyMutate(postId, {
       onSuccess: () => {
+        queryClient.invalidateQueries([`/api/posts/${postId}/applicants/check-status`, postId]);
         setIsApplied(true);
       },
       onError: (error) => {
@@ -41,7 +43,7 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
 
   const handleDeleteApply = () => {
     deleteMutate(
-      { postId, applicantId: userId },
+      { postId, applicantId: data?.data?.response.applicantId },
       {
         onSuccess: () => {
           setIsApplied(false);
