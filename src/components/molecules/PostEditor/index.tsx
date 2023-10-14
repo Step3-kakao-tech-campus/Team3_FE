@@ -14,7 +14,7 @@ function PostEditor({ id }: Props) {
 
   const handleDelete = () => {
     mutate(
-      { id: id },
+      { id },
       {
         onSuccess: () => {
           router.refresh();
@@ -29,14 +29,14 @@ function PostEditor({ id }: Props) {
 
   return (
     <div className="flex text-neutral-500 gap-3">
-      <span className="flex items-center cursor-pointer">
+      <button type="button" className="flex items-center cursor-pointer">
         <MdOutlineEdit />
         수정
-      </span>
-      <span className="flex items-center cursor-pointer" onClick={handleDelete}>
+      </button>
+      <button type="button" className="flex items-center cursor-pointer" onClick={handleDelete}>
         <MdOutlineDelete />
         삭제
-      </span>
+      </button>
     </div>
   );
 }
