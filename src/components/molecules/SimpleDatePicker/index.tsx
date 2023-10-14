@@ -10,9 +10,10 @@ interface Props {
   value: Date;
   setValue: React.Dispatch<SetStateAction<Date>>;
   minDate?: Date;
+  maxDate?: Date;
 }
 
-function SimpleDatePicker({ value, setValue, minDate }: Props) {
+function SimpleDatePicker({ value, setValue, minDate, maxDate }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -27,9 +28,7 @@ function SimpleDatePicker({ value, setValue, minDate }: Props) {
         styleType="outlined-gray"
         rounded="full"
         size="sm"
-        fontSize="md"
         fontWeight="normal"
-        noLineHeight
         onClick={() => {
           setIsOpen((prev) => !prev);
         }}
@@ -42,6 +41,7 @@ function SimpleDatePicker({ value, setValue, minDate }: Props) {
             locale="ko"
             value={value}
             minDate={minDate}
+            maxDate={maxDate}
             onChange={(selectedData) => {
               setValue(selectedData as Date);
               setIsOpen(false);
