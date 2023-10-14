@@ -2,18 +2,21 @@
 
 import { getProfileById } from "@/apis/profile";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import { getClientUserId } from "@/utils/Cookie";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
 
 function ProfileModalTemplate(): JSX.Element {
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
   const pageParam = useParams();
+  const pageUserId = parseInt(pageParam.user_id as string, 10);
+  const isMyProfile = getClientUserId() === pageUserId;
   const { data } = useQuery({
-    queryKey: ["userProfile", pageParam.user_id],
-    queryFn: () => getProfileById(parseInt(pageParam.user_id as string, 10)),
+    queryKey: ["userProfile", pageUserId],
+    queryFn: () => getProfileById(pageUserId),
   });
-
+  const router = useRouter();
   const user = data?.data?.response;
 
   return (
@@ -33,19 +36,48 @@ function ProfileModalTemplate(): JSX.Element {
             <span>매너점수</span>
             <span>{`★ ${user?.rating ? `${user?.rating} / 5` : "없음"}`}</span>
           </div>
-          {/* 내 프로필이라면 내 정보 수정 페이지 Link 추가 */}
+          {isMyProfile && (
+            <div className="button_container ml-auto">
+              <button
+                type="button"
+                className="text-sm underline"
+                onClick={() => {
+                  router.push(`/close_modal`);
+                  router.refresh();
+                  router.replace(`/내정보수정페이지`);
+                }}
+              >
+                내 정보 수정
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="profile-modal-lower flex flex-col gap-4 p-7">
-        <button type="button" className={buttonStyle}>
+        <button
+          type="button"
+          className={buttonStyle}
+          onClick={() => {
+            router.push(`/close_modal`);
+            router.refresh();
+            router.replace(`/쪽지페이지(내쪽지함or다른사람과의쪽지페이지)`);
+          }}
+        >
           <MdMail />
-          쪽지 보내기
+          {isMyProfile ? "내 쪽지함" : "쪽지 보내기"}
         </button>
-        <button type="button" className={buttonStyle}>
+        <button
+          type="button"
+          className={buttonStyle}
+          onClick={() => {
+            router.push(`/close_modal`);
+            router.refresh();
+            router.replace(`/scoreboard/${pageUserId}`);
+          }}
+        >
           <MdLeaderboard />
           참여 기록
         </button>
-        {/* 내 프로필이라면 내 쪽지함, 참여 기록 Link로 두 버튼 대체 */}
       </div>
     </div>
   );
