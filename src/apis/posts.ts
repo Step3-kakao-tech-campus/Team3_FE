@@ -22,3 +22,8 @@ export async function getPostById(id: number) {
   const response = await client.get(`/api/posts/${id}`);
   return response;
 }
+
+export async function deletePost({ id }: { id: number }) {
+  const response = await client.delete(`/api/posts/${id}`);
+  return response;
+}
