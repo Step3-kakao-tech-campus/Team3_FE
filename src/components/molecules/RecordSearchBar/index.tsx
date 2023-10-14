@@ -8,9 +8,12 @@ import { useState } from "react";
 import SimpleDatePicker from "../SimpleDatePicker";
 
 function RecordSearchBar(): JSX.Element {
+  const currentDate = new Date();
+  const threeMonthsAgoDate = new Date(currentDate);
+  threeMonthsAgoDate.setMonth(currentDate.getMonth() - 3);
   const [cityId, setCityId] = useState(0);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(threeMonthsAgoDate);
+  const [endDate, setEndDate] = useState(currentDate);
   const { data } = useQuery({
     queryKey: ["cityId"],
     queryFn: getCities,
@@ -27,11 +30,12 @@ function RecordSearchBar(): JSX.Element {
           }}
           styleType="small"
           options={[{ id: 0, name: "전체 지역" }, ...cities]}
+          selectedOptionId={cityId}
         />
       </div>
       <div className="period-dropdown flex gap-2 items-center">
-        <SimpleDatePicker value={startDate} setValue={setStartDate} />
-        <SimpleDatePicker minDate={startDate} value={endDate} setValue={setEndDate} />
+        <SimpleDatePicker value={startDate} setValue={setStartDate} maxDate={currentDate} />
+        <SimpleDatePicker value={endDate} setValue={setEndDate} minDate={startDate} maxDate={currentDate} />
       </div>
       <div>
         <Button styleType="thunder" fontWeight="normal" size="sm" rounded="full">
