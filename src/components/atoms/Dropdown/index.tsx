@@ -8,14 +8,7 @@ interface Props {
   selectedOptionId?: number;
 }
 
-function Dropdown({
-  options,
-  onChange,
-  placeholder,
-  styleType,
-  selectedOptionId = -1,
-  useNameToValue,
-}: Props): JSX.Element {
+function Dropdown({ options, onChange, placeholder, styleType, selectedOptionId = -1 }: Props): JSX.Element {
   const styleObj = {
     small: "rounded-full text-center p-1 w-[150px]",
     big: "rounded-3xl p-4 w-[180px] text-xl text-center shadow-lg",
