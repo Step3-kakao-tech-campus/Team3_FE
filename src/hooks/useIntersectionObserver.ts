@@ -1,11 +1,10 @@
-import { RefObject, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 function useIntersectionObserver(
-  targetRef: RefObject<HTMLElement>,
   handleIntersect: ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => any,
 ) {
   const observer = useMemo(() => new IntersectionObserver(handleIntersect), [handleIntersect]);
-
+  const targetRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const target = targetRef.current;
     if (target) {
@@ -15,6 +14,7 @@ function useIntersectionObserver(
       return observer.disconnect();
     };
   }, [targetRef, observer]);
+  return { targetRef };
 }
 
 export default useIntersectionObserver;
