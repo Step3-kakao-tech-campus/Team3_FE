@@ -9,7 +9,7 @@ import { getCookie } from "@/utils/Cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
@@ -26,7 +26,13 @@ function RecordCard({ data }: Props): JSX.Element {
   const members = data?.members;
   const scores = data?.scores;
   const clientUserId = getCookie("userId");
-  const isMyRecord = clientUserId === parseInt(params.user_id as string, 10) && pathname.startsWith("/scoreboard");
+
+  const [isMyRecord, setIsMyRecord] = useState(clientUserId === parseInt(params.user_id as string, 10));
+  useEffect(() => {
+    if (pathname.startsWith("/scoreboard")) {
+      setIsMyRecord(clientUserId === parseInt(params.user_id as string, 10));
+    }
+  }, [clientUserId, params.user_id, pathname]);
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
