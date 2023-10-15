@@ -29,7 +29,13 @@ function PostEditor({ id }: Props) {
 
   return (
     <div className="flex text-neutral-500 gap-3">
-      <button type="button" className="flex items-center cursor-pointer">
+      <button
+        type="button"
+        className="flex items-center cursor-pointer"
+        onClick={() => {
+          router.push(`/post/${id}/edit`);
+        }}
+      >
         <MdOutlineEdit />
         수정
       </button>
