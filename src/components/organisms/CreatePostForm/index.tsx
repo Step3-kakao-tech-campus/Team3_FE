@@ -52,7 +52,7 @@ function CreatePostForm(): JSX.Element {
       };
       mutate(payload, {
         onSuccess: (res) => {
-          router.push(`/post/${res.data.response.id}`);
+          router.replace(`/post/${res.data.response.id}`);
         },
         onError: (error) => {
           console.log(error);
