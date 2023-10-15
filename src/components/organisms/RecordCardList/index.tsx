@@ -8,7 +8,7 @@ import { ScoreboardSearchParams } from "@/types/scoreboardSearchParams";
 import isValidDateFormatByDash from "@/utils/validDateStringFormat";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, useParams, useSearchParams } from "next/navigation";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 
 function RecordCardList(): JSX.Element {
   const params = useParams();
@@ -49,8 +49,6 @@ function RecordCardList(): JSX.Element {
     },
   );
 
-  const target = useRef<HTMLDivElement>(null);
-
   const handleIntersect = useCallback(
     async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entry.isIntersecting) {
@@ -64,7 +62,7 @@ function RecordCardList(): JSX.Element {
     [fetchNextPage, hasNextPage],
   );
 
-  useIntersectionObserver(target, handleIntersect);
+  const { targetRef } = useIntersectionObserver(handleIntersect);
 
   return (
     <div className="record-card-list flex flex-col gap-5">
@@ -79,7 +77,7 @@ function RecordCardList(): JSX.Element {
           검색된 참여 기록이 없습니다. 더 넓은 범위로 검색해 보세요.
         </p>
       )}
-      {hasNextPage && <div className="observe-area" ref={target} />}
+      {hasNextPage && <div className="observe-area" ref={targetRef} />}
     </div>
   );
 }
