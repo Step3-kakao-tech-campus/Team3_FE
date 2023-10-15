@@ -5,7 +5,7 @@ import { ScoreboardSearchParams } from "@/types/scoreboardSearchParams";
 import isValidDateFormatByDash from "@/utils/validDateStringFormat";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, useParams, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 function RecordCardList(): JSX.Element {
   const params = useParams();
@@ -46,7 +46,36 @@ function RecordCardList(): JSX.Element {
     },
   );
 
-  return <div>RecordCardList</div>;
+  const target = useRef<HTMLDivElement>(null);
+
+  const handleIntersect = useCallback(
+    async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        if (hasNextPage) {
+          await fetchNextPage();
+        }
+        observer.observe(entry.target);
+      }
+    },
+    [fetchNextPage, hasNextPage],
+  );
+
+  const observer = useMemo(() => new IntersectionObserver(handleIntersect), [handleIntersect]);
+
+  useEffect(() => {
+    if (target.current) {
+      observer.observe(target.current);
+    }
+    return () => observer.disconnect();
+  }, [target, data, observer]);
+
+  return (
+    <div>
+      <span>RecordCardList</span>
+      {hasNextPage && <div className="observe-area" ref={target} />}
+    </div>
+  );
 }
 
 export default RecordCardList;
