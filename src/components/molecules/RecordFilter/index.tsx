@@ -1,19 +1,22 @@
 "use client";
 
 import Button from "@/components/atoms/Button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 function RecordFilter(): JSX.Element {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [condition, setCondition] = useState(searchParams.get("condition") || "all");
   const [status, setStatus] = useState(searchParams.get("status") || "all");
 
   useEffect(() => {
-    setCondition(searchParams.get("condition") || "all");
-    setStatus(searchParams.get("status") || "all");
-  }, [searchParams]);
+    if (pathname.startsWith("/scoreboard")) {
+      setCondition(searchParams.get("condition") || "all");
+      setStatus(searchParams.get("status") || "all");
+    }
+  }, [pathname, searchParams]);
 
   const handleCondition = useCallback(
     (newCondition: "all" | "created" | "participated") => {
