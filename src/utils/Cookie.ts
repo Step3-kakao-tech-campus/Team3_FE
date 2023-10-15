@@ -13,7 +13,3 @@ export const getCookie = (name: string) => {
 export const removeCookie = (name: string) => {
   cookie.remove(name, { path: "/" });
 };
-
-export const getClientUserId = () => {
-  return getCookie("userId");
-};

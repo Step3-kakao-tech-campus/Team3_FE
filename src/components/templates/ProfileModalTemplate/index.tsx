@@ -2,7 +2,7 @@
 
 import { getProfileById } from "@/apis/profile";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
-import { getClientUserId } from "@/utils/Cookie";
+import { getCookie } from "@/utils/Cookie";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
@@ -11,7 +11,7 @@ function ProfileModalTemplate(): JSX.Element {
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
   const pageParam = useParams();
   const pageUserId = parseInt(pageParam.user_id as string, 10);
-  const isMyProfile = getClientUserId() === pageUserId;
+  const isMyProfile = getCookie("userId") === pageUserId;
   const { data } = useQuery({
     queryKey: ["userProfile", pageUserId],
     queryFn: () => getProfileById(pageUserId),
