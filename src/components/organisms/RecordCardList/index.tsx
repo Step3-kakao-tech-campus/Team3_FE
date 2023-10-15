@@ -1,11 +1,14 @@
 "use client";
 
 import getParticipationRecord from "@/apis/record";
+import RecordCard from "@/components/molecules/RecordCard";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { RecordData } from "@/types/recordData";
 import { ScoreboardSearchParams } from "@/types/scoreboardSearchParams";
 import isValidDateFormatByDash from "@/utils/validDateStringFormat";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ReadonlyURLSearchParams, useParams, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 function RecordCardList(): JSX.Element {
   const params = useParams();
@@ -61,18 +64,21 @@ function RecordCardList(): JSX.Element {
     [fetchNextPage, hasNextPage],
   );
 
-  const observer = useMemo(() => new IntersectionObserver(handleIntersect), [handleIntersect]);
-
-  useEffect(() => {
-    if (target.current) {
-      observer.observe(target.current);
-    }
-    return () => observer.disconnect();
-  }, [target, data, observer]);
+  useIntersectionObserver(target, handleIntersect);
 
   return (
-    <div>
-      <span>RecordCardList</span>
+    <div className="record-card-list flex flex-col gap-5">
+      {data?.pages[0]?.data?.response?.posts?.length ? (
+        data?.pages?.map((page) => {
+          return page?.data?.response?.posts?.map((post: RecordData) => {
+            return <RecordCard data={post} key={post.id} />;
+          });
+        })
+      ) : (
+        <p className="no-post-search-result my-10 text-center center text-2xl text-neutral-500">
+          검색된 참여 기록이 없습니다. 더 넓은 범위로 검색해 보세요.
+        </p>
+      )}
       {hasNextPage && <div className="observe-area" ref={target} />}
     </div>
   );
