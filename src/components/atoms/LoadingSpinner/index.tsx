@@ -2,7 +2,7 @@ interface Prop {
   styleType?: "xl" | "lg" | "md" | "sm";
 }
 
-function LoadingSpinner({ styleType = "md" }: Prop) {
+function LoadingSpinner({ styleType = "md" }: Prop): JSX.Element {
   const tailwindKeyword = {
     xl: "w-14 h-14",
     lg: "w-10 h-10",

@@ -10,7 +10,7 @@ interface Props {
   data: PostData;
 }
 
-function PostCard({ data }: Props) {
+function PostCard({ data }: Props): JSX.Element {
   return (
     <Link
       href={`/post/${data.id}`}

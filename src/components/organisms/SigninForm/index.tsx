@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import InputBox from "@/components/molecules/InputBox";
@@ -15,16 +15,17 @@ import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
 import { useAppDispatch } from "@/stores/hooks";
 import { postLogin } from "@/apis/sign";
 
-function SigninForm() {
+function SigninForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const errRef = useRef<HTMLParagraphElement>(null);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [errMsg, setErrMsg] = useState("");
 
-  const handleInputChange = (fieldName: any, value: any) => {
+  const handleInputChange = (fieldName: any, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: value,
@@ -33,14 +34,13 @@ function SigninForm() {
 
   const handleSubmit = useCallback(async () => {
     if (!formData.email || !formData.password) {
-      errRef.current!.innerHTML = "모든 항목을 입력해주세요.";
+      setErrMsg("모든 항목을 입력해주세요.");
     } else if (!validateEmail(formData.email)) {
-      errRef.current!.innerHTML = "이메일 형식이 올바르지 않습니다.";
+      setErrMsg("이메일 형식이 올바르지 않습니다.");
     } else if (!validatePassword(formData.password)) {
-      errRef.current!.innerHTML = "비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.";
+      setErrMsg("비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.");
     } else {
       try {
-        errRef.current!.innerHTML = "";
         const response = await postLogin(formData);
         const payload = getTokenPayload(response.headers.authorization);
         // 토큰 만료시간 설정
@@ -97,7 +97,7 @@ function SigninForm() {
         />
       </div>
       <div>
-        <p className="text-red-500 text-sm whitespace-pre-line" ref={errRef} />
+        <p className="text-[#ff003e] text-sm whitespace-pre-line">{errMsg}</p>
       </div>
       <BlankBar />
 

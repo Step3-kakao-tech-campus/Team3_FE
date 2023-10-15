@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-function Provider({ children }: Props) {
+function QueryProvider({ children }: Props) {
   const [client] = React.useState(
     new QueryClient({
       defaultOptions: {
@@ -23,4 +23,4 @@ function Provider({ children }: Props) {
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
 
-export default Provider;
+export default QueryProvider;

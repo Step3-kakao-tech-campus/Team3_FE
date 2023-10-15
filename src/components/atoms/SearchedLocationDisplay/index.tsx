@@ -4,7 +4,7 @@ import useRegionQueries from "@/hooks/useRegionQueries";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { MdLocationOn } from "react-icons/md";
 
-function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
+function SearchedLocationDisplay({ searchParams }: PageSearchParams): JSX.Element {
   const cityId = searchParams?.cityId ? parseInt(searchParams?.cityId, 10) || 0 : 0;
   const countryId = searchParams?.countryId ? parseInt(searchParams?.countryId, 10) || 0 : 0;
   const districtId = searchParams?.districtId ? parseInt(searchParams?.districtId, 10) || 0 : 0;
@@ -16,10 +16,9 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
   const districts = queries[2]?.data?.data?.response?.districts || [];
 
   const cityName = cities.filter((option: { id: number; name: string }) => option.id === cityId)[0]?.name || "전체";
-  const countryName =
-    countries.filter((option: { id: number; name: string }) => option.id === countryId)[0]?.name || "전체";
+  const countryName = countries.find((option: { id: number; name: string }) => option.id === countryId)?.name || "전체";
   const districtName =
-    districts.filter((option: { id: number; name: string }) => option.id === districtId)[0]?.name || "전체";
+    districts.find((option: { id: number; name: string }) => option.id === districtId)?.name || "전체";
 
   const searchedRegion = `${cityName} ${cityName !== "전체" ? countryName : ""} ${
     cityName !== "전체" && countryName !== "전체" ? districtName : ""
@@ -27,7 +26,7 @@ function SearchedLocationDisplay({ searchParams }: PageSearchParams) {
 
   return (
     <p className="searched-location flex items-center">
-      <MdLocationOn className="inline text-red-500" size={20} />
+      <MdLocationOn className="inline text-red-500 w-5 h-5" size={20} />
       {searchedRegion}
     </p>
   );

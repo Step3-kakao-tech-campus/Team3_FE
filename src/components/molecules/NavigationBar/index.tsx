@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { setLogin, getTokenPayload, deleteToken } from "@/utils/user";
 import { postAuthentication } from "@/apis/sign";
 
-function NavigationBar() {
+function NavigationBar(): JSX.Element {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const expiryDate = useAppSelector((state) => state.expiryDate);
