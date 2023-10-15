@@ -6,11 +6,11 @@ import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
-import Button from "@/components/atoms/Button";
 import CommentForm from "@/components/organisms/CommentForm";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import PostEditor from "@/components/molecules/PostEditor";
 import { getCookie } from "@/utils/Cookie";
+import ApplyButton from "@/components/molecules/ApplyButton";
 
 interface Props {
   id: string;
@@ -66,9 +66,7 @@ function PostTemplates({ id }: Props): JSX.Element {
       </p>
       <pre className="whitespace-pre-wrap mt-4 break-all">{post.content}</pre>
       <div className="mt-4 flex flex-row-reverse">
-        <Button styleType="thunder" rounded="md" size="sm">
-          신청하기
-        </Button>
+        <ApplyButton postId={parameter} authorId={post.userId} />
       </div>
       <hr className="mt-6" />
       <CommentForm id={parameter} />

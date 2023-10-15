@@ -25,7 +25,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
 
   const handleReject = useCallback(async () => {
     try {
-      await deleteRejectApplicant(postId, applicantId);
+      await deleteRejectApplicant({ postId, applicantId });
       setApprovalStatus("rejected");
     } catch {
       alert("거절 요청이 실패했습니다.");
