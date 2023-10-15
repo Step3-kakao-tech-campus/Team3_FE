@@ -1,6 +1,6 @@
 "use client";
 
-import getParticipationRecord from "@/apis/record";
+import { getParticipationRecord } from "@/apis/record";
 import RecordCard from "@/components/molecules/RecordCard";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { RecordData } from "@/types/recordData";
