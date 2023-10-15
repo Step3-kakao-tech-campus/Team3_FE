@@ -1,23 +1,24 @@
 "use client";
 
-import { MdArrowBack, MdLocationOn, MdOutlineEdit, MdOutlineDelete, MdAlarm } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { MdLocationOn, MdAlarm } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
-import Button from "@/components/atoms/Button";
 import CommentForm from "@/components/organisms/CommentForm";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import PostEditor from "@/components/molecules/PostEditor";
+import { getCookie } from "@/utils/Cookie";
+import ApplyButton from "@/components/molecules/ApplyButton";
 
 interface Props {
   id: string;
 }
 
-function PostTemplates({ id }: Props) {
-  const router = useRouter();
+function PostTemplates({ id }: Props): JSX.Element {
   const parameter = parseInt(id, 10);
+  const userId = parseInt(getCookie("userId"), 10);
 
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
     onError: (error) => {
@@ -27,20 +28,14 @@ function PostTemplates({ id }: Props) {
 
   const post = data?.data?.response.post || {};
 
-  const handleBack = () => {
-    router.refresh();
-    router.push("/");
-  };
-
   return (
     <div>
-      <MdArrowBack onClick={handleBack} size="30" className="cursor-pointer" />
       <div className="flex justify-between mt-6">
         <Badge isClose={post.isClose} />
         <div className="flex items-center">
           <Participant currentNumber={post.currentNumber} />
           <p className="searched-location flex items-center">
-            <MdLocationOn className="inline text-red-500" size={20} />
+            <MdLocationOn className="inline text-red-500 w-5 h-5" />
             {post.districtName}
           </p>
         </div>
@@ -54,17 +49,11 @@ function PostTemplates({ id }: Props) {
           />
           <span className="ml-1">{post.userName}</span>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
-        </div>
-        <div className="flex text-neutral-500 gap-3">
-          <span className="flex items-center cursor-pointer">
-            <MdOutlineEdit />
-            수정
-          </span>
-          <span className="flex items-center cursor-pointer">
-            <MdOutlineDelete />
-            삭제
+          <span className="ml-2 text-neutral-400 text-sm">
+            조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
+        {userId === post.userId && <PostEditor id={parameter} />}
       </div>
       <hr className="mt-6" />
       <p className="flex mt-4 items-center gap-3">
@@ -77,9 +66,7 @@ function PostTemplates({ id }: Props) {
       </p>
       <pre className="whitespace-pre-wrap mt-4 break-all">{post.content}</pre>
       <div className="mt-4 flex flex-row-reverse">
-        <Button styleType="thunder" rounded="md" size="sm">
-          신청하기
-        </Button>
+        <ApplyButton postId={parameter} authorId={post.userId} />
       </div>
       <hr className="mt-6" />
       <CommentForm id={parameter} />

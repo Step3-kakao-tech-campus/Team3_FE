@@ -10,30 +10,27 @@ interface Prop {
   applicantData: Applicant;
 }
 
-function ApplicantBlock({ postId, applicantData }: Prop) {
+function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
-  const handleAcceptReject = useCallback(
-    async (type: "accept" | "reject") => {
-      if (type === "accept") {
-        try {
-          await putAcceptApplicant(postId, applicantId);
-          setApprovalStatus("accepted");
-        } catch {
-          alert("수락 요청이 실패했습니다.");
-        }
-      } else {
-        try {
-          await deleteRejectApplicant(postId, applicantId);
-          setApprovalStatus("rejected");
-        } catch {
-          alert("거절 요청이 실패했습니다.");
-        }
-      }
-    },
-    [postId, applicantId],
-  );
+  const handleAccept = useCallback(async () => {
+    try {
+      await putAcceptApplicant(postId, applicantId);
+      setApprovalStatus("accepted");
+    } catch {
+      alert("수락 요청이 실패했습니다.");
+    }
+  }, [postId, applicantId]);
+
+  const handleReject = useCallback(async () => {
+    try {
+      await deleteRejectApplicant({ postId, applicantId });
+      setApprovalStatus("rejected");
+    } catch {
+      alert("거절 요청이 실패했습니다.");
+    }
+  }, [postId, applicantId]);
 
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
@@ -61,10 +58,10 @@ function ApplicantBlock({ postId, applicantData }: Prop) {
         )}
         {approvalStatus === "pending" && (
           <>
-            <Button styleType="outlined-gray" size="sm" rounded="full" onClick={() => handleAcceptReject("reject")}>
+            <Button styleType="outlined-gray" size="sm" rounded="full" onClick={() => handleReject()}>
               <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
             </Button>
-            <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleAcceptReject("accept")}>
+            <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleAccept()}>
               <span className="block text-sm font-normal min-w-[40px]">수락</span>
             </Button>
           </>

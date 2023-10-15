@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { MdClose } from "react-icons/md";
 
@@ -9,9 +9,7 @@ interface Props {
   noPadding?: boolean;
 }
 
-function Modal({ children, noPadding }: Props) {
-  const overlay = useRef(null);
-  const wrapper = useRef(null);
+function Modal({ children, noPadding }: Props): JSX.Element {
   const router = useRouter();
 
   const onDismiss = useCallback(() => {
@@ -31,9 +29,8 @@ function Modal({ children, noPadding }: Props) {
   }, [onKeyDown]);
 
   return (
-    <div ref={overlay} className="fixed z-10 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
+    <div className="fixed z-10 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
       <div
-        ref={wrapper}
         className={`relative bg-white rounded-2xl border-[#868484] shadow-2xl overflow-clip ${
           noPadding ? "p-0" : "p-6"
         }`}

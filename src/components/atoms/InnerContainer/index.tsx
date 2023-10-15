@@ -2,7 +2,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-function InnerContainer({ children }: Props) {
+function InnerContainer({ children }: Props): JSX.Element {
   return <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">{children}</div>;
 }
 
