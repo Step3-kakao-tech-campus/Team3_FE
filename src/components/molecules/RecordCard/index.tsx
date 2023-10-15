@@ -8,7 +8,7 @@ import { RecordData } from "@/types/recordData";
 import { getCookie } from "@/utils/Cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
@@ -19,13 +19,14 @@ interface Props {
 }
 
 function RecordCard({ data }: Props): JSX.Element {
+  const pathname = usePathname();
   const params = useParams();
   const [isExpand, setIsExpand] = useState(false);
 
   const members = data?.members;
   const scores = data?.scores;
   const clientUserId = getCookie("userId");
-  const isMyRecord = clientUserId === parseInt(params.user_id as string, 10);
+  const isMyRecord = clientUserId === parseInt(params.user_id as string, 10) && pathname.startsWith("/scoreboard");
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
