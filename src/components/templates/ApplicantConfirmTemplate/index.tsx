@@ -38,7 +38,7 @@ function ApplicantConfirmTemplate(): JSX.Element {
     if (isError) {
       return errorComponent;
     }
-    if (response?.participantNumber === 0) {
+    if (response?.applicantNumber === 0) {
       return noApplicantComponent;
     }
     return response?.applicants?.map((applicant: Applicant) => {
@@ -51,7 +51,7 @@ function ApplicantConfirmTemplate(): JSX.Element {
     noApplicantComponent,
     postId,
     response?.applicants,
-    response?.participantNumber,
+    response?.applicantNumber,
   ]);
 
   return (
@@ -59,7 +59,7 @@ function ApplicantConfirmTemplate(): JSX.Element {
       <h1 className="text-2xl">신청자 확인</h1>
       {!isError && (
         <div className="applicant-number-with-button flex justify-between items-center">
-          <span>총 {response?.participantNumber}건의 신청 요청이 있습니다.</span>
+          <span>총 {response?.applicantNumber}건의 신청 요청이 있습니다.</span>
           <Button styleType="thunder" size="sm" rounded="full">
             마감하기
           </Button>
