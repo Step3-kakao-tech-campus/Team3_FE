@@ -14,7 +14,7 @@ function RecordCardList(): JSX.Element {
   const pathname = usePathname();
   const params = useParams();
   const searchParams = useSearchParams();
-  const pageUserId = parseInt(params.user_id as string, 10) || 0;
+  const pageUserId = parseInt(params.scoreboard_user_id as string, 10) || 0;
 
   const [queryKey, setQueryKey] = useState([
     `/api/posts/users/${pageUserId}/participation-records`,
