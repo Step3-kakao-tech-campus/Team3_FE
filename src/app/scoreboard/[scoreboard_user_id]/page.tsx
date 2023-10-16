@@ -3,13 +3,13 @@ import ScoreboardTemplate from "@/components/templates/ScoreboardTemplate";
 
 interface Props {
   params: {
-    user_id: number;
+    scoreboard_user_id: number;
   };
 }
 function ScoreboardPage({ params }: Props) {
   return (
     <BackArrowContainer>
-      <ScoreboardTemplate userId={params.user_id} />
+      <ScoreboardTemplate userId={params.scoreboard_user_id} />
     </BackArrowContainer>
   );
 }
