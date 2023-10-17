@@ -30,7 +30,6 @@ function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
       scoreImage: selectedFile,
       isValid: !scoreError && !fileError,
     };
-    if (scoreData.isNew === false) newData.isNew = true;
     if (scoreData.isModified === false) newData.isModified = true;
     onUpdate(newData);
   };
