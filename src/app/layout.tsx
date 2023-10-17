@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Background from "@/components/atoms/Background";
 import NavigationBar from "@/components/molecules/NavigationBar";
-import Providers from "@/stores/provider";
 import { Noto_Sans_KR } from "next/font/google";
 import InnerContainer from "@/components/atoms/InnerContainer";
 import QueryProvider from "@/utils/queryProvider";
@@ -27,15 +26,13 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       </head>
 
       <body className={`bg-[#F6F6F6] ${notoSans.className}`}>
-        <Providers>
-          <QueryProvider>
-            <NavigationBar />
-            <Background>
-              <InnerContainer>{children}</InnerContainer>
-            </Background>
-            {modal}
-          </QueryProvider>
-        </Providers>
+        <QueryProvider>
+          <NavigationBar />
+          <Background>
+            <InnerContainer>{children}</InnerContainer>
+          </Background>
+          {modal}
+        </QueryProvider>
       </body>
     </html>
   );
