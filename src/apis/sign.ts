@@ -7,28 +7,27 @@ interface UserData {
   districtId?: number;
 }
 
-export const postRegister = (data: UserData) => {
-  const { email, password, name, districtId } = data;
-  return client.post("/api/join", {
-    email,
-    password,
-    name,
-    districtId,
-  });
-};
+export async function postRegister(data: UserData) {
+  const response = await client.post("/api/join", data);
 
-export const postLogin = (data: UserData) => {
+  return response;
+}
+
+export async function postLogin(data: UserData) {
   const { email, password } = data;
-  return client.post("/api/login", {
+  const response = await client.post("/api/login", {
     email,
     password,
   });
-};
+  return response;
+}
 
-export const postLogout = () => {
-  return client.post("/api/logout");
-};
+export async function postLogout() {
+  const response = await client.post("/api/logout");
+  return response;
+}
 
-export const postAuthentication = () => {
-  return client.post("/api/authentication");
-};
+export async function postAuthentication() {
+  const response = await client.post("/api/authentication");
+  return response;
+}
