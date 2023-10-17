@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   scoreData: ScoreData;
-  onUpdate: any;
-  onRemove: any;
+  onUpdate: (scoreFromInput: ScoreData) => void;
+  onRemove: () => void;
 }
 
 function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
@@ -24,12 +24,15 @@ function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
   const isFileSelected = selectedFile && true;
 
   const handleUpdate = () => {
-    onUpdate({
+    const newData: ScoreData = {
       id: scoreData.id,
       scoreNum: scoreValue,
       scoreImage: selectedFile,
       isValid: !scoreError && !fileError,
-    });
+    };
+    if (scoreData.isNew === false) newData.isNew = true;
+    if (scoreData.isModified === false) newData.isModified = true;
+    onUpdate(newData);
   };
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
