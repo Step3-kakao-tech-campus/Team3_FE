@@ -1,28 +1,21 @@
 "use client";
 
 import Button from "@/components/atoms/Button";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useState } from "react";
 
 function RecordFilter(): JSX.Element {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [condition, setCondition] = useState(searchParams.get("condition") || "all");
   const [status, setStatus] = useState(searchParams.get("status") || "all");
-
-  useEffect(() => {
-    if (pathname.startsWith("/scoreboard")) {
-      setCondition(searchParams.get("condition") || "all");
-      setStatus(searchParams.get("status") || "all");
-    }
-  }, [pathname, searchParams]);
 
   const handleCondition = useCallback(
     (newCondition: "all" | "created" | "participated") => {
       const searchParamObj = new URLSearchParams(searchParams);
       searchParamObj.set("condition", newCondition);
       const queryString = searchParamObj.toString();
+      setCondition(searchParamObj.get("condition") || "all");
       router.push(`?${queryString}`);
     },
     [router, searchParams],
@@ -32,6 +25,7 @@ function RecordFilter(): JSX.Element {
       const searchParamObj = new URLSearchParams(searchParams);
       searchParamObj.set("status", newStatus);
       const queryString = searchParamObj.toString();
+      setStatus(searchParamObj.get("status") || "all");
       router.push(`?${queryString}`);
     },
     [router, searchParams],
