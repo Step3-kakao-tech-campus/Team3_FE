@@ -2,12 +2,19 @@
 
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
+import { ScoreData } from "@/types/score";
 import { useEffect, useRef, useState } from "react";
 
-function ScoreInput({ scoreData, onUpdate, onRemove }) {
+interface Props {
+  scoreData: ScoreData;
+  onUpdate: any;
+  onRemove: any;
+}
+
+function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [scoreValue, setScoreValue] = useState<number>(scoreData.scoreNum);
-  const [selectedFile, setSelectedFile] = useState<File | null>(scoreData.scoreImage);
+  const [selectedFile, setSelectedFile] = useState<ScoreData["scoreImage"]>(scoreData.scoreImage);
   const [scoreError, setScoreError] = useState("");
   const [fileError, setFileError] = useState("");
 
