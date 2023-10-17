@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-function PreserveLink({ href, children, className }: Props) {
+function ModalLink({ href, children, className }: Props) {
   const searchParam = useSearchParams();
   const queryString = searchParam.toString() && `?${searchParam.toString()}`;
   return (
@@ -20,4 +20,4 @@ function PreserveLink({ href, children, className }: Props) {
   );
 }
 
-export default PreserveLink;
+export default ModalLink;
