@@ -1,5 +1,12 @@
+import Modal from "@/components/atoms/Modal";
+import ScoreEditTemplate from "@/components/templates/ScoreEditTemplate";
+
 function ScoreEditPage() {
-  return <div>ScoreEditPage</div>;
+  return (
+    <Modal>
+      <ScoreEditTemplate />
+    </Modal>
+  );
 }
 
 export default ScoreEditPage;
