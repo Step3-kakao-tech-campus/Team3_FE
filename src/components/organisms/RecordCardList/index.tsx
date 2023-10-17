@@ -7,25 +7,13 @@ import { RecordData } from "@/types/recordData";
 import { ScoreboardSearchParams } from "@/types/scoreboardSearchParams";
 import isValidDateFormatByDash from "@/utils/validDateStringFormat";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { ReadonlyURLSearchParams, useParams, usePathname, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { ReadonlyURLSearchParams, useParams, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 function RecordCardList(): JSX.Element {
-  const pathname = usePathname();
   const params = useParams();
   const searchParams = useSearchParams();
   const pageUserId = parseInt(params.scoreboard_user_id as string, 10) || 0;
-
-  const [queryKey, setQueryKey] = useState([
-    `/api/posts/users/${pageUserId}/participation-records`,
-    searchParams.toString(),
-  ]);
-
-  useEffect(() => {
-    if (pathname.startsWith("/scoreboard")) {
-      setQueryKey([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
-    }
-  }, [pageUserId, pathname, searchParams]);
 
   const getRecordList = useCallback(
     async ({ pageParam = 0 }, URLSearchParams: ReadonlyURLSearchParams) => {
@@ -48,7 +36,7 @@ function RecordCardList(): JSX.Element {
   );
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    queryKey,
+    [`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()],
     (reactQueryParam) => {
       return getRecordList(reactQueryParam, searchParams);
     },
