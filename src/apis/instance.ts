@@ -13,17 +13,18 @@ const client = axios.create({
 });
 
 client.interceptors.request.use(async (config) => {
-  const { headers } = config;
-  const token = getCookie("token");
-  if (token) {
-    headers.Authorization = token;
-  }
   const exp = getCookie("exp");
   const currentTime = Date.now() / 1000;
 
   if (currentTime >= exp) {
     const res = await postAuthentication();
     setLogin(res.headers.authorization);
+  }
+
+  const { headers } = config;
+  const token = getCookie("token");
+  if (token) {
+    headers.Authorization = token;
   }
 
   return config;
