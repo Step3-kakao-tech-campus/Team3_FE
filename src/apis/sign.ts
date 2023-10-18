@@ -26,8 +26,3 @@ export async function postLogout() {
   const response = await client.post("/api/logout");
   return response;
 }
-
-export async function postAuthentication() {
-  const response = await client.post("/api/authentication");
-  return response;
-}
