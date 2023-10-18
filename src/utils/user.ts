@@ -8,7 +8,7 @@ export const getTokenPayload = (token: string) => {
   return payload;
 };
 
-export const setLogin = async (email: string, token: string) => {
+export const setLogin = async (token: string) => {
   const payload = getTokenPayload(token);
   const maxAge = 3600 * 168;
 
