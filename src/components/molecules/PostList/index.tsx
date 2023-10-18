@@ -3,7 +3,7 @@
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { PostData } from "@/types/postData";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { getPosts } from "@/apis/posts";
 import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
@@ -54,14 +54,13 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     [fetchNextPage, hasNextPage],
   );
 
-  const observer = useMemo(() => new IntersectionObserver(handleIntersect), [handleIntersect]);
-
   useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect);
     if (target.current) {
       observer.observe(target.current);
     }
     return () => observer.disconnect();
-  }, [target, data, observer]);
+  }, [target, handleIntersect]);
 
   return (
     <div className="posts flex flex-col gap-5">
