@@ -42,7 +42,7 @@ function SigninForm(): JSX.Element {
     } else {
       mutate(formData, {
         onSuccess: (res) => {
-          setLogin(formData.email, res.headers.authorization);
+          setLogin(res.headers.authorization);
           router.back();
           router.refresh();
         },
