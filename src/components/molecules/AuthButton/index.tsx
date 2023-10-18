@@ -3,17 +3,25 @@
 import Button from "@/components/atoms/Button";
 import { getCookie } from "@/utils/Cookie";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AuthUserProfile from "./AuthUserProfile";
 
-function AuthButton(): JSX.Element {
+function AuthButton(): JSX.Element | null {
   const router = useRouter();
-  const isLogin = getCookie("token");
+  const [isLoad, setIsLoad] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    setIsLoad(false);
+    if (getCookie("token")) setIsLogin(true);
+  });
+
+  if (isLoad) return null;
 
   return (
     <div className="flex items-center space-x-4">
       {isLogin ? (
-        <AuthUserProfile />
+        <AuthUserProfile setIsLogin={setIsLogin} />
       ) : (
         <>
           <Button

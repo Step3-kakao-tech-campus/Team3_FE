@@ -6,12 +6,17 @@ import { deleteToken } from "@/utils/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-function AuthUserProfile() {
+interface Props {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function AuthUserProfile({ setIsLogin }: Props) {
   const { data } = useQuery(["/api/users/mine"], getMyProfile);
   const router = useRouter();
 
   const handleLogout = () => {
     deleteToken();
+    setIsLogin(false);
     router.refresh();
   };
 
