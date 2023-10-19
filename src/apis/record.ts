@@ -22,6 +22,12 @@ export async function getRecord(userId: number) {
   return response;
 }
 
+export async function getScore(postId: number) {
+  if (!postId) throw new Error("postId가 유효하지 않습니다.");
+  const response = await client.get(`/api/posts/${postId}/scores`);
+  return response;
+}
+
 export async function postScore({ postId, formData }: { postId: number; formData: { score: number; image?: File } }) {
   if (!postId) throw new Error("postId가 유효하지 않습니다.");
   const response = await client.post(`/api/posts/${postId}/scores`, formData, {
