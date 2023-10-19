@@ -21,3 +21,13 @@ export async function getRecord(userId: number) {
   const response = await client.get(`/api/users/${userId}/records`);
   return response;
 }
+
+export async function postScore(postId: number, formData) {
+  if (!postId) throw new Error("postId가 유효하지 않습니다.");
+  const response = await client.post(`/api/posts/${postId}/scores`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+}
