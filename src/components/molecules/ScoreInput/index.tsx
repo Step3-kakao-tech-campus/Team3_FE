@@ -48,6 +48,14 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     }
   };
 
+  const handleOnSave = () => {
+    if (isValid) {
+      const formData: { score: number; image?: File } = { score: scoreValue };
+      if (selectedFile && typeof selectedFile !== "string") formData.image = selectedFile;
+      postScore(postId, formData);
+    }
+  };
+
   return (
     <div className="score-input">
       <button type="button" onClick={onRemove}>
@@ -71,12 +79,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       >
         {isFileSelected ? "파일 제거" : "파일 입력"}
       </Button>
-      <Button
-        rounded="full"
-        size="xs"
-        styleType="thunder"
-        onClick={() => postScore(postId, { score: scoreValue, image: selectedFile })}
-      >
+      <Button rounded="full" size="xs" styleType="thunder" onClick={handleOnSave}>
         저장
       </Button>
       <input
