@@ -8,7 +8,6 @@ export interface Score {
 export interface ScoreData extends Omit<Score, "scoreImage"> {
   // Score for ScoreInput, ScoreEditForm
   scoreImage: string | null | File;
-  isValid: boolean;
   isNew?: boolean;
   isModified?: boolean;
 }
