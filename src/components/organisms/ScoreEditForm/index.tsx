@@ -1,3 +1,5 @@
+"use client";
+
 import ScoreInput from "@/components/molecules/ScoreInput";
 import { ScoreData } from "@/types/score";
 import { useState } from "react";
