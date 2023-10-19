@@ -31,6 +31,7 @@ export async function postScore({ postId, formData }: { postId: number; formData
   });
   return response;
 }
+
 export async function putScore({
   postId,
   scoreId,
@@ -42,10 +43,17 @@ export async function putScore({
 }) {
   if (!postId) throw new Error("postId가 유효하지 않습니다.");
   if (!scoreId) throw new Error("scoreId가 유효하지 않습니다.");
-  const response = await client.post(`/api/posts/${postId}/scores/${scoreId}`, formData, {
+  const response = await client.put(`/api/posts/${postId}/scores/${scoreId}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
+  return response;
+}
+
+export async function deleteScore({ postId, scoreId }: { postId: number; scoreId: number }) {
+  if (!postId) throw new Error("postId가 유효하지 않습니다.");
+  if (!scoreId) throw new Error("scoreId가 유효하지 않습니다.");
+  const response = await client.delete(`/api/posts/${postId}/scores/${scoreId}`);
   return response;
 }
