@@ -1,6 +1,6 @@
 "use client";
 
-import { postScore, putScore } from "@/apis/record";
+import { deleteScore, postScore, putScore } from "@/apis/record";
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
@@ -18,6 +18,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
 
   const params = useParams();
   const postId = parseInt(params.post_id as string, 10);
+  const scoreId = scoreData.id;
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [scoreValue, setScoreValue] = useState<ScoreData["scoreNum"]>(scoreData.scoreNum);
@@ -41,6 +42,12 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   };
   const { mutate: postNewScore } = useMutation(postScore, mutateOption);
   const { mutate: putEditScore } = useMutation(putScore, mutateOption);
+  const { mutate: deleteCurrentScore } = useMutation(deleteScore, {
+    onSuccess: onRemove,
+    onError: () => {
+      alert("삭제에 실패했습니다.");
+    },
+  });
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
@@ -66,25 +73,29 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     if (isValid && isNew) {
       const formData: { score: number; image?: File } = { score: scoreValue };
       if (selectedFile && typeof selectedFile !== "string") formData.image = selectedFile;
-      postNewScore({ postId, formData }); // useMutation이용, onSuccess시 setIsEditing false
+      postNewScore({ postId, formData });
     } else if (isValid && !isNew && isModified) {
-      const scoreId = scoreData.id;
       const isScoreModified = scoreValue !== scoreData.scoreNum;
       const isImageModified = selectedFile !== scoreData.scoreImage;
       const formData: { score?: number; image?: File } = {};
       if (isScoreModified) formData.score = scoreValue;
       if (isImageModified) formData.image = selectedFile;
-      putEditScore({ postId, scoreId, formData }); // useMutation이용, onSuccess시 setIsEditing false
+      putEditScore({ postId, scoreId, formData });
     } else if (isValid && !isNew && !isModified) {
       setIsEditing(false);
     }
+  };
+
+  const handleRemove = () => {
+    if (!isNew) deleteCurrentScore({ postId, scoreId });
+    else onRemove();
   };
 
   return (
     <div className="score-input">
       {isEditing ? (
         <>
-          <button type="button" onClick={onRemove}>
+          <button type="button" onClick={handleRemove}>
             삭제
           </button>
           <input
