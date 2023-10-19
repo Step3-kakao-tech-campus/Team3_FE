@@ -34,21 +34,6 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   const { isNew } = scoreData;
   const isModified = scoreData.scoreNum !== scoreValue || scoreData.scoreImage !== selectedFile;
 
-  const mutateOption = {
-    onSuccess: () => setIsEditing(false),
-    onError: () => {
-      alert("저장에 실패했습니다.");
-    },
-  };
-  const { mutate: postNewScore } = useMutation(postScore, mutateOption);
-  const { mutate: putEditScore } = useMutation(putScore, mutateOption);
-  const { mutate: deleteCurrentScore } = useMutation(deleteScore, {
-    onSuccess: onRemove,
-    onError: () => {
-      alert("삭제에 실패했습니다.");
-    },
-  });
-
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
     if (scoreInputValue < 0 || scoreInputValue > 300 || Number.isNaN(scoreInputValue))
@@ -68,6 +53,21 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       setFileError("");
     }
   };
+
+  const mutateOption = {
+    onSuccess: () => setIsEditing(false),
+    onError: () => {
+      alert("저장에 실패했습니다.");
+    },
+  };
+  const { mutate: postNewScore } = useMutation(postScore, mutateOption);
+  const { mutate: putEditScore } = useMutation(putScore, mutateOption);
+  const { mutate: deleteCurrentScore } = useMutation(deleteScore, {
+    onSuccess: onRemove,
+    onError: () => {
+      alert("삭제에 실패했습니다.");
+    },
+  });
 
   const handleOnSave = () => {
     if (isValid && isNew) {
