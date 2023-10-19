@@ -18,7 +18,9 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
 
   const router = useRouter();
 
-  const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId));
+  const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId), {
+    enabled: !!userId,
+  });
 
   const { mutate: applyMutate, queryClient } = useMutateWithQueryClient(postApply);
   const { mutate: deleteMutate } = useMutation({ mutationFn: deleteRejectApplicant });
