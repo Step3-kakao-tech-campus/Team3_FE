@@ -1,11 +1,12 @@
 "use client";
 
-import { postScore } from "@/apis/record";
+import { postScore, putScore } from "@/apis/record";
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
 import { useRef, useState } from "react";
 import { useParams } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 interface Props {
   scoreData: ScoreData;
@@ -32,6 +33,15 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   const { isNew } = scoreData;
   const isModified = scoreData.scoreNum !== scoreValue || scoreData.scoreImage !== selectedFile;
 
+  const mutateOption = {
+    onSuccess: () => setIsEditing(false),
+    onError: () => {
+      alert("저장에 실패했습니다.");
+    },
+  };
+  const { mutate: postNewScore } = useMutation(postScore, mutateOption);
+  const { mutate: putEditScore } = useMutation(putScore, mutateOption);
+
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
     if (scoreInputValue < 0 || scoreInputValue > 300 || Number.isNaN(scoreInputValue))
@@ -56,9 +66,15 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     if (isValid && isNew) {
       const formData: { score: number; image?: File } = { score: scoreValue };
       if (selectedFile && typeof selectedFile !== "string") formData.image = selectedFile;
-      postScore(postId, formData); // useMutation이용, onSuccess시 setIsEditing false
+      postNewScore({ postId, formData }); // useMutation이용, onSuccess시 setIsEditing false
     } else if (isValid && !isNew && isModified) {
-      // put 메소드 요청 // useMutation이용, onSuccess시 setIsEditing false
+      const scoreId = scoreData.id;
+      const isScoreModified = scoreValue !== scoreData.scoreNum;
+      const isImageModified = selectedFile !== scoreData.scoreImage;
+      const formData: { score?: number; image?: File } = {};
+      if (isScoreModified) formData.score = scoreValue;
+      if (isImageModified) formData.image = selectedFile;
+      putEditScore({ postId, scoreId, formData }); // useMutation이용, onSuccess시 setIsEditing false
     } else if (isValid && !isNew && !isModified) {
       setIsEditing(false);
     }
@@ -103,7 +119,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
           <div className="score-input-error-msg">
             {scoreError && <p className="text-red-500">{scoreError}</p>}
             {fileError && <p className="text-red-500">{fileError}</p>}
-          </div>{" "}
+          </div>
         </>
       ) : (
         <>
