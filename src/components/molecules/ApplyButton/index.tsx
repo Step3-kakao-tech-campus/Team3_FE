@@ -13,7 +13,7 @@ interface Props {
   authorId: number;
 }
 
-function ApplyButton({ postId, authorId }: Props): JSX.Element {
+function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
   const userId = parseInt(getCookie("userId"), 10);
 
   const router = useRouter();
@@ -56,6 +56,9 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
       },
     );
   };
+  if (!userId) {
+    return null;
+  }
 
   if (authorId === userId) {
     return (
