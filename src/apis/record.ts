@@ -22,9 +22,27 @@ export async function getRecord(userId: number) {
   return response;
 }
 
-export async function postScore(postId: number, formData: { score: number; image?: File }) {
+export async function postScore({ postId, formData }: { postId: number; formData: { score: number; image?: File } }) {
   if (!postId) throw new Error("postId가 유효하지 않습니다.");
   const response = await client.post(`/api/posts/${postId}/scores`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+}
+export async function putScore({
+  postId,
+  scoreId,
+  formData,
+}: {
+  postId: number;
+  scoreId: number;
+  formData: { score?: number; image?: File };
+}) {
+  if (!postId) throw new Error("postId가 유효하지 않습니다.");
+  if (!scoreId) throw new Error("scoreId가 유효하지 않습니다.");
+  const response = await client.post(`/api/posts/${postId}/scores/${scoreId}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
