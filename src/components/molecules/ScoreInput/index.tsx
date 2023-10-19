@@ -1,9 +1,11 @@
 "use client";
 
+import { postScore } from "@/apis/record";
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
 import { useRef, useState } from "react";
+import { useParams } from "next/navigation";
 
 interface Props {
   scoreData: ScoreData;
@@ -11,8 +13,11 @@ interface Props {
 }
 
 function ScoreInput({ scoreData, onRemove }: Props) {
+  const params = useParams();
+  const postId = parseInt(params.post_id as string, 10);
+
   const fileRef = useRef<HTMLInputElement>(null);
-  const [scoreValue, setScoreValue] = useState<number>(scoreData.scoreNum);
+  const [scoreValue, setScoreValue] = useState<ScoreData["scoreNum"]>(scoreData.scoreNum);
   const [selectedFile, setSelectedFile] = useState<ScoreData["scoreImage"]>(scoreData.scoreImage);
   const [scoreError, setScoreError] = useState("");
   const [fileError, setFileError] = useState("");
@@ -50,7 +55,6 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       </button>
       <input
         type="number"
-        defaultValue={scoreValue || 0}
         onChange={handleScoreInputChange}
         className="border border-gray-400 rounded-lg py-1 px-2 appearance-none"
       />
@@ -67,7 +71,12 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       >
         {isFileSelected ? "파일 제거" : "파일 입력"}
       </Button>
-      <Button rounded="full" size="xs" styleType="thunder" onClick={() => {}}>
+      <Button
+        rounded="full"
+        size="xs"
+        styleType="thunder"
+        onClick={() => postScore(postId, { score: scoreValue, image: selectedFile })}
+      >
         저장
       </Button>
       <input
