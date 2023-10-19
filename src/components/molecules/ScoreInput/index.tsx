@@ -3,15 +3,14 @@
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 interface Props {
   scoreData: ScoreData;
-  onUpdate: (scoreFromInput: ScoreData) => void;
   onRemove: () => void;
 }
 
-function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
+function ScoreInput({ scoreData, onRemove }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [scoreValue, setScoreValue] = useState<number>(scoreData.scoreNum);
   const [selectedFile, setSelectedFile] = useState<ScoreData["scoreImage"]>(scoreData.scoreImage);
@@ -21,44 +20,28 @@ function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
   const tenMB = 10485760;
   const fileTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif"];
 
-  const isFileSelected = selectedFile && true;
-
-  const handleUpdate = () => {
-    const newData: ScoreData = {
-      id: scoreData.id,
-      scoreNum: scoreValue,
-      scoreImage: selectedFile,
-      isValid: !scoreError && !fileError,
-    };
-    if (scoreData.isModified === false) newData.isModified = true;
-    onUpdate(newData);
-  };
+  const isFileSelected = selectedFile !== null;
+  const isValid = !scoreError && !fileError;
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
-    if (scoreInputValue < 0 || scoreInputValue > 300 || Number.isNaN(scoreInputValue)) {
+    if (scoreInputValue < 0 || scoreInputValue > 300 || Number.isNaN(scoreInputValue))
       setScoreError("점수는 0에서 300 사이의 값입니다.");
-    } else {
-      setScoreError("");
+    else {
       setScoreValue(scoreInputValue);
+      setScoreError("");
     }
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
-    if (files?.length && files[0].size > tenMB) {
-      setFileError("파일의 크기는 10MB를 넘을 수 없습니다.");
-    } else if (files?.length && !fileTypes.includes(files[0]?.type)) {
-      setFileError("png, jpg, jpeg, gif 형식의 파일만 허용됩니다.");
-    } else {
+    const file = e.target.files?.[0];
+    if (file && file.size > tenMB) setFileError("파일의 크기는 10MB를 넘을 수 없습니다.");
+    else if (file && !fileTypes.includes(file.type)) setFileError("png, jpg, jpeg, gif 형식의 파일만 허용됩니다.");
+    else {
+      setSelectedFile(file || null);
       setFileError("");
-      setSelectedFile((files && files[0]) || null);
     }
   };
-
-  useEffect(() => {
-    handleUpdate();
-  }, [scoreValue, selectedFile]);
 
   return (
     <div className="score-input">
@@ -67,7 +50,7 @@ function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
       </button>
       <input
         type="number"
-        defaultValue={scoreData.scoreNum || 0}
+        defaultValue={scoreValue || 0}
         onChange={handleScoreInputChange}
         className="border border-gray-400 rounded-lg py-1 px-2 appearance-none"
       />
@@ -76,11 +59,16 @@ function ScoreInput({ scoreData, onUpdate, onRemove }: Props) {
         size="xs"
         styleType={isFileSelected ? "filled-red" : "outlined-orange"}
         onClick={() => {
-          if (isFileSelected) setSelectedFile(null);
-          else fileRef.current?.click();
+          if (isFileSelected) {
+            setSelectedFile(null);
+            setFileError("");
+          } else fileRef.current?.click();
         }}
       >
         {isFileSelected ? "파일 제거" : "파일 입력"}
+      </Button>
+      <Button rounded="full" size="xs" styleType="thunder" onClick={() => {}}>
+        저장
       </Button>
       <input
         type="file"
