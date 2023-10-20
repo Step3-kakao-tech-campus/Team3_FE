@@ -63,6 +63,8 @@ function RecordCard({ data }: Props): JSX.Element {
                   isMyRecord={isMyRecord}
                   member={member}
                   scoresLength={scores.length}
+                  applicantId={data.applicantId}
+                  postId={data.id}
                 />
               ))}
             </div>
