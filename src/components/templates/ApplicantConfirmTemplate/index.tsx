@@ -63,7 +63,6 @@ function ApplicantConfirmTemplate(): JSX.Element {
       alert("요청에 실패했습니다. 다시 시도해주세요");
     },
     onSuccess: () => {
-      console.log(postId);
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);
       router.back();
       alert("마감되었습니다.");
