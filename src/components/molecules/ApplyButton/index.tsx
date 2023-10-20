@@ -14,9 +14,9 @@ interface Props {
 }
 
 function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
-  const userId = parseInt(getCookie("userId"), 10);
-
   const router = useRouter();
+
+  const [userId, setUserId] = useState<number | null>(null);
 
   const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId), {
     enabled: !!userId,
@@ -30,6 +30,11 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
   useEffect(() => {
     setIsApplied(data?.data?.response.isApplied);
   }, [data]);
+
+  useEffect(() => {
+    if (getCookie("userId")) setUserId(parseInt(getCookie("userId"), 10));
+    else setUserId(null);
+  });
 
   const handleApply = () => {
     applyMutate(postId, {
@@ -49,6 +54,7 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
       {
         onSuccess: () => {
           setIsApplied(false);
+          console.log("??");
         },
         onError: (error) => {
           console.log(error);
