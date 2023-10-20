@@ -1,10 +1,15 @@
 import BackArrowContainer from "@/components/atoms/BackArrowContainer";
 import ScoreboardTemplate from "@/components/templates/ScoreboardTemplate";
 
-function ScoreboardPage() {
+interface Props {
+  params: {
+    scoreboard_user_id: number;
+  };
+}
+function ScoreboardPage({ params }: Props) {
   return (
     <BackArrowContainer>
-      <ScoreboardTemplate />
+      <ScoreboardTemplate userId={params.scoreboard_user_id} />
     </BackArrowContainer>
   );
 }

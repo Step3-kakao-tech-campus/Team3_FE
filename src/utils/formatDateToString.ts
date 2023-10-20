@@ -40,6 +40,16 @@ export function formatDateToStringByDot(date: Date) {
   return `${year}.${month}.${day} ${hours}:${minutes}`;
 }
 
+export function formatDateToStringByDash(date: Date) {
+  const newDate = new Date(date);
+
+  const year = newDate.getFullYear(); // 연도
+  const month = (newDate.getMonth() + 1).toString().padStart(2, "0"); // 월 (0부터 시작하므로 +1, 두 자리로 포맷)
+  const day = newDate.getDate().toString().padStart(2, "0"); // 일 (두 자리로 포맷)
+
+  return `${year}-${month}-${day}`;
+}
+
 export function formatDateToKoreanTime(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
