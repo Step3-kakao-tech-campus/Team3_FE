@@ -1,12 +1,12 @@
 "use client";
 
-import { deleteScore, postScore, putScore } from "@/apis/record";
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
 import { useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import useScoreMutation from "@/hooks/useScoreMutation";
+import { UseMutationOptions } from "@tanstack/react-query";
 
 interface Props {
   scoreData: ScoreData;
@@ -54,19 +54,22 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     }
   };
 
-  const mutateOption = {
+  const optionPostPut: UseMutationOptions = {
     onSuccess: () => setIsEditing(false),
     onError: () => {
       alert("저장에 실패했습니다.");
     },
   };
-  const { mutate: postNewScore } = useMutation(postScore, mutateOption);
-  const { mutate: putEditScore } = useMutation(putScore, mutateOption);
-  const { mutate: deleteCurrentScore } = useMutation(deleteScore, {
+  const optionDelete: UseMutationOptions = {
     onSuccess: onRemove,
     onError: () => {
       alert("삭제에 실패했습니다.");
     },
+  };
+  const { postNewScore, putEditScore, deleteCurrentScore } = useScoreMutation({
+    postOption: optionPostPut,
+    putOption: optionPostPut,
+    deleteOption: optionDelete,
   });
 
   const handleOnSave = () => {
