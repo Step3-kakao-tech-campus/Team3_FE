@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions } from "@tanstack/react-query";
+import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
 
 interface Props {
   scoreData: ScoreData;
@@ -95,22 +96,23 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   };
 
   return (
-    <div className="score-input">
+    <div className="score-input flex items-center gap-2">
       {isEditing ? (
         <>
-          <button type="button" onClick={handleRemove}>
-            삭제
+          <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
+            <MdRemoveCircleOutline />
           </button>
           <input
             type="number"
             defaultValue={scoreValue}
             onChange={handleScoreInputChange}
-            className="border border-gray-400 rounded-lg py-1 px-2 appearance-none"
+            className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none"
           />
           <Button
             rounded="full"
-            size="xs"
+            size="sm"
             styleType={isFileSelected ? "outlined-red" : "outlined-orange"}
+            fontWeight="normal"
             onClick={() => {
               if (isFileSelected) {
                 setSelectedFile(null);
@@ -118,9 +120,19 @@ function ScoreInput({ scoreData, onRemove }: Props) {
               } else fileRef.current?.click();
             }}
           >
-            {isFileSelected ? "파일 제거" : "파일 입력"}
+            {isFileSelected ? (
+              <span className="flex items-center text-sm gap-1">
+                <MdDeleteForever className="text-base" />
+                점수판 삭제
+              </span>
+            ) : (
+              <span className="flex items-center text-sm gap-1">
+                <MdCameraAlt />
+                점수판 첨부
+              </span>
+            )}
           </Button>
-          <Button rounded="full" size="xs" styleType="thunder" onClick={handleOnSave}>
+          <Button rounded="full" size="sm" styleType="thunder" fontWeight="normal" onClick={handleOnSave}>
             저장
           </Button>
           <input
@@ -139,7 +151,13 @@ function ScoreInput({ scoreData, onRemove }: Props) {
         <>
           <span>스코어</span>
           <span>{scoreValue}</span>
-          <Button rounded="full" size="xs" styleType="outlined-orange" onClick={() => setIsEditing(true)}>
+          <Button
+            rounded="full"
+            size="sm"
+            styleType="outlined-orange"
+            fontWeight="normal"
+            onClick={() => setIsEditing(true)}
+          >
             수정하기
           </Button>
         </>
