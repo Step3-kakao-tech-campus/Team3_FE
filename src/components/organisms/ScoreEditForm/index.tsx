@@ -3,6 +3,7 @@
 import ScoreInput from "@/components/molecules/ScoreInput";
 import { Score, ScoreData } from "@/types/score";
 import { useState } from "react";
+import { MdAddCircleOutline } from "react-icons/md";
 
 interface Props {
   initialScoresData: Score[];
@@ -29,13 +30,15 @@ function ScoreEditForm({ initialScoresData }: Props) {
   };
 
   return (
-    <div>
-      <h1>Score Form</h1>
+    <div className="score-edit-form flex flex-col gap-2">
       {formScores?.map((formScore) => (
         <ScoreInput key={formScore?.id} scoreData={formScore} onRemove={() => handleRemove(formScore?.id)} />
       ))}
       <button type="button" onClick={handleAdd}>
-        게임 추가
+        <span className="inline-flex gap-1 text-neutral-500 items-center">
+          <MdAddCircleOutline />
+          게임 추가
+        </span>
       </button>
     </div>
   );
