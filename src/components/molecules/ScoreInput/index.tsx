@@ -110,7 +110,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
           <Button
             rounded="full"
             size="xs"
-            styleType={isFileSelected ? "filled-red" : "outlined-orange"}
+            styleType={isFileSelected ? "outlined-red" : "outlined-orange"}
             onClick={() => {
               if (isFileSelected) {
                 setSelectedFile(null);
