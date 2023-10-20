@@ -5,8 +5,7 @@ import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { postReply } from "@/apis/comment";
-import { ToastData } from "@/types/toast";
-import Toast from "../Toast";
+import useToast from "@/hooks/useToast";
 import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
 import CommentSubmit from "../CommentSubmit";
@@ -25,11 +24,12 @@ function Comment({ comment }: Props): JSX.Element {
 
   const [reply, setReply] = useState(false);
   const [commentContent, setCommentContent] = useState("");
-  const [toastList, setToastList] = useState<ToastData[]>([]);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate, queryClient } = useMutateWithQueryClient(postReply);
+
+  const { addWarningToast } = useToast();
 
   const handleReplyForm = () => {
     setReply((prev) => !prev);
@@ -38,13 +38,7 @@ function Comment({ comment }: Props): JSX.Element {
 
   const handleReply = () => {
     if (commentContent === "") {
-      setToastList((prev) =>
-        prev.concat({
-          id: Date.now(),
-          type: "warning",
-          message: "내용을 입력해 주세요.",
-        }),
-      );
+      addWarningToast("내용을 입력해 주세요.");
       return;
     }
     const payload = {
@@ -90,7 +84,6 @@ function Comment({ comment }: Props): JSX.Element {
         </>
       )}
       {comment.childComments?.map((childComment) => <ChildComment childComment={childComment} key={childComment.id} />)}
-      <Toast toastList={toastList} setToastList={setToastList} />
     </>
   );
 }
