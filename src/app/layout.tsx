@@ -4,7 +4,9 @@ import Background from "@/components/atoms/Background";
 import NavigationBar from "@/components/molecules/NavigationBar";
 import { Noto_Sans_KR } from "next/font/google";
 import InnerContainer from "@/components/atoms/InnerContainer";
-import QueryProvider from "@/utils/queryProvider";
+import QueryProvider from "@/utils/providers/queryProvider";
+import RecoilRootProvider from "@/utils/providers/recoilRootProvider";
+import Toast from "@/components/molecules/Toast";
 
 const notoSans = Noto_Sans_KR({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -26,13 +28,16 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
       </head>
 
       <body className={`bg-[#F6F6F6] ${notoSans.className}`}>
-        <QueryProvider>
-          <NavigationBar />
-          <Background>
-            <InnerContainer>{children}</InnerContainer>
-          </Background>
-          {modal}
-        </QueryProvider>
+        <RecoilRootProvider>
+          <QueryProvider>
+            <NavigationBar />
+            <Background>
+              <InnerContainer>{children}</InnerContainer>
+            </Background>
+            {modal}
+            <Toast />
+          </QueryProvider>
+        </RecoilRootProvider>
       </body>
     </html>
   );
