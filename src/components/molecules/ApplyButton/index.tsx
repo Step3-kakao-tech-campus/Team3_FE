@@ -54,7 +54,6 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
       {
         onSuccess: () => {
           setIsApplied(false);
-          console.log("??");
         },
         onError: (error) => {
           console.log(error);
