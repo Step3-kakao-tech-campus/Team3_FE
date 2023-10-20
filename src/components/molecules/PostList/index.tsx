@@ -3,10 +3,11 @@
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { PostData } from "@/types/postData";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { getPosts } from "@/apis/posts";
 import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams): JSX.Element {
@@ -39,8 +40,6 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     },
   );
 
-  const target = useRef<HTMLDivElement>(null);
-
   const handleIntersect = useCallback(
     async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entry.isIntersecting) {
@@ -54,13 +53,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     [fetchNextPage, hasNextPage],
   );
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersect);
-    if (target.current) {
-      observer.observe(target.current);
-    }
-    return () => observer.disconnect();
-  }, [target, handleIntersect]);
+  const { targetRef } = useIntersectionObserver(handleIntersect);
 
   return (
     <div className="posts flex flex-col gap-5">
@@ -75,7 +68,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
           검색된 글이 없습니다. 더 넓은 범위로 검색해 보세요.
         </p>
       )}
-      {hasNextPage && <div className="observe-area" ref={target} />}
+      {hasNextPage && <div className="observe-area" ref={targetRef} />}
     </div>
   );
 }

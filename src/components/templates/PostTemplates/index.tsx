@@ -17,10 +17,10 @@ interface Props {
 }
 
 function PostTemplates({ id }: Props): JSX.Element {
-  const parameter = parseInt(id, 10);
+  const postId = parseInt(id, 10);
   const userId = parseInt(getCookie("userId"), 10);
 
-  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(parameter), {
+  const { data } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
     onError: (error) => {
       console.log(error);
     },
@@ -53,7 +53,7 @@ function PostTemplates({ id }: Props): JSX.Element {
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
-        {userId === post.userId && <PostEditor id={parameter} />}
+        {userId === post.userId && <PostEditor id={postId} />}
       </div>
       <hr className="mt-6" />
       <p className="flex mt-4 items-center gap-3">
@@ -66,10 +66,10 @@ function PostTemplates({ id }: Props): JSX.Element {
       </p>
       <pre className="whitespace-pre-wrap mt-4 break-all">{post.content}</pre>
       <div className="mt-4 flex flex-row-reverse">
-        <ApplyButton postId={parameter} authorId={post.userId} />
+        <ApplyButton postId={postId} authorId={post.userId} />
       </div>
       <hr className="mt-6" />
-      <CommentForm id={parameter} />
+      <CommentForm id={postId} />
     </div>
   );
 }

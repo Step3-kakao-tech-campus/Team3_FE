@@ -25,7 +25,7 @@ function RecordCard({ data }: Props): JSX.Element {
   const members = data?.members;
   const scores = data?.scores;
   const clientUserId = getCookie("userId");
-  const isMyRecord = clientUserId === parseInt(params.user_id as string, 10);
+  const isMyRecord = clientUserId === parseInt(params.scoreboard_user_id as string, 10);
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">

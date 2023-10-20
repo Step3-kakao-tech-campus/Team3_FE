@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getComments, postComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
@@ -8,6 +8,7 @@ import CommentSubmit from "@/components/molecules/CommentSubmit";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useToast from "@/hooks/useToast";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
   id: number;
@@ -29,7 +30,6 @@ function CommentForm({ id }: Props): JSX.Element {
   const { mutate, queryClient } = useMutateWithQueryClient(postComments);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
-  const target = useRef<HTMLDivElement>(null);
 
   const { addWarningToast } = useToast();
 
@@ -45,6 +45,8 @@ function CommentForm({ id }: Props): JSX.Element {
     },
     [fetchNextPage, hasNextPage],
   );
+
+  const { targetRef } = useIntersectionObserver(handleIntersect);
 
   const handleSubmit = () => {
     if (commentRef.current!.value === "") {
@@ -68,15 +70,6 @@ function CommentForm({ id }: Props): JSX.Element {
     });
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersect);
-
-    if (target.current) {
-      observer.observe(target.current);
-    }
-    return () => observer.disconnect();
-  }, [target, handleIntersect]);
-
   return (
     <div>
       <h2 className="mt-4 text-xl">댓글</h2>
@@ -92,7 +85,7 @@ function CommentForm({ id }: Props): JSX.Element {
             )),
         )}
       </div>
-      {hasNextPage && <div className="observe-area" ref={target} />}
+      {hasNextPage && <div className="observe-area" ref={targetRef} />}
     </div>
   );
 }
