@@ -6,6 +6,8 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { ToastData } from "@/types/toast";
+import Toast from "../Toast";
 import CommentSubmit from "../CommentSubmit";
 
 interface Props {
@@ -21,6 +23,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
 
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
+  const [toastList, setToastList] = useState<ToastData[]>([]);
 
   const { mutate, queryClient } = useMutateWithQueryClient(deleteComments);
   const { mutate: putMutate } = useMutation(putComments);
@@ -47,6 +50,16 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   };
 
   const handleUpdate = () => {
+    if (commentContent === "") {
+      setToastList((prev) =>
+        prev.concat({
+          id: Date.now(),
+          type: "warning",
+          message: "내용을 입력해 주세요.",
+        }),
+      );
+      return;
+    }
     const putPayload = {
       ...payload,
       content: commentContent,
@@ -93,6 +106,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
       )}
+      <Toast toastList={toastList} setToastList={setToastList} />
     </>
   );
 }

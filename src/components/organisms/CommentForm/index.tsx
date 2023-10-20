@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getComments, postComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
 import CommentSubmit from "@/components/molecules/CommentSubmit";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import Toast from "@/components/molecules/Toast";
+import { ToastData } from "@/types/toast";
 
 interface Props {
   id: number;
@@ -43,7 +45,19 @@ function CommentForm({ id }: Props): JSX.Element {
     [fetchNextPage, hasNextPage],
   );
 
+  const [toastList, setToastList] = useState<ToastData[]>([]);
+
   const handleSubmit = () => {
+    if (commentRef.current!.value === "") {
+      setToastList((prev) =>
+        prev.concat({
+          id: Date.now(),
+          type: "warning",
+          message: "내용을 입력해 주세요.",
+        }),
+      );
+      return;
+    }
     const payload = {
       id,
       content: commentRef.current!.value,
@@ -86,6 +100,7 @@ function CommentForm({ id }: Props): JSX.Element {
         )}
       </div>
       {hasNextPage && <div className="observe-area" ref={target} />}
+      <Toast toastList={toastList} setToastList={setToastList} />
     </div>
   );
 }
