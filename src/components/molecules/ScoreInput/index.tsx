@@ -96,73 +96,75 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   };
 
   return (
-    <div className="score-input flex items-center gap-2">
-      {isEditing ? (
-        <>
-          <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
-            <MdRemoveCircleOutline />
-          </button>
-          <input
-            type="number"
-            defaultValue={scoreValue}
-            onChange={handleScoreInputChange}
-            className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none"
-          />
-          <Button
-            rounded="full"
-            size="sm"
-            styleType={isFileSelected ? "outlined-red" : "outlined-orange"}
-            fontWeight="normal"
-            onClick={() => {
-              if (isFileSelected) {
-                setSelectedFile(null);
-                setFileError("");
-              } else fileRef.current?.click();
-            }}
-          >
-            {isFileSelected ? (
-              <span className="flex items-center text-sm gap-1">
-                <MdDeleteForever className="text-base" />
-                점수판 삭제
-              </span>
-            ) : (
-              <span className="flex items-center text-sm gap-1">
-                <MdCameraAlt />
-                점수판 첨부
-              </span>
-            )}
-          </Button>
-          <Button rounded="full" size="sm" styleType="thunder" fontWeight="normal" onClick={handleOnSave}>
-            저장
-          </Button>
-          <input
-            type="file"
-            ref={fileRef}
-            accept="image/png, image/jpg, image/jpeg, image/gif"
-            onChange={handleFileInputChange}
-            className="hidden"
-          />
-          <div className="score-input-error-msg">
-            {scoreError && <p className="text-red-500">{scoreError}</p>}
-            {fileError && <p className="text-red-500">{fileError}</p>}
-          </div>
-        </>
-      ) : (
-        <>
-          <span>스코어</span>
-          <span>{scoreValue}</span>
-          <Button
-            rounded="full"
-            size="sm"
-            styleType="outlined-orange"
-            fontWeight="normal"
-            onClick={() => setIsEditing(true)}
-          >
-            수정하기
-          </Button>
-        </>
-      )}
-    </div>
+    <>
+      <div className="score-input flex items-center gap-2">
+        {isEditing ? (
+          <>
+            <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
+              <MdRemoveCircleOutline />
+            </button>
+            <input
+              type="number"
+              defaultValue={scoreValue}
+              onChange={handleScoreInputChange}
+              className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none"
+            />
+            <Button
+              rounded="full"
+              size="sm"
+              styleType={isFileSelected ? "outlined-red" : "outlined-orange"}
+              fontWeight="normal"
+              onClick={() => {
+                if (isFileSelected) {
+                  setSelectedFile(null);
+                  setFileError("");
+                } else fileRef.current?.click();
+              }}
+            >
+              {isFileSelected ? (
+                <span className="flex items-center text-sm gap-1">
+                  <MdDeleteForever className="text-base" />
+                  점수판 삭제
+                </span>
+              ) : (
+                <span className="flex items-center text-sm gap-1">
+                  <MdCameraAlt />
+                  점수판 첨부
+                </span>
+              )}
+            </Button>
+            <Button rounded="full" size="sm" styleType="thunder" fontWeight="normal" onClick={handleOnSave}>
+              저장
+            </Button>
+            <input
+              type="file"
+              ref={fileRef}
+              accept="image/png, image/jpg, image/jpeg, image/gif"
+              onChange={handleFileInputChange}
+              className="hidden"
+            />
+          </>
+        ) : (
+          <>
+            <span>스코어</span>
+            <span>{scoreValue}</span>
+            <Button
+              rounded="full"
+              size="sm"
+              styleType="outlined-orange"
+              fontWeight="normal"
+              onClick={() => setIsEditing(true)}
+            >
+              수정하기
+            </Button>
+          </>
+        )}
+      </div>
+      <div className="score-input-error-msg text-center">
+        {scoreError && <p className="text-red-500">{scoreError}</p>}
+        {fileError && <p className="text-red-500">{fileError}</p>}
+      </div>
+    </>
   );
 }
 
