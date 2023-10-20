@@ -6,7 +6,7 @@ import { ScoreData } from "@/types/score";
 import { useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import useScoreMutation from "@/hooks/useScoreMutation";
-import { UseMutationOptions } from "@tanstack/react-query";
+import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
 
 interface Props {
@@ -55,14 +55,21 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     }
   };
 
+  const queryClient = useQueryClient();
   const optionPostPut: UseMutationOptions = {
-    onSuccess: () => setIsEditing(false),
+    onSuccess: () => {
+      setIsEditing(false);
+      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+    },
     onError: () => {
       alert("저장에 실패했습니다.");
     },
   };
   const optionDelete: UseMutationOptions = {
-    onSuccess: onRemove,
+    onSuccess: () => {
+      onRemove();
+      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+    },
     onError: () => {
       alert("삭제에 실패했습니다.");
     },
