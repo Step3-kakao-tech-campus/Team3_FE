@@ -1,14 +1,14 @@
+"use client";
+
 import { MdWarningAmber, MdErrorOutline, MdCheckCircleOutline } from "react-icons/md";
 import { ToastData } from "@/types/toast";
-import React from "react";
+import { useRecoilValue } from "recoil";
+import toastState from "@/stores/atoms/toastState";
 import ToastItem from "./ToastItem";
 
-interface Props {
-  toastList: ToastData[];
-  setToastList: React.Dispatch<React.SetStateAction<ToastData[]>>;
-}
+function Toast(): JSX.Element {
+  const toastList = useRecoilValue(toastState);
 
-function Toast({ toastList, setToastList }: Props) {
   const getBackgroundColor = (type: string) => {
     switch (type) {
       case "success":
@@ -40,7 +40,6 @@ function Toast({ toastList, setToastList }: Props) {
       {toastList.map((item: ToastData) => (
         <ToastItem
           key={item.id}
-          setToastList={setToastList}
           toastData={item}
           backgroundColor={getBackgroundColor(item.type)}
           icon={getIcon(item.type)}

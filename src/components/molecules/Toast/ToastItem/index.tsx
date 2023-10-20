@@ -1,17 +1,20 @@
 import { ToastData } from "@/types/toast";
 import React, { useEffect, useState } from "react";
 import { MdWarningAmber, MdErrorOutline, MdCheckCircleOutline } from "react-icons/md";
+import toastState from "@/stores/atoms/toastState";
+import { useSetRecoilState } from "recoil";
 
 interface Props {
-  setToastList: React.Dispatch<React.SetStateAction<ToastData[]>>;
   toastData: ToastData;
   backgroundColor: string;
   icon: typeof MdWarningAmber | typeof MdErrorOutline | typeof MdCheckCircleOutline;
 }
 
-function ToastItem({ setToastList, toastData, backgroundColor, icon }: Props) {
+function ToastItem({ toastData, backgroundColor, icon }: Props): JSX.Element {
   const { id, message } = toastData;
   const [visible, setVisible] = useState(0);
+
+  const setToastList = useSetRecoilState(toastState);
 
   useEffect(() => {
     setVisible(1);
