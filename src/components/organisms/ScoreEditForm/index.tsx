@@ -1,11 +1,18 @@
 "use client";
 
 import ScoreInput from "@/components/molecules/ScoreInput";
-import { ScoreData } from "@/types/score";
+import { Score, ScoreData } from "@/types/score";
 import { useState } from "react";
 
-function ScoreEditForm() {
-  const [formScores, setFormScores] = useState<ScoreData[]>([]);
+interface Props {
+  initialScoresData: Score[];
+}
+
+function ScoreEditForm({ initialScoresData }: Props) {
+  const initialScores = initialScoresData.map((score) => {
+    return { ...score, isNew: false };
+  });
+  const [formScores, setFormScores] = useState<ScoreData[]>(initialScores);
 
   const handleAdd = () => {
     if (formScores.length >= 20) alert("최대 20 게임까지만 등록 가능합니다.");
