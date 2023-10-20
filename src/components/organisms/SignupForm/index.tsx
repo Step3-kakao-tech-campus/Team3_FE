@@ -11,13 +11,10 @@ import Logo from "public/images/bowling_logo.png";
 import BlankBar from "@/components/atoms/BlankBar";
 import { useRouter } from "next/navigation";
 
-import { setLogin, getTokenPayload } from "@/utils/user";
-import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
-import { useAppDispatch } from "@/stores/hooks";
-import { postLogin, postRegister } from "@/apis/sign";
+import { postRegister } from "@/apis/sign";
+import { useMutation } from "@tanstack/react-query";
 
 function SignupForm(): JSX.Element {
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [errMsg, setErrMsg] = useState("");
@@ -32,6 +29,8 @@ function SignupForm(): JSX.Element {
     districtId: regionIds.districtId,
   });
 
+  const { mutate } = useMutation(postRegister);
+
   const handleInputChange = useCallback((fieldName: string, value: string | number) => {
     if (fieldName === "confirmPassword") {
       // 'confirmpassword' 필드의 값을 설정
@@ -44,7 +43,7 @@ function SignupForm(): JSX.Element {
     }
   }, []);
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!formData.email || !formData.password || !formData.name || !confirmPassword) {
       setErrMsg("모든 항목을 입력해주세요.");
     } else if (!validateEmail(formData.email)) {
@@ -60,24 +59,17 @@ function SignupForm(): JSX.Element {
     } else if (!consentChecked) {
       setErrMsg("개인정보 수집 및 이용에 동의해주세요.");
     } else {
-      try {
-        await postRegister(formData);
-        const response = await postLogin(formData);
-        const payload = getTokenPayload(response.headers.authorization);
-        // 토큰 만료시간 설정
-        dispatch(isLogin(formData.email));
-        dispatch(setExpiryDate(payload.exp));
-        setLogin(formData.email, response.headers.authorization);
-
-        router.back();
-      } catch (e: any) {
-        if (e.response) {
-          alert(e.response.data.errorMessage);
-        }
-      }
-      router.refresh();
+      mutate(formData, {
+        onSuccess: () => {
+          router.back();
+          router.refresh();
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
     }
-  }, [confirmPassword, consentChecked, dispatch, formData, regionIds.districtId, router]);
+  }, [confirmPassword, consentChecked, formData, regionIds.districtId, router, mutate]);
 
   useEffect(() => {
     handleInputChange("districtId", regionIds.districtId);

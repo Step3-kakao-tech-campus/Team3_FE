@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getComments, postComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
@@ -61,14 +61,14 @@ function CommentForm({ id }: Props): JSX.Element {
     });
   };
 
-  const observer = useMemo(() => new IntersectionObserver(handleIntersect), [handleIntersect]);
-
   useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect);
+
     if (target.current) {
       observer.observe(target.current);
     }
     return () => observer.disconnect();
-  }, [target, data, observer]);
+  }, [target, handleIntersect]);
 
   return (
     <div>
