@@ -1,6 +1,7 @@
 import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import useToast from "@/hooks/useToast";
 import ProfileLink from "@/components/atoms/ProfileLink";
 import { Applicant } from "@/types/applicant";
 import { useCallback, useState } from "react";
@@ -15,23 +16,24 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
+  const { addErrorToast } = useToast();
   const handleAccept = useCallback(async () => {
     try {
       await putAcceptApplicant(postId, applicantId);
       setApprovalStatus("accepted");
     } catch {
-      alert("수락 요청이 실패했습니다.");
+      addErrorToast("수락 요청이 실패했습니다.");
     }
-  }, [postId, applicantId]);
+  }, [postId, applicantId, addErrorToast]);
 
   const handleReject = useCallback(async () => {
     try {
       await deleteRejectApplicant({ postId, applicantId });
       setApprovalStatus("rejected");
     } catch {
-      alert("거절 요청이 실패했습니다.");
+      addErrorToast("거절 요청이 실패했습니다.");
     }
-  }, [postId, applicantId]);
+  }, [postId, applicantId, addErrorToast]);
 
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">

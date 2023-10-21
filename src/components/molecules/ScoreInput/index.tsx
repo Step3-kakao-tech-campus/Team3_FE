@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
+import useToast from "@/hooks/useToast";
 
 interface Props {
   scoreData: ScoreData;
@@ -34,6 +35,8 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   const isValid = !scoreError && !fileError;
   const { isNew } = scoreData;
   const isModified = scoreData.scoreNum !== scoreValue || scoreData.scoreImage !== selectedFile;
+
+  const { addErrorToast } = useToast();
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
@@ -62,7 +65,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
     },
     onError: () => {
-      alert("저장에 실패했습니다.");
+      addErrorToast("저장에 실패했습니다.");
     },
   };
   const optionDelete: UseMutationOptions = {
@@ -71,7 +74,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
     },
     onError: () => {
-      alert("삭제에 실패했습니다.");
+      addErrorToast("삭제에 실패했습니다.");
     },
   };
   const { postNewScore, putEditScore, deleteCurrentScore } = useScoreMutation({

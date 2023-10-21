@@ -4,6 +4,7 @@ import { getProfileById } from "@/apis/profile";
 import postRating from "@/apis/rating";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
+import useToast from "@/hooks/useToast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,13 +21,14 @@ function StarRatingTemplate() {
   const userName = data?.data?.response?.name;
   const userImage = data?.data?.response?.profileImage;
 
+  const { addErrorToast, addSuccessToast } = useToast();
   const { mutate: postStarRating } = useMutation(postRating, {
     onSuccess: () => {
-      alert("등록이 완료되었습니다.");
+      addSuccessToast("등록이 완료되었습니다.");
       router.back();
     },
     onError: () => {
-      alert("요청이 실패하였습니다.");
+      addErrorToast("요청이 실패하였습니다.");
     },
   });
 

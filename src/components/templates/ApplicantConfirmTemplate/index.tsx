@@ -6,6 +6,7 @@ import Button from "@/components/atoms/Button";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
+import useToast from "@/hooks/useToast";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -59,15 +60,16 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     response?.applicantNumber,
   ]);
 
+  const { addErrorToast, addSuccessToast } = useToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);
   const mutateOption = {
     onError: () => {
-      alert("요청에 실패했습니다. 다시 시도해주세요");
+      addErrorToast("요청에 실패했습니다. 다시 시도해주세요");
     },
     onSuccess: () => {
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);
       router.back();
-      alert("마감되었습니다.");
+      addSuccessToast("마감되었습니다.");
     },
   };
 

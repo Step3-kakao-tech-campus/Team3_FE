@@ -1,6 +1,7 @@
 "use client";
 
 import ScoreInput from "@/components/molecules/ScoreInput";
+import useToast from "@/hooks/useToast";
 import { Score, ScoreData } from "@/types/score";
 import { useState } from "react";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -18,8 +19,9 @@ function ScoreEditForm({ initialScoresData }: Props) {
 
   const [formScores, setFormScores] = useState<ScoreData[]>(initialScores);
 
+  const { addWarningToast } = useToast();
   const handleAdd = () => {
-    if (formScores?.length >= 10) alert("최대 10 게임까지만 등록 가능합니다.");
+    if (formScores?.length >= 10) addWarningToast("최대 10 게임까지만 등록 가능합니다.");
     else {
       setFormScores((prev) => [...prev, newScore]);
     }
