@@ -107,7 +107,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
 
   return (
     <>
-      <div className="score-input flex items-center gap-2">
+      <div className="score-input flex items-center justify-between">
         {isEditing ? (
           <>
             <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
@@ -156,8 +156,10 @@ function ScoreInput({ scoreData, onRemove }: Props) {
           </>
         ) : (
           <>
-            <span>스코어</span>
-            <span>{scoreValue}</span>
+            <div className="text-lg flex items-center gap-2">
+              <span>스코어</span>
+              <span className="text-slate-700">{scoreValue}</span>
+            </div>
             <Button
               rounded="full"
               size="sm"

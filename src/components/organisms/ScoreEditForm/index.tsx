@@ -33,7 +33,7 @@ function ScoreEditForm({ initialScoresData }: Props) {
   };
 
   return (
-    <div className="score-edit-form flex flex-col gap-2">
+    <div className="score-edit-form flex flex-col gap-2 min-w-[350px]">
       {formScores?.map((formScore) => (
         <ScoreInput key={formScore?.id} scoreData={formScore} onRemove={() => handleRemove(formScore?.id)} />
       ))}
