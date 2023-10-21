@@ -1,3 +1,5 @@
+"use client";
+
 import { ToastData } from "@/types/toast";
 import React, { useEffect, useState } from "react";
 import { MdWarningAmber, MdErrorOutline, MdCheckCircleOutline } from "react-icons/md";
