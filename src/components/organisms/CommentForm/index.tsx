@@ -7,6 +7,7 @@ import Comment, { CommentWithChild } from "@/components/molecules/Comment";
 import CommentSubmit from "@/components/molecules/CommentSubmit";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import useToast from "@/hooks/useToast";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
@@ -30,6 +31,8 @@ function CommentForm({ id }: Props): JSX.Element {
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
+  const { addWarningToast } = useToast();
+
   const handleIntersect = useCallback(
     async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entry.isIntersecting) {
@@ -46,6 +49,10 @@ function CommentForm({ id }: Props): JSX.Element {
   const { targetRef } = useIntersectionObserver(handleIntersect);
 
   const handleSubmit = () => {
+    if (commentRef.current!.value === "") {
+      addWarningToast("내용을 입력해 주세요.");
+      return;
+    }
     const payload = {
       id,
       content: commentRef.current!.value,

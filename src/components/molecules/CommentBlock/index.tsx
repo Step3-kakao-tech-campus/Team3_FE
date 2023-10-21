@@ -6,6 +6,7 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import useToast from "@/hooks/useToast";
 import CommentSubmit from "../CommentSubmit";
 
 interface Props {
@@ -24,6 +25,8 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
 
   const { mutate, queryClient } = useMutateWithQueryClient(deleteComments);
   const { mutate: putMutate } = useMutation(putComments);
+
+  const { addWarningToast } = useToast();
 
   const payload = {
     postId: id,
@@ -47,6 +50,10 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   };
 
   const handleUpdate = () => {
+    if (commentContent === "") {
+      addWarningToast("내용을 입력해 주세요.");
+      return;
+    }
     const putPayload = {
       ...payload,
       content: commentContent,
