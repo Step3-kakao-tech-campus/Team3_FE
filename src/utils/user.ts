@@ -8,18 +8,16 @@ export const getTokenPayload = (token: string) => {
   return payload;
 };
 
-export const setLogin = async (email: string, token: string) => {
+export const setLogin = async (token: string) => {
   const payload = getTokenPayload(token);
   const maxAge = 3600 * 168;
 
-  setCookie("email", email, { maxAge });
-  setCookie("token", token, { maxAge });
-  setCookie("exp", payload.exp, { maxAge });
-  setCookie("userId", payload.sub, { maxAge });
+  setCookie("token", token, { maxAge, path: "/" });
+  setCookie("exp", payload.exp, { maxAge, path: "/" });
+  setCookie("userId", payload.sub, { maxAge, path: "/" });
 };
 
 export const deleteToken = async () => {
-  removeCookie("email");
   removeCookie("token");
   removeCookie("exp");
   removeCookie("userId");

@@ -10,10 +10,10 @@ interface Props {
 function RecordSummary({ data }: Props): JSX.Element {
   return (
     <div className="record-summary grid gap-[5%] grid-cols-2 md:grid-cols-4 sm">
-      <Card text="Game" number={data.game} />
-      <Card text="Average" number={data.average} />
-      <Card text="Maximum" number={data.maximum} />
-      <Card text="Minimum" number={data.minimum} />
+      <Card text="Game" number={data?.game} />
+      <Card text="Average" number={data?.average} />
+      <Card text="Maximum" number={data?.maximum} />
+      <Card text="Minimum" number={data?.minimum} />
     </div>
   );
 }

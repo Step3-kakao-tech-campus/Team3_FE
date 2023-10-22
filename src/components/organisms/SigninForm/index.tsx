@@ -10,13 +10,11 @@ import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
 import { validateEmail, validatePassword } from "@/utils/validation";
 
-import { setLogin, getTokenPayload } from "@/utils/user";
-import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
-import { useAppDispatch } from "@/stores/hooks";
+import { setLogin } from "@/utils/user";
 import { postLogin } from "@/apis/sign";
+import { useMutation } from "@tanstack/react-query";
 
 function SigninForm(): JSX.Element {
-  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -25,6 +23,8 @@ function SigninForm(): JSX.Element {
   });
   const [errMsg, setErrMsg] = useState("");
 
+  const { mutate } = useMutation(postLogin);
+
   const handleInputChange = (fieldName: any, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -32,7 +32,7 @@ function SigninForm(): JSX.Element {
     }));
   };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!formData.email || !formData.password) {
       setErrMsg("모든 항목을 입력해주세요.");
     } else if (!validateEmail(formData.email)) {
@@ -40,24 +40,18 @@ function SigninForm(): JSX.Element {
     } else if (!validatePassword(formData.password)) {
       setErrMsg("비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.");
     } else {
-      try {
-        const response = await postLogin(formData);
-        const payload = getTokenPayload(response.headers.authorization);
-        // 토큰 만료시간 설정
-        dispatch(isLogin(formData.email));
-        dispatch(setExpiryDate(payload.exp));
-
-        setLogin(formData.email, response.headers.authorization);
-
-        router.back();
-      } catch (e: any) {
-        if (e.response) {
-          alert(e.response.data.errorMessage);
-        }
-      }
-      router.refresh();
+      mutate(formData, {
+        onSuccess: (res) => {
+          setLogin(res.headers.authorization);
+          router.back();
+          router.refresh();
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
     }
-  }, [dispatch, formData, router]);
+  }, [formData, router, mutate]);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {

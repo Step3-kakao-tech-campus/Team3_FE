@@ -39,3 +39,8 @@ export async function putPost(putOption: PutOption) {
   });
   return response;
 }
+
+export async function patchPost(postId: number) {
+  const response = await client.patch(`/api/posts/${postId}`, { isClose: true });
+  return response;
+}
