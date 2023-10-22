@@ -20,7 +20,7 @@ function ScoreEditTemplate({ postId }: { postId: number }) {
           <h1>{`${userName}님의 점수`}</h1>
         </div>
       )}
-      <ScoreEditForm initialScoresData={scores} />
+      {scores && <ScoreEditForm initialScoresData={scores} />}
     </div>
   );
 }
