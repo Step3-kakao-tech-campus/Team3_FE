@@ -36,7 +36,7 @@ function RecordCardMember({ member, isMyRecord, clientUserId, scoresLength, appl
           </Button>
         ) : (
           <Button size="xs" rounded="full" styleType="outlined-orange" fontWeight="normal">
-            <ModalLink href={`/star_rating?applicantId=${applicantId}&targetId=${member.id}`}>별점주기</ModalLink>
+            <ModalLink href={`/star_rating/${applicantId}/${member.id}`}>별점주기</ModalLink>
           </Button>
         ))}
     </div>

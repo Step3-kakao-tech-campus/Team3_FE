@@ -6,14 +6,14 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
 import useToast from "@/hooks/useToast";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 function StarRatingTemplate() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const applicantId = parseInt(searchParams.get("applicantId") as string, 10);
-  const targetId = parseInt(searchParams.get("targetId") as string, 10);
+  const params = useParams();
+  const applicantId = parseInt(params.applicantId as string, 10);
+  const targetId = parseInt(params.targetId as string, 10);
 
   const [star, setStar] = useState(0);
 
