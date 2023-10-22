@@ -2,7 +2,7 @@
 
 import Button from "@/components/atoms/Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 function RecordFilter(): JSX.Element {
   const searchParams = useSearchParams();
@@ -10,16 +10,12 @@ function RecordFilter(): JSX.Element {
   const [condition, setCondition] = useState(searchParams.get("condition") || "all");
   const [status, setStatus] = useState(searchParams.get("status") || "all");
 
-  useEffect(() => {
-    setCondition(searchParams.get("condition") || "all");
-    setStatus(searchParams.get("status") || "all");
-  }, [searchParams]);
-
   const handleCondition = useCallback(
     (newCondition: "all" | "created" | "participated") => {
       const searchParamObj = new URLSearchParams(searchParams);
       searchParamObj.set("condition", newCondition);
       const queryString = searchParamObj.toString();
+      setCondition(searchParamObj.get("condition") || "all");
       router.push(`?${queryString}`);
     },
     [router, searchParams],
@@ -29,6 +25,7 @@ function RecordFilter(): JSX.Element {
       const searchParamObj = new URLSearchParams(searchParams);
       searchParamObj.set("status", newStatus);
       const queryString = searchParamObj.toString();
+      setStatus(searchParamObj.get("status") || "all");
       router.push(`?${queryString}`);
     },
     [router, searchParams],

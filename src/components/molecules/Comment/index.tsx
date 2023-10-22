@@ -5,6 +5,7 @@ import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { postReply } from "@/apis/comment";
+import useToast from "@/hooks/useToast";
 import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
 import CommentSubmit from "../CommentSubmit";
@@ -28,12 +29,18 @@ function Comment({ comment }: Props): JSX.Element {
 
   const { mutate, queryClient } = useMutateWithQueryClient(postReply);
 
+  const { addWarningToast } = useToast();
+
   const handleReplyForm = () => {
     setReply((prev) => !prev);
     setCommentContent("");
   };
 
   const handleReply = () => {
+    if (commentContent === "") {
+      addWarningToast("내용을 입력해 주세요.");
+      return;
+    }
     const payload = {
       postId: id,
       commentId: comment.id,

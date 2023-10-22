@@ -13,12 +13,14 @@ interface Props {
   authorId: number;
 }
 
-function ApplyButton({ postId, authorId }: Props): JSX.Element {
-  const userId = parseInt(getCookie("userId"), 10);
-
+function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
   const router = useRouter();
 
-  const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId));
+  const [userId, setUserId] = useState<number | null>(null);
+
+  const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId), {
+    enabled: !!userId,
+  });
 
   const { mutate: applyMutate, queryClient } = useMutateWithQueryClient(postApply);
   const { mutate: deleteMutate } = useMutation({ mutationFn: deleteRejectApplicant });
@@ -28,6 +30,11 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
   useEffect(() => {
     setIsApplied(data?.data?.response.isApplied);
   }, [data]);
+
+  useEffect(() => {
+    if (getCookie("userId")) setUserId(parseInt(getCookie("userId"), 10));
+    else setUserId(null);
+  });
 
   const handleApply = () => {
     applyMutate(postId, {
@@ -54,6 +61,9 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element {
       },
     );
   };
+  if (!userId) {
+    return null;
+  }
 
   if (authorId === userId) {
     return (
