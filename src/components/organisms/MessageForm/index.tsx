@@ -1,6 +1,5 @@
 "use client";
 
-import "./style.css";
 import { getUserMessages } from "@/apis/message";
 import Message from "@/components/molecules/Message";
 import MessageSubmit from "@/components/molecules/MessageSubmit";
@@ -44,7 +43,7 @@ function MessageForm(): JSX.Element {
 
   return (
     <div>
-      <h1 className="mt-6 text-center text-2xl font-semibold">볼링님과의 대화</h1>
+      <h1 className="mt-6 text-center text-2xl font-semibold">{`${data?.pages[0]?.data?.response?.opponentUserName}님과의 대화`}</h1>
       <hr className="mt-4" />
       <div className="styled-scroll flex flex-col-reverse gap-4 mt-2 h-[580px] overflow-y-auto">
         {data?.pages?.map(
