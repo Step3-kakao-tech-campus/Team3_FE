@@ -60,3 +60,32 @@ export function formatDateToKoreanTime(date: Date) {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 }
+
+export function formatDateToMessageDay(date: Date) {
+  const newDate = new Date(date);
+
+  const year = newDate.getFullYear(); // 연도
+  const month = (newDate.getMonth() + 1).toString(); // 월 (0부터 시작하므로 +1, 두 자리로 포맷)
+  const day = newDate.getDate().toString(); // 일 (두 자리로 포맷)
+
+  return `${year}년 ${month}월 ${day}일`;
+}
+
+export function formatDateToMessageTime(date: Date) {
+  const newDate = new Date(date);
+
+  let hours = newDate.getHours(); // 시간 (두 자리로 포맷)
+  const minutes = newDate.getMinutes().toString().padStart(2, "0"); // 분 (두 자리로 포맷)
+
+  let ampm = "오전";
+
+  // 오후 표시 및 시간 조정
+  if (hours >= 12) {
+    ampm = "오후";
+    if (hours > 12) {
+      hours -= 12;
+    }
+  }
+
+  return `${ampm} ${hours}:${minutes}`;
+}
