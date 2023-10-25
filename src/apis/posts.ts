@@ -22,3 +22,25 @@ export async function getPostById(id: number) {
   const response = await client.get(`/api/posts/${id}`);
   return response;
 }
+
+export async function deletePost({ id }: { id: number }) {
+  const response = await client.delete(`/api/posts/${id}`);
+  return response;
+}
+
+type PutOption = Omit<PostOption, "districtId"> & { id: number };
+
+export async function putPost(putOption: PutOption) {
+  const response = await client.put(`/api/posts/${putOption.id}`, {
+    title: putOption.title,
+    startTime: putOption.startTime,
+    dueTime: putOption.dueTime,
+    content: putOption.content,
+  });
+  return response;
+}
+
+export async function patchPost(postId: number) {
+  const response = await client.patch(`/api/posts/${postId}`, { isClose: true });
+  return response;
+}

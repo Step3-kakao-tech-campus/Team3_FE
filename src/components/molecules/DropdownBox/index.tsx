@@ -20,7 +20,7 @@ interface Props {
   styleType: "big" | "small";
 }
 
-function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Props) {
+function DropdownBox({ styleType, selectedOptionIds, setSelectedOptionIds }: Props): JSX.Element {
   const queries = useRegionQueries({ cityId: selectedOptionIds.cityId, countryId: selectedOptionIds.countryId });
 
   const options1 = queries[0]?.data?.data?.response?.cities || [];

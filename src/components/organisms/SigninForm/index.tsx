@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Button from "@/components/atoms/Button";
 import InputBox from "@/components/molecules/InputBox";
@@ -10,54 +10,48 @@ import { useRouter } from "next/navigation";
 import BlankBar from "@/components/atoms/BlankBar";
 import { validateEmail, validatePassword } from "@/utils/validation";
 
-import { setLogin, getTokenPayload } from "@/utils/user";
-import { isLogin, setExpiryDate } from "@/stores/features/counterSlice";
-import { useAppDispatch } from "@/stores/hooks";
+import { setLogin } from "@/utils/user";
 import { postLogin } from "@/apis/sign";
+import { useMutation } from "@tanstack/react-query";
 
-function SigninForm() {
-  const dispatch = useAppDispatch();
+function SigninForm(): JSX.Element {
   const router = useRouter();
-  const errRef = useRef<HTMLParagraphElement>(null);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [errMsg, setErrMsg] = useState("");
 
-  const handleInputChange = (fieldName: any, value: any) => {
+  const { mutate } = useMutation(postLogin);
+
+  const handleInputChange = (fieldName: any, value: string) => {
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
   };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = useCallback(() => {
     if (!formData.email || !formData.password) {
-      errRef.current!.innerHTML = "모든 항목을 입력해주세요.";
+      setErrMsg("모든 항목을 입력해주세요.");
     } else if (!validateEmail(formData.email)) {
-      errRef.current!.innerHTML = "이메일 형식이 올바르지 않습니다.";
+      setErrMsg("이메일 형식이 올바르지 않습니다.");
     } else if (!validatePassword(formData.password)) {
-      errRef.current!.innerHTML = "비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.";
+      setErrMsg("비밀번호는 영문,숫자, 특수문자가 모두 포함 8자 이상 20자 이하로 입력해주세요.");
     } else {
-      try {
-        errRef.current!.innerHTML = "";
-        const response = await postLogin(formData);
-        const payload = getTokenPayload(response.headers.authorization);
-        // 토큰 만료시간 설정
-        dispatch(isLogin(formData.email));
-        dispatch(setExpiryDate(payload.exp));
-
-        setLogin(formData.email, response.headers.authorization);
-
-        router.back();
-      } catch (e: any) {
-        if (e.response) {
-          alert(e.response.data.errorMessage);
-        }
-      }
-      router.refresh();
+      mutate(formData, {
+        onSuccess: (res) => {
+          setLogin(res.headers.authorization);
+          router.back();
+          router.refresh();
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
     }
-  }, [dispatch, formData, router]);
+  }, [formData, router, mutate]);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -97,7 +91,7 @@ function SigninForm() {
         />
       </div>
       <div>
-        <p className="text-red-500 text-sm whitespace-pre-line" ref={errRef} />
+        <p className="text-[#ff003e] text-sm whitespace-pre-line">{errMsg}</p>
       </div>
       <BlankBar />
 

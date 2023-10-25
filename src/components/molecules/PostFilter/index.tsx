@@ -2,23 +2,14 @@
 
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
-function PostFilter({ searchParams }: PageSearchParams) {
+function PostFilter({ searchParams }: PageSearchParams): JSX.Element {
   const pathname = usePathname();
-  const [searchParamsState, setSearchParamsState] = useState(new URLSearchParams(searchParams));
-  const [isAll, setIsAll] = useState(searchParamsState.get("all") !== "false");
+  const searchParamsState = new URLSearchParams(searchParams);
+  const isAll = searchParamsState.get("all") !== "false";
   const router = useRouter();
 
-  useEffect(() => {
-    setSearchParamsState(new URLSearchParams(searchParams));
-  }, [searchParams]);
-  useEffect(() => {
-    setIsAll(searchParamsState.get("all") !== "false");
-  }, [searchParamsState]);
-
   const handleOnClick = (newIsAll: boolean) => {
-    setIsAll(newIsAll);
     searchParamsState.set("all", newIsAll.toString());
     const queryString = searchParamsState.toString();
     router.push(`${pathname}?${queryString}`);

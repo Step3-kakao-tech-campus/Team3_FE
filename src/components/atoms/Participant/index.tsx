@@ -4,7 +4,7 @@ interface Props {
   currentNumber: number;
 }
 
-function Participant({ currentNumber }: Props) {
+function Participant({ currentNumber }: Props): JSX.Element {
   return (
     <span className="text-sm mx-2 font-bold">
       <MdPeopleAlt className="inline mr-1 text-neutral-400" />
