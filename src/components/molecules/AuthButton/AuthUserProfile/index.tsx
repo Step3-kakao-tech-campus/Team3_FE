@@ -2,6 +2,7 @@
 
 import { getMyProfile } from "@/apis/profile";
 import Button from "@/components/atoms/Button";
+import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import { deleteToken } from "@/utils/user";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -22,7 +23,10 @@ function AuthUserProfile({ setIsLogin }: Props) {
 
   return (
     <>
-      <span className="mr-2 text-sm text-gray-500">{data?.data?.response?.name}님</span>
+      <div className="flex items-center gap-2">
+        <CircularProfileImage src={data?.data?.response?.profileImage} />
+        <span className="text-sm text-gray-500">{data?.data?.response?.name}님</span>
+      </div>
       <Button styleType="white" rounded="md" size="sm" onClick={handleLogout}>
         로그아웃
       </Button>

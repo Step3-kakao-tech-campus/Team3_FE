@@ -6,7 +6,7 @@ import AuthButton from "../AuthButton";
 
 function NavigationBar(): JSX.Element {
   return (
-    <nav className="fixed top-0 inset-x-0 z-999 bg-white">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-white">
       <InnerContainer>
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
