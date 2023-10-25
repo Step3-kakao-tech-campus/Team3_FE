@@ -12,4 +12,5 @@ export interface MessageCardType {
   opponentUserName: string;
   opponentUserProfileImage: string;
   recentMessage: string;
+  recentTime: Date;
 }
