@@ -3,6 +3,7 @@
 import CheckBox from "@/components/atoms/CheckBox";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import { MessageCardType } from "@/types/message";
+import { formatDateToStringByDot } from "@/utils/formatDateToString";
 import processString from "@/utils/processString";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -31,7 +32,7 @@ function MessageCard({ messageCard, setCheckList }: Props): JSX.Element {
       <div className="ml-4">
         <div className="flex gap-4 text-sm">
           <span>{messageCard.opponentUserName}</span>
-          <div className="text-gray-500">2020.02.02</div>
+          <div className="text-gray-500">{formatDateToStringByDot(messageCard.recentTime)}</div>
         </div>
         <pre className="mt-3 leading-tight">{processString(messageCard.recentMessage)}</pre>
       </div>
