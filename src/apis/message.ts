@@ -24,3 +24,8 @@ export async function postMessages({ id, content }: { id: number; content: strin
   });
   return response;
 }
+
+export async function deleteMessageCard({ id }: { id: number }) {
+  const response = await client.delete(`/api/messages/opponents/${id}`);
+  return response;
+}
