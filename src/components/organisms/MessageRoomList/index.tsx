@@ -5,12 +5,15 @@ import Button from "@/components/atoms/Button";
 import MessageCard from "@/components/molecules/MessageCard";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
+import useToast from "@/hooks/useToast";
 import { MessageCardType } from "@/types/message";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useState, useCallback } from "react";
 
 function MessageRoomList(): JSX.Element {
   const [checkList, setCheckList] = useState<number[]>([]);
+
+  const { addSuccessToast } = useToast();
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/api/messages/opponents"],
@@ -47,8 +50,9 @@ function MessageRoomList(): JSX.Element {
         { id: item },
         {
           onSuccess: () => {
-            setCheckList([]);
             queryClient.invalidateQueries(["/api/messages/opponents"]);
+            setCheckList([]);
+            addSuccessToast("성공적으로 삭제되었습니다.");
           },
           onError: () => {},
         },
