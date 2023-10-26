@@ -44,6 +44,19 @@ function MessageSubmit() {
     });
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.shiftKey) {
+      return;
+    }
+    if (e.key === "Enter") {
+      if (textAreaRef.current!.value === "") {
+        e.preventDefault();
+        return;
+      }
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="flex items-center gap-4 mt-6">
       <textarea
@@ -52,6 +65,7 @@ function MessageSubmit() {
         rows={1}
         ref={textAreaRef}
         onChange={handleOnChange}
+        onKeyDown={handleKeyDown}
       />
       <Button styleType="thunder" fontWeight="normal" rounded="full" size="md" onClick={handleSubmit}>
         전송
