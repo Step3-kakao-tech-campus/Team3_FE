@@ -12,6 +12,7 @@ import { useState } from "react";
 function StarRatingTemplate() {
   const router = useRouter();
   const params = useParams();
+  const postId = parseInt(params.postId as string, 10);
   const applicantId = parseInt(params.applicantId as string, 10);
   const targetId = parseInt(params.targetId as string, 10);
 
@@ -45,7 +46,7 @@ function StarRatingTemplate() {
       <button
         type="button"
         className="w-full p-[3px] bg-thunder text-white rounded-full"
-        onClick={() => postStarRating({ applicantId, targetId, rating: star })}
+        onClick={() => postStarRating({ postId, applicantId, targetId, rating: star })}
       >
         확인
       </button>
