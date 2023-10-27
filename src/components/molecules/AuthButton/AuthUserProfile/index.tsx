@@ -26,7 +26,7 @@ function AuthUserProfile({ setIsLogin }: Props) {
     <>
       <div className="flex items-center gap-2">
         <CircularProfileImage src={data?.data?.response?.profileImage} />
-        <span className="text-sm text-gray-500">{data?.data?.response?.name}님</span>
+        <span className="text-sm text-gray-500 hover:underline">{data?.data?.response?.name}님</span>
       </div>
       <Button styleType="white" rounded="md" size="sm" onClick={handleLogout}>
         로그아웃
