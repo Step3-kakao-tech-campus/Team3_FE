@@ -25,7 +25,7 @@ function AuthUserProfile({ setIsLogin }: Props) {
 
   return (
     <>
-      <Link href={`/user_profile/${data?.data?.response?.id}`} className="flex items-center gap-2">
+      <Link href={`/user_profile/${data?.data?.response?.id}`} className="flex items-center gap-2" scroll={false}>
         <CircularProfileImage src={data?.data?.response?.profileImage} />
         <span className="text-sm text-gray-500 hover:underline">{data?.data?.response?.name}님</span>
       </Link>

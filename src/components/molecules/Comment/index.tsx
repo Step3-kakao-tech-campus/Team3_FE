@@ -61,7 +61,7 @@ function Comment({ comment }: Props): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-3">
-        <Link href={`/user_profile/${comment.userId}`}>
+        <Link href={`/user_profile/${comment.userId}`} scroll={false}>
           <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
         </Link>
         <div className="flex-1">

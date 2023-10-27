@@ -44,7 +44,7 @@ function PostTemplates({ id }: Props): JSX.Element {
       <h1 className="mt-4 text-2xl">{post.title}</h1>
       <div className="mt-4 flex justify-between">
         <div className="flex items-center">
-          <Link href={`/user_profile/${post.userId}`} className="flex items-center">
+          <Link href={`/user_profile/${post.userId}`} className="flex items-center" scroll={false}>
             <CircularProfileImage
               src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
               styleType="sm"
