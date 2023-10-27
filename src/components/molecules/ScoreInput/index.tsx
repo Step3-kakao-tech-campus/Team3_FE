@@ -93,7 +93,7 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       const isImageModified = selectedFile !== scoreData.scoreImage;
       const formData: { score?: number; image?: File } = {};
       if (isScoreModified) formData.score = scoreValue;
-      if (isImageModified) formData.image = selectedFile as File | undefined;
+      if (isImageModified) formData.image = (selectedFile || new File([""], "")) as File | undefined;
       putEditScore({ postId, scoreId, formData });
     } else if (isValid && !isNew && !isModified) {
       setIsEditing(false);
