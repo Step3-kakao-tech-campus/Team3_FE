@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
 import CommentSubmit from "../CommentSubmit";
+import Link from "next/link";
 
 interface Props {
   comment: CommentData;
@@ -72,7 +73,9 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[#2a5885]">{comment.userName}</span>
+        <Link href={`/user_profile/${comment.userId}`}>
+          <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
+        </Link>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
           {comment.userId === userId && (
             <>

@@ -11,6 +11,7 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import PostEditor from "@/components/molecules/PostEditor";
 import { getCookie } from "@/utils/Cookie";
 import ApplyButton from "@/components/molecules/ApplyButton";
+import Link from "next/link";
 
 interface Props {
   id: string;
@@ -43,11 +44,13 @@ function PostTemplates({ id }: Props): JSX.Element {
       <h1 className="mt-4 text-2xl">{post.title}</h1>
       <div className="mt-4 flex justify-between">
         <div className="flex items-center">
-          <CircularProfileImage
-            src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
-            styleType="sm"
-          />
-          <span className="ml-1">{post.userName}</span>
+          <Link href={`/user_profile/${post.userId}`} className="flex items-center">
+            <CircularProfileImage
+              src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
+              styleType="sm"
+            />
+            <span className="ml-1 hover:underline">{post.userName}</span>
+          </Link>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
           <span className="ml-2 text-neutral-400 text-sm">
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
@@ -55,7 +58,7 @@ function PostTemplates({ id }: Props): JSX.Element {
         </div>
         {userId === post.userId && <PostEditor id={postId} />}
       </div>
-      <hr className="mt-6" />
+      <hr className="mt-4" />
       <p className="flex mt-4 items-center gap-3">
         <span className="text-xl">모집 정보</span>
         <span className="text-neutral-400 text-sm">모집 마감 {formatDateToString(post.dueTime)}</span>
