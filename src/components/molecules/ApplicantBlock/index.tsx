@@ -2,6 +2,7 @@ import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import { Applicant } from "@/types/applicant";
+import Link from "next/link";
 import { useCallback, useState } from "react";
 import { MdCheck, MdClose } from "react-icons/md";
 
@@ -35,9 +36,13 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
       <div className="user-info flex gap-2 items-center">
-        <CircularProfileImage src={user.profileImage} styleType="lg" />
+        <Link href={`/user_profile/${user.id}`} scroll={false}>
+          <CircularProfileImage src={user.profileImage} styleType="lg" />
+        </Link>
         <div className="user-info-text flex flex-col justify-start">
-          <span className="block w-fit font-bold text-slate-700">{user.name}</span>
+          <Link href={`/user_profile/${user.id}`} scroll={false}>
+            <span className="block w-fit font-bold text-slate-700 hover:underline">{user.name}</span>
+          </Link>
           <span className="block w-fit text-sm text-neutral-500">{`매너점수 ★ ${
             user.rating ? `${user.rating}/5` : "없음"
           }`}</span>
