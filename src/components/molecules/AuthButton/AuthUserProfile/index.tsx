@@ -19,6 +19,7 @@ function AuthUserProfile({ setIsLogin }: Props) {
     deleteToken();
     setIsLogin(false);
     router.refresh();
+    router.push("/");
   };
 
   return (
