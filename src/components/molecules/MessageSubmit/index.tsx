@@ -27,6 +27,7 @@ function MessageSubmit() {
   };
 
   const handleSubmit = () => {
+    if (textAreaRef.current!.value.trim() === "") return;
     const payload = {
       id,
       content: textAreaRef.current!.value,
@@ -49,10 +50,7 @@ function MessageSubmit() {
       return;
     }
     if (e.key === "Enter") {
-      if (textAreaRef.current!.value === "") {
-        e.preventDefault();
-        return;
-      }
+      e.preventDefault();
       handleSubmit();
     }
   };
