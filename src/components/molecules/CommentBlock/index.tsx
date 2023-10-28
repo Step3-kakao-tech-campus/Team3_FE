@@ -1,6 +1,7 @@
 import { CommentData } from "@/types/commentData";
 import { getCookie } from "@/utils/Cookie";
 import React, { useState } from "react";
+import Link from "next/link";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
@@ -72,7 +73,9 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[#2a5885]">{comment.userName}</span>
+        <Link href={`/user_profile/${comment.userId}`} scroll={false}>
+          <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
+        </Link>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
           {comment.userId === userId && (
             <>

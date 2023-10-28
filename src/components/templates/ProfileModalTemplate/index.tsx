@@ -60,7 +60,7 @@ function ProfileModalTemplate(): JSX.Element {
           onClick={() => {
             router.push(`/close_modal`);
             router.refresh();
-            router.replace(`/쪽지페이지(내쪽지함or다른사람과의쪽지페이지)`);
+            router.replace(isMyProfile ? `/message` : `/message/${pageUserId}`);
           }}
         >
           <MdMail />

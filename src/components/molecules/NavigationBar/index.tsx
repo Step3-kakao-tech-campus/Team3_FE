@@ -14,8 +14,12 @@ function NavigationBar(): JSX.Element {
               <Image src={Logo} alt="볼링 로고" width={45} height={45} />
               <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">번개볼링</span>
             </div>
-            <Link href="/">홈</Link>
-            <Link href="/">볼링장 찾기</Link>
+            <Link href="/" className="hover:underline">
+              홈
+            </Link>
+            <Link href="/" className="hover:underline">
+              볼링장 찾기
+            </Link>
           </div>
           <AuthButton />
         </div>

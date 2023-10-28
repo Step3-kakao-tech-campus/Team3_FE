@@ -1,5 +1,6 @@
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import React, { useRef, useState } from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
@@ -60,7 +61,9 @@ function Comment({ comment }: Props): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-3">
-        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        <Link href={`/user_profile/${comment.userId}`} scroll={false}>
+          <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        </Link>
         <div className="flex-1">
           <CommentBlock comment={comment} isChild handleReplyForm={handleReplyForm} />
         </div>
