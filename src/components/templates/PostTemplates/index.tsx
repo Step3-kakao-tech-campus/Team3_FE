@@ -12,8 +12,8 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import PostEditor from "@/components/molecules/PostEditor";
 import { getCookie } from "@/utils/Cookie";
 import ApplyButton from "@/components/molecules/ApplyButton";
-import Link from "next/link";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
+import ProfileLink from "@/components/atoms/ProfileLink";
 
 interface Props {
   id: string;
@@ -48,13 +48,13 @@ function PostTemplates({ id }: Props): JSX.Element {
       <h1 className="mt-4 text-2xl">{post.title}</h1>
       <div className="mt-4 flex justify-between">
         <div className="flex items-center">
-          <Link href={`/user_profile/${post.userId}`} className="flex items-center" scroll={false}>
+          <ProfileLink className="flex items-center" userId={post.userId}>
             <CircularProfileImage
               src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
               styleType="sm"
             />
             <span className="ml-1 hover:underline">{post.userName}</span>
-          </Link>
+          </ProfileLink>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
           <span className="ml-2 text-neutral-400 text-sm">
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
