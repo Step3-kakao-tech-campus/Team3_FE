@@ -9,6 +9,7 @@ import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import PostCard from "../PostCard";
+import PostCardSkeleton from "../PostCard/Skeleton";
 
 function PostList({ searchParams }: PageSearchParams): JSX.Element {
   const getPostList = async ({ pageParam = 0 }, URLSearchParams: URLSearchParams) => {
@@ -26,7 +27,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     return getPosts(queryString);
   };
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["post_list", searchParams],
     (reactQueryParam) => {
       return getPostList(reactQueryParam, new URLSearchParams(searchParams));
@@ -54,6 +55,8 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
   );
 
   const { targetRef } = useIntersectionObserver(handleIntersect);
+
+  if (isLoading) return <PostCardSkeleton />;
 
   return (
     <div className="posts flex flex-col gap-5">
