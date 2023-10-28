@@ -1,15 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 import { MdClose } from "react-icons/md";
 
 interface Props {
   children: React.ReactNode;
   noPadding?: boolean;
-  onDismiss: () => void;
+  onDismiss?: () => void;
 }
 
 function ModalWrapper({ children, noPadding, onDismiss }: Props): JSX.Element {
+  const router = useRouter();
   return (
     <div className="fixed z-50 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
       <div
@@ -20,7 +22,7 @@ function ModalWrapper({ children, noPadding, onDismiss }: Props): JSX.Element {
         <button
           type="button"
           className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl font-bold rounded-full w-7 h-7 flex items-center justify-center focus:outline-none"
-          onClick={onDismiss}
+          onClick={onDismiss || (() => router.back())}
           aria-label="Modal Close"
         >
           <MdClose />
