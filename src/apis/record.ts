@@ -63,3 +63,10 @@ export async function deleteScore({ postId, scoreId }: { postId: number; scoreId
   const response = await client.delete(`/api/posts/${postId}/scores/${scoreId}`);
   return response;
 }
+
+export async function deleteScoreImage({ postId, scoreId }: { postId: number; scoreId: number }) {
+  if (!postId) throw new Error("postId가 유효하지 않습니다.");
+  if (!scoreId) throw new Error("scoreId가 유효하지 않습니다.");
+  const response = await client.delete(`/api/posts/${postId}/scores/${scoreId}/image`);
+  return response;
+}
