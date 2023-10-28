@@ -1,11 +1,11 @@
-import Modal from "@/components/atoms/Modal";
+import ModalWrapper from "@/components/atoms/ModalWrapper";
 import ProfileModalTemplate from "@/components/templates/ProfileModalTemplate";
 
 function ProfileModalPage() {
   return (
-    <Modal noPadding>
+    <ModalWrapper noPadding>
       <ProfileModalTemplate />
-    </Modal>
+    </ModalWrapper>
   );
 }
 

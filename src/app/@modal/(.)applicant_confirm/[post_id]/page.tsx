@@ -1,11 +1,11 @@
-import Modal from "@/components/atoms/Modal";
+import ModalWrapper from "@/components/atoms/ModalWrapper";
 import ApplicantConfirmTemplate from "@/components/templates/ApplicantConfirmTemplate";
 
 function ApplicantConfirmPage() {
   return (
-    <Modal>
+    <ModalWrapper>
       <ApplicantConfirmTemplate />
-    </Modal>
+    </ModalWrapper>
   );
 }
 
