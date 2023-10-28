@@ -77,25 +77,31 @@ function ScoreInput({ scoreData, onRemove }: Props) {
       addErrorToast("삭제에 실패했습니다.");
     },
   };
-  const { postNewScore, putEditScore, deleteCurrentScore } = useScoreMutation({
+  const { postNewScore, putEditScore, deleteCurrentScore, deleteCurrentScoreImage } = useScoreMutation({
     postOption: optionPostPut,
     putOption: optionPostPut,
     deleteOption: optionDelete,
+    deleteImageOption: optionPostPut,
   });
 
   const handleOnSave = () => {
-    if (isValid && isNew) {
+    if (!isValid) return;
+    if (isNew) {
       const formData: { score: number; image?: File } = { score: scoreValue };
       if (selectedFile && typeof selectedFile !== "string") formData.image = selectedFile;
       postNewScore({ postId, formData });
-    } else if (isValid && !isNew && isModified) {
-      const isScoreModified = scoreValue !== scoreData.scoreNum;
-      const isImageModified = selectedFile !== scoreData.scoreImage;
+    } else if (!isNew && isModified) {
       const formData: { score?: number; image?: File } = {};
-      if (isScoreModified) formData.score = scoreValue;
-      if (isImageModified) formData.image = selectedFile as File | undefined;
-      putEditScore({ postId, scoreId, formData });
-    } else if (isValid && !isNew && !isModified) {
+      const isScoreModified = scoreValue !== scoreData.scoreNum;
+      const isImageAdded = selectedFile !== scoreData.scoreImage && isFileSelected;
+      const isImageDeleted = selectedFile !== scoreData.scoreImage && !isFileSelected;
+      if (isScoreModified || isImageAdded) {
+        if (isScoreModified) formData.score = scoreValue;
+        if (isImageAdded) formData.image = selectedFile as File | undefined;
+        putEditScore({ postId, scoreId, formData });
+      }
+      if (isImageDeleted) deleteCurrentScoreImage({ postId, scoreId });
+    } else if (!isNew && !isModified) {
       setIsEditing(false);
     }
   };
