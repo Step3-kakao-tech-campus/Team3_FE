@@ -1,11 +1,11 @@
-import ModalWrapper from "@/components/atoms/ModalWrapper";
+import RoutingModalWrapper from "@/components/atoms/RoutingModalWrapper";
 import ApplicantConfirmTemplate from "@/components/templates/ApplicantConfirmTemplate";
 
 function ApplicantConfirmPage() {
   return (
-    <ModalWrapper>
+    <RoutingModalWrapper>
       <ApplicantConfirmTemplate />
-    </ModalWrapper>
+    </RoutingModalWrapper>
   );
 }
 

@@ -9,7 +9,7 @@ interface Props {
   noPadding?: boolean;
 }
 
-function ModalWrapper({ children, noPadding }: Props): JSX.Element {
+function RoutingModalWrapper({ children, noPadding }: Props): JSX.Element {
   const router = useRouter();
 
   const onDismiss = useCallback(() => {
@@ -49,4 +49,4 @@ function ModalWrapper({ children, noPadding }: Props): JSX.Element {
   );
 }
 
-export default ModalWrapper;
+export default RoutingModalWrapper;
