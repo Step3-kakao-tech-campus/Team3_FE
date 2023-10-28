@@ -2,19 +2,25 @@
 
 import { getProfileById } from "@/apis/profile";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import profileModalState from "@/stores/atoms/profileModalState";
 import { getCookie } from "@/utils/Cookie";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
+import { useSetRecoilState } from "recoil";
 
-function ProfileModalTemplate(): JSX.Element {
+interface Props {
+  userId: number;
+}
+
+function ProfileModalTemplate({ userId }: Props): JSX.Element {
+  const setProfileModal = useSetRecoilState(profileModalState);
+
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
-  const pageParam = useParams();
-  const pageUserId = parseInt(pageParam.user_id as string, 10);
-  const isMyProfile = getCookie("userId") === pageUserId;
+  const isMyProfile = getCookie("userId") === userId;
   const { data } = useQuery({
-    queryKey: ["userProfile", pageUserId],
-    queryFn: () => getProfileById(pageUserId),
+    queryKey: ["userProfile", userId],
+    queryFn: () => getProfileById(userId),
   });
   const router = useRouter();
   const user = data?.data?.response;
@@ -58,9 +64,8 @@ function ProfileModalTemplate(): JSX.Element {
           type="button"
           className={buttonStyle}
           onClick={() => {
-            router.push(`/close_modal`);
-            router.refresh();
-            router.replace(isMyProfile ? `/message` : `/message/${pageUserId}`);
+            setProfileModal({ isOpen: false });
+            router.push(isMyProfile ? `/message` : `/message/${userId}`);
           }}
         >
           <MdMail />
@@ -70,9 +75,8 @@ function ProfileModalTemplate(): JSX.Element {
           type="button"
           className={buttonStyle}
           onClick={() => {
-            router.push(`/close_modal`);
-            router.refresh();
-            router.replace(`/scoreboard/${pageUserId}`);
+            setProfileModal({ isOpen: false });
+            router.push(`/scoreboard/${userId}`);
           }}
         >
           <MdLeaderboard />
