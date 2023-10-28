@@ -7,6 +7,7 @@ import InnerContainer from "@/components/atoms/InnerContainer";
 import QueryProvider from "@/utils/providers/queryProvider";
 import RecoilRootProvider from "@/utils/providers/recoilRootProvider";
 import Toast from "@/components/molecules/Toast";
+import ProfileModal from "@/components/molecules/Modal/ProfileModal";
 
 const notoSans = Noto_Sans_KR({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -36,6 +37,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
             </Background>
             {modal}
             <Toast />
+            <ProfileModal />
           </QueryProvider>
         </RecoilRootProvider>
       </body>

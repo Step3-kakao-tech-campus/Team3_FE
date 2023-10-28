@@ -1,12 +1,12 @@
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import React, { useRef, useState } from "react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { postReply } from "@/apis/comment";
 import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
 import CommentSubmit from "../CommentSubmit";
@@ -61,9 +61,9 @@ function Comment({ comment }: Props): JSX.Element {
   return (
     <>
       <div className="flex items-center gap-3">
-        <Link href={`/user_profile/${comment.userId}`} scroll={false}>
+        <ProfileLink userId={comment.userId}>
           <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
-        </Link>
+        </ProfileLink>
         <div className="flex-1">
           <CommentBlock comment={comment} isChild handleReplyForm={handleReplyForm} />
         </div>

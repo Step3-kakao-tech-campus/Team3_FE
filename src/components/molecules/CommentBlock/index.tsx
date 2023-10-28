@@ -1,13 +1,13 @@
 import { CommentData } from "@/types/commentData";
 import { getCookie } from "@/utils/Cookie";
 import React, { useState } from "react";
-import Link from "next/link";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentSubmit from "../CommentSubmit";
 
 interface Props {
@@ -73,9 +73,9 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   return (
     <>
       <div className="flex items-center justify-between">
-        <Link href={`/user_profile/${comment.userId}`} scroll={false}>
+        <ProfileLink userId={comment.userId}>
           <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
-        </Link>
+        </ProfileLink>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
           {comment.userId === userId && (
             <>

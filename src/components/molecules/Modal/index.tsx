@@ -1,33 +1,17 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { MdClose } from "react-icons/md";
 
 interface Props {
   children: React.ReactNode;
   noPadding?: boolean;
+  onDismiss?: () => void;
 }
 
-function Modal({ children, noPadding }: Props): JSX.Element {
+function ModalWrapper({ children, noPadding, onDismiss }: Props): JSX.Element {
   const router = useRouter();
-
-  const onDismiss = useCallback(() => {
-    router.back();
-  }, [router]);
-
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onDismiss();
-    },
-    [onDismiss],
-  );
-
-  useEffect(() => {
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onKeyDown]);
-
   return (
     <div className="fixed z-50 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
       <div
@@ -38,7 +22,7 @@ function Modal({ children, noPadding }: Props): JSX.Element {
         <button
           type="button"
           className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl font-bold rounded-full w-7 h-7 flex items-center justify-center focus:outline-none"
-          onClick={onDismiss}
+          onClick={onDismiss || (() => router.back())}
           aria-label="Modal Close"
         >
           <MdClose />
@@ -49,4 +33,4 @@ function Modal({ children, noPadding }: Props): JSX.Element {
   );
 }
 
-export default Modal;
+export default ModalWrapper;
