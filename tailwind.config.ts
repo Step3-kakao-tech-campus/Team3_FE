@@ -20,6 +20,22 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         thunder: "linear-gradient(to top left, #FE7E07, #FFC750)",
       },
+      keyframes: {
+        "skeleton-gradient": {
+          "0%": {
+            backgroundColor: "rgba(165, 165, 165, 0.1)",
+          },
+          "50%": {
+            backgroundColor: "rgba(165, 165, 165, 0.3)",
+          },
+          "100%": {
+            backgroundColor: "rgba(165, 165, 165, 0.1)",
+          },
+        },
+      },
+      animation: {
+        "skeleton-gradient": "skeleton-gradient 1.5s infinite ease-in-out",
+      },
     },
   },
   plugins: [],
