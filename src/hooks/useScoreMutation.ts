@@ -1,9 +1,10 @@
-import { deleteScore, postScore, putScore } from "@/apis/record";
+import { deleteScore, deleteScoreImage, postScore, putScore } from "@/apis/record";
 import { useMutation } from "@tanstack/react-query";
 
-export default function useScoreMutation({ postOption, putOption, deleteOption }: any) {
+export default function useScoreMutation({ postOption, putOption, deleteOption, deleteImageOption }: any) {
   const { mutate: postNewScore } = useMutation(postScore, postOption);
   const { mutate: putEditScore } = useMutation(putScore, putOption);
   const { mutate: deleteCurrentScore } = useMutation(deleteScore, deleteOption);
-  return { postNewScore, putEditScore, deleteCurrentScore };
+  const { mutate: deleteCurrentScoreImage } = useMutation(deleteScoreImage, deleteImageOption);
+  return { postNewScore, putEditScore, deleteCurrentScore, deleteCurrentScoreImage };
 }
