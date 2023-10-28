@@ -1,3 +1,5 @@
+"use client";
+
 import profileModalState from "@/stores/atoms/profileModalState";
 import React from "react";
 import { useSetRecoilState } from "recoil";
