@@ -8,12 +8,14 @@ import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-function ApplicantConfirmTemplate(): JSX.Element {
-  const pageParam = useParams();
-  const postId = parseInt(pageParam.post_id as string, 10);
+interface Props {
+  postId: number;
+}
+
+function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
   const router = useRouter();
   const { data, isLoading, isError, error }: any = useQuery(["getApplicants", postId], {
     queryFn: () => getApplicants(postId),

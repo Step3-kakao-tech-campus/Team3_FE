@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { MdLocationOn, MdAlarm } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById } from "@/apis/posts";
@@ -12,6 +13,7 @@ import PostEditor from "@/components/molecules/PostEditor";
 import { getCookie } from "@/utils/Cookie";
 import ApplyButton from "@/components/molecules/ApplyButton";
 import Link from "next/link";
+import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 
 interface Props {
   id: string;
@@ -20,6 +22,8 @@ interface Props {
 function PostTemplates({ id }: Props): JSX.Element {
   const postId = parseInt(id, 10);
   const userId = parseInt(getCookie("userId"), 10);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { data } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
     onError: (error) => {
@@ -69,10 +73,24 @@ function PostTemplates({ id }: Props): JSX.Element {
       </p>
       <pre className="whitespace-pre-wrap mt-4 break-all">{post.content}</pre>
       <div className="mt-4 flex flex-row-reverse">
-        <ApplyButton postId={postId} authorId={post.userId} />
+        <ApplyButton
+          postId={postId}
+          authorId={post.userId}
+          onOpen={() => {
+            setModalOpen(true);
+          }}
+        />
       </div>
       <hr className="mt-6" />
       <CommentForm id={postId} />
+      {modalOpen && (
+        <ApplicantConfirmModal
+          postId={postId}
+          onDismiss={() => {
+            setModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
