@@ -1,13 +1,11 @@
-import React from "react";
-
-import RoutingModalWrapper from "@/components/atoms/RoutingModalWrapper";
 import SignupForm from "@/components/organisms/SignupForm";
+import ModalWrapper from "@/components/molecules/Modal";
 
 function SignupHome() {
   return (
-    <RoutingModalWrapper>
+    <ModalWrapper>
       <SignupForm />
-    </RoutingModalWrapper>
+    </ModalWrapper>
   );
 }
 
