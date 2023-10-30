@@ -3,13 +3,11 @@
 import { getApplicants } from "@/apis/applicant";
 import { patchPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
 interface Props {
@@ -17,9 +15,9 @@ interface Props {
 }
 
 function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
-  const router = useRouter();
-  const { data, isLoading, isError, error }: any = useQuery(["getApplicants", postId], {
+  const { data, isError, error }: any = useQuery(["getApplicants", postId], {
     queryFn: () => getApplicants(postId),
+    suspense: true,
   });
 
   const response = data?.data?.response;
@@ -38,9 +36,6 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
   );
 
   const renderComponent = useCallback(() => {
-    if (isLoading) {
-      return <LoadingSpinner />;
-    }
     if (isError) {
       return errorComponent;
     }
@@ -50,15 +45,7 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
-  }, [
-    errorComponent,
-    isError,
-    isLoading,
-    noApplicantComponent,
-    postId,
-    response?.applicants,
-    response?.applicantNumber,
-  ]);
+  }, [errorComponent, isError, noApplicantComponent, postId, response?.applicants, response?.applicantNumber]);
 
   const { addErrorToast, addSuccessToast } = useToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);
@@ -68,7 +55,6 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     },
     onSuccess: () => {
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);
-      router.back();
       addSuccessToast("마감되었습니다.");
     },
   };
