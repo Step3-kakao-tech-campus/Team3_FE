@@ -24,7 +24,7 @@ function ScoreEditTemplate({ postId }: { postId: number }) {
         </div>
       )}
       {scoreIsLoading && <LoadingSpinner />}
-      {scores && <ScoreEditForm initialScoresData={scores} />}
+      {scores && <ScoreEditForm postId={postId} initialScoresData={scores} />}
     </div>
   );
 }
