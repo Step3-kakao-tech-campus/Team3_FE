@@ -9,7 +9,6 @@ import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import PostCard from "../PostCard";
-import PostCardSkeleton from "../PostCard/Skeleton";
 
 function PostList({ searchParams }: PageSearchParams): JSX.Element {
   const getPostList = async ({ pageParam = 0 }, URLSearchParams: URLSearchParams) => {
@@ -27,13 +26,14 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     return getPosts(queryString);
   };
 
-  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["post_list", searchParams],
     (reactQueryParam) => {
       return getPostList(reactQueryParam, new URLSearchParams(searchParams));
     },
     {
       retry: 2,
+      suspense: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined; // 이전 페이지에서 받은 key값이 -1이면 undefined를 리턴하여 hasnextPage를 false로 설정
@@ -55,8 +55,6 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
   );
 
   const { targetRef } = useIntersectionObserver(handleIntersect);
-
-  if (isLoading) return <PostCardSkeleton />;
 
   return (
     <div className="posts flex flex-col gap-5">
