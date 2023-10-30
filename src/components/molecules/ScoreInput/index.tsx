@@ -59,7 +59,16 @@ function ScoreInput({ scoreData, onRemove }: Props) {
   };
 
   const queryClient = useQueryClient();
-  const optionPostPut: UseMutationOptions = {
+  const optionPost: UseMutationOptions = {
+    onSuccess: () => {
+      onRemove();
+      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+    },
+    onError: () => {
+      addErrorToast("저장에 실패했습니다.");
+    },
+  };
+  const optionPut: UseMutationOptions = {
     onSuccess: () => {
       setIsEditing(false);
       queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
@@ -78,10 +87,10 @@ function ScoreInput({ scoreData, onRemove }: Props) {
     },
   };
   const { postNewScore, putEditScore, deleteCurrentScore, deleteCurrentScoreImage } = useScoreMutation({
-    postOption: optionPostPut,
-    putOption: optionPostPut,
+    postOption: optionPost,
+    putOption: optionPut,
     deleteOption: optionDelete,
-    deleteImageOption: optionPostPut,
+    deleteImageOption: optionPut,
   });
 
   const handleOnSave = () => {
