@@ -1,6 +1,8 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable import/no-duplicates */
+import React from "react";
 import Badge from "@/components/atoms/Badge";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import Participant from "@/components/atoms/Participant";
@@ -9,7 +11,7 @@ import { getCookie } from "@/utils/Cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
@@ -31,6 +33,14 @@ function RecordCard({ data }: Props): JSX.Element {
   const scores = data?.scores;
   const clientUserId = getCookie("userId");
   const isMyRecord = clientUserId === parseInt(params.scoreboard_user_id as string, 10);
+
+  const onScoreEditModalOpen = useCallback(() => setScoreEditModalOpen(true), []);
+  const onStarRatingModalOpen = useCallback((newTargetId: number) => {
+    setTargetId(newTargetId);
+    setStarRatingModalOpen(true);
+  }, []);
+  const onDismissScoreEditModal = useCallback(() => setScoreEditModalOpen(false), []);
+  const onDismissStarRatingModal = useCallback(() => setStarRatingModalOpen(false), []);
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
@@ -68,11 +78,8 @@ function RecordCard({ data }: Props): JSX.Element {
                   isMyRecord={isMyRecord}
                   member={member}
                   scoresLength={scores.length}
-                  onScoreEditModalOpen={() => setScoreEditModalOpen(true)}
-                  onStarRatingModalOpen={(newTargetId) => {
-                    setTargetId(newTargetId);
-                    setStarRatingModalOpen(true);
-                  }}
+                  onScoreEditModalOpen={onScoreEditModalOpen}
+                  onStarRatingModalOpen={onStarRatingModalOpen}
                 />
               ))}
             </div>
@@ -80,20 +87,20 @@ function RecordCard({ data }: Props): JSX.Element {
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
           ))}
       </div>
-      {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={() => setScoreEditModalOpen(false)} />}
+      {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={onDismissScoreEditModal} />}
       {starRatingModalOpen && (
         <StarRatingModal
           postId={data?.id}
           applicantId={data?.applicantId}
           targetId={targetId}
-          onDismiss={() => setStarRatingModalOpen(false)}
+          onDismiss={onDismissStarRatingModal}
         />
       )}
     </div>
   );
 }
 
-export default RecordCard;
+export default React.memo(RecordCard);
 
 function RecordTimeWithLocation({
   districtName,
