@@ -48,10 +48,10 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    setSelectedFile(file || null);
     if (file && file.size > tenMB) setFileError("파일의 크기는 10MB를 넘을 수 없습니다.");
     else if (file && !fileTypes.includes(file.type)) setFileError("png, jpg, jpeg, gif 형식의 파일만 허용됩니다.");
     else {
-      setSelectedFile(file || null);
       setFileError("");
     }
   };
@@ -64,33 +64,26 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
     queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
   }, [pageUserId, postId, queryClient, searchParams]);
 
-  const optionPost: UseMutationOptions = {
+  interface Params {
+    onSuccess?: () => void;
+    onError?: () => void;
+    errorMsg?: string;
+  }
+  const createMutationOptions = ({ onSuccess, onError, errorMsg }: Params): UseMutationOptions => ({
     onSuccess: () => {
-      onRemove();
+      if (onSuccess) onSuccess();
       invalidateCurrentQuery();
     },
     onError: () => {
-      addErrorToast("저장에 실패했습니다.");
+      if (onError) onError();
+      addErrorToast(errorMsg || "작업에 실패했습니다.");
     },
-  };
-  const optionPut: UseMutationOptions = {
-    onSuccess: () => {
-      setIsEditing(false);
-      invalidateCurrentQuery();
-    },
-    onError: () => {
-      addErrorToast("저장에 실패했습니다.");
-    },
-  };
-  const optionDelete: UseMutationOptions = {
-    onSuccess: () => {
-      onRemove();
-      invalidateCurrentQuery();
-    },
-    onError: () => {
-      addErrorToast("삭제에 실패했습니다.");
-    },
-  };
+  });
+
+  const optionPost = createMutationOptions({ onSuccess: onRemove, errorMsg: "저장에 실패했습니다." });
+  const optionPut = createMutationOptions({ onSuccess: () => setIsEditing(false), errorMsg: "저장에 실패했습니다." });
+  const optionDelete = createMutationOptions({ onSuccess: onRemove, errorMsg: "삭제에 실패했습니다." });
+
   const { postNewScore, putEditScore, deleteCurrentScore, deleteCurrentScoreImage } = useScoreMutation({
     postOption: optionPost,
     putOption: optionPut,
