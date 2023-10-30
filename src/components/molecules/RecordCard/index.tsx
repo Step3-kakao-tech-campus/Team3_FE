@@ -56,7 +56,7 @@ function RecordCard({ data }: Props): JSX.Element {
       </Link>
       <div className="record-card-lower flex flex-col gap-2">
         <RecordTimeWithLocation districtName={data.districtName} startTime={data.startTime} />
-        <div className="scores">
+        <div className="scores flex flex-col gap-1">
           {scores.map((score) => (
             <ScoreWithImageButton key={`${data.id}:${score.id}`} scoreObj={score} />
           ))}
