@@ -126,7 +126,7 @@ function RecordTimeWithLocation({
 function ScoreWithImageButton({ scoreObj }: { scoreObj: RecordData["scores"][number] }) {
   return (
     <div className="score flex gap-2">
-      <span>{`스코어 ${scoreObj.id} | ${scoreObj.score}`}</span>
+      <span>{`스코어 | ${scoreObj.score}`}</span>
       {scoreObj.scoreImage && (
         <Button rounded="full" size="xs" styleType="outlined-orange" fontWeight="normal">
           <div className="inline-flex items-center gap-x-0.5 ">
