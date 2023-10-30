@@ -4,8 +4,9 @@ import { getProfileById } from "@/apis/profile";
 import postRating from "@/apis/rating";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -23,15 +24,17 @@ function StarRatingTemplate() {
   const userImage = data?.data?.response?.profileImage;
 
   const { addErrorToast, addSuccessToast } = useToast();
-  const { mutate: postStarRating } = useMutation(postRating, {
+  const { mutate: postStarRating, queryClient } = useMutateWithQueryClient(postRating);
+  const mutateOption = {
     onSuccess: () => {
+      // queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
       addSuccessToast("등록이 완료되었습니다.");
       router.back();
     },
     onError: () => {
       addErrorToast("요청이 실패하였습니다.");
     },
-  });
+  };
 
   return (
     <div className="star-rating-template flex flex-col gap-3">
@@ -46,7 +49,7 @@ function StarRatingTemplate() {
       <button
         type="button"
         className="w-full p-[3px] bg-thunder text-white rounded-full"
-        onClick={() => postStarRating({ postId, applicantId, targetId, rating: star })}
+        onClick={() => postStarRating({ postId, applicantId, targetId, rating: star }, mutateOption)}
       >
         확인
       </button>
