@@ -4,22 +4,19 @@ import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
 import { useRef, useState } from "react";
-import { useParams } from "next/navigation";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
 import useToast from "@/hooks/useToast";
 
 interface Props {
+  postId: number;
   scoreData: ScoreData;
   onRemove: () => void;
 }
 
-function ScoreInput({ scoreData, onRemove }: Props) {
+function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const [isEditing, setIsEditing] = useState(scoreData.isNew);
-
-  const params = useParams();
-  const postId = parseInt(params.post_id as string, 10);
   const scoreId = scoreData.id;
 
   const fileRef = useRef<HTMLInputElement>(null);
