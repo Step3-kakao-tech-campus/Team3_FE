@@ -3,7 +3,7 @@
 import ScoreInput from "@/components/molecules/ScoreInput";
 import useToast from "@/hooks/useToast";
 import { Score, ScoreData } from "@/types/score";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdAddCircleOutline } from "react-icons/md";
 
 interface Props {
@@ -12,12 +12,20 @@ interface Props {
 
 function ScoreEditForm({ initialScoresData }: Props) {
   const newScore = { id: Math.random(), scoreNum: 0, scoreImage: null, isNew: true };
-  const initialScores: ScoreData[] = (initialScoresData?.length &&
-    initialScoresData?.map((score) => {
-      return { ...score, isNew: false };
-    })) || [newScore];
 
-  const [formScores, setFormScores] = useState<ScoreData[]>(initialScores);
+  const [formScores, setFormScores] = useState<ScoreData[]>([]);
+  useEffect(() => {
+    const newFormScores: ScoreData[] = initialScoresData?.map((score) => {
+      return { ...score, isNew: false };
+    });
+    setFormScores((prev) => {
+      const mergedScores = [...newFormScores, ...prev];
+      const uniqueScores = [...new Set(mergedScores.map((score) => score.id))].map(
+        (id) => mergedScores.find((score) => score.id === id) as ScoreData,
+      );
+      return uniqueScores.length ? uniqueScores : [newScore];
+    });
+  }, [initialScoresData]);
 
   const { addWarningToast } = useToast();
   const handleAdd = () => {
