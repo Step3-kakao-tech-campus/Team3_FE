@@ -8,10 +8,14 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { StarRatingModalProps } from "@/types/starRatingModalProps";
 import { useQuery } from "@tanstack/react-query";
+import { useParams, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRatingModalProps) {
   const [star, setStar] = useState(0);
+  const param = useParams();
+  const searchParams = useSearchParams();
+  const pageUserId = parseInt(param.scoreboard_user_id as string, 10);
 
   const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId));
   const userName = data?.data?.response?.name;
@@ -21,7 +25,7 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
   const { mutate: postStarRating, queryClient } = useMutateWithQueryClient(postRating);
   const mutateOption = {
     onSuccess: () => {
-      // queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
+      queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
       addSuccessToast("등록이 완료되었습니다.");
       onDismiss();
     },
