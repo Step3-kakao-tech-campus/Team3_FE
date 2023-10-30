@@ -6,17 +6,11 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
+import { StarRatingModalProps } from "@/types/starRatingModalProps";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-function StarRatingTemplate() {
-  const router = useRouter();
-  const params = useParams();
-  const postId = parseInt(params.postId as string, 10);
-  const applicantId = parseInt(params.applicantId as string, 10);
-  const targetId = parseInt(params.targetId as string, 10);
-
+function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRatingModalProps) {
   const [star, setStar] = useState(0);
 
   const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId));
@@ -29,7 +23,7 @@ function StarRatingTemplate() {
     onSuccess: () => {
       // queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
       addSuccessToast("등록이 완료되었습니다.");
-      router.back();
+      onDismiss();
     },
     onError: () => {
       addErrorToast("요청이 실패하였습니다.");
