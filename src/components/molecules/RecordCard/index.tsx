@@ -13,6 +13,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
+import ScoreEditModal from "../Modal/ScoreEditModal";
+import StarRatingModal from "../Modal/StarRatingModal";
 
 interface Props {
   data: RecordData;
@@ -21,6 +23,9 @@ interface Props {
 function RecordCard({ data }: Props): JSX.Element {
   const params = useParams();
   const [isExpand, setIsExpand] = useState(false);
+  const [scoreEditModalOpen, setScoreEditModalOpen] = useState(false);
+  const [starRatingModalOpen, setStarRatingModalOpen] = useState(false);
+  const [targetId, setTargetId] = useState(0);
 
   const members = data?.members;
   const scores = data?.scores;
@@ -63,8 +68,11 @@ function RecordCard({ data }: Props): JSX.Element {
                   isMyRecord={isMyRecord}
                   member={member}
                   scoresLength={scores.length}
-                  applicantId={data.applicantId}
-                  postId={data.id}
+                  onScoreEditModalOpen={() => setScoreEditModalOpen(true)}
+                  onStarRatingModalOpen={(newTargetId) => {
+                    setTargetId(newTargetId);
+                    setStarRatingModalOpen(true);
+                  }}
                 />
               ))}
             </div>
@@ -72,6 +80,15 @@ function RecordCard({ data }: Props): JSX.Element {
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
           ))}
       </div>
+      {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={() => setScoreEditModalOpen(false)} />}
+      {starRatingModalOpen && (
+        <StarRatingModal
+          postId={data?.id}
+          applicantId={data?.applicantId}
+          targetId={targetId}
+          onDismiss={() => setStarRatingModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
