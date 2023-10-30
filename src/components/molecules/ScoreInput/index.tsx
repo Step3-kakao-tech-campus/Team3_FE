@@ -3,7 +3,7 @@
 import "./scoreInput.css";
 import Button from "@/components/atoms/Button";
 import { ScoreData } from "@/types/score";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
@@ -59,10 +59,11 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const pageUserId = parseInt(useParams().scoreboard_user_id as string, 10);
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const invalidateCurrentQuery = () => {
+  const invalidateCurrentQuery = useCallback(() => {
     queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
     queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
-  };
+  }, [pageUserId, postId, queryClient, searchParams]);
+
   const optionPost: UseMutationOptions = {
     onSuccess: () => {
       onRemove();
