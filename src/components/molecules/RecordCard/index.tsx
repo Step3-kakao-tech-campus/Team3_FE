@@ -29,8 +29,7 @@ function RecordCard({ data }: Props): JSX.Element {
   const [starRatingModalOpen, setStarRatingModalOpen] = useState(false);
   const [targetId, setTargetId] = useState(0);
 
-  const members = data?.members;
-  const scores = data?.scores;
+  const { members, scores, isClose } = data;
   const clientUserId = getCookie("userId");
   const isMyRecord = clientUserId === parseInt(params.scoreboard_user_id as string, 10);
 
@@ -76,6 +75,7 @@ function RecordCard({ data }: Props): JSX.Element {
                   key={`${data.id}:${member.id}`}
                   clientUserId={clientUserId}
                   isMyRecord={isMyRecord}
+                  isClose={isClose}
                   member={member}
                   scoresLength={scores.length}
                   onScoreEditModalOpen={onScoreEditModalOpen}
@@ -86,6 +86,9 @@ function RecordCard({ data }: Props): JSX.Element {
           ) : (
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
           ))}
+        {isExpand && !isClose && (
+          <span className="text-lg text-neutral-500 text-center">모집 마감 후 점수 및 별점 등록이 가능합니다.</span>
+        )}
       </div>
       {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={onDismissScoreEditModal} />}
       {starRatingModalOpen && (
