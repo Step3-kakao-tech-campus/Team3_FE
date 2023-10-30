@@ -5,6 +5,7 @@ import MiniProfile from "../MiniProfile";
 interface Prop {
   member: RecordData["members"][number];
   isMyRecord: boolean;
+  isClose: boolean;
   clientUserId: number;
   scoresLength: number;
   onScoreEditModalOpen: () => void;
@@ -14,6 +15,7 @@ interface Prop {
 function RecordCardMember({
   member,
   isMyRecord,
+  isClose,
   clientUserId,
   scoresLength,
   onScoreEditModalOpen,
@@ -23,6 +25,7 @@ function RecordCardMember({
     <div className="member flex gap-4 items-center">
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
       {isMyRecord &&
+        isClose &&
         clientUserId === member.id &&
         (scoresLength ? (
           <Button size="xs" rounded="full" styleType="outlined-blue" fontWeight="normal" onClick={onScoreEditModalOpen}>
@@ -34,6 +37,7 @@ function RecordCardMember({
           </Button>
         ))}
       {isMyRecord &&
+        isClose &&
         clientUserId !== member.id &&
         (member.isRated ? (
           <Button size="xs" rounded="full" styleType="outlined-gray" fontWeight="normal">
