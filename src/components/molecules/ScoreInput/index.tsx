@@ -8,6 +8,7 @@ import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
 import useToast from "@/hooks/useToast";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface Props {
   postId: number;
@@ -55,11 +56,17 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
     }
   };
 
+  const pageUserId = parseInt(useParams().scoreboard_user_id as string, 10);
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const invalidateCurrentQuery = () => {
+    queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+    queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
+  };
   const optionPost: UseMutationOptions = {
     onSuccess: () => {
       onRemove();
-      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+      invalidateCurrentQuery();
     },
     onError: () => {
       addErrorToast("저장에 실패했습니다.");
@@ -68,7 +75,7 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const optionPut: UseMutationOptions = {
     onSuccess: () => {
       setIsEditing(false);
-      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+      invalidateCurrentQuery();
     },
     onError: () => {
       addErrorToast("저장에 실패했습니다.");
@@ -77,7 +84,7 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const optionDelete: UseMutationOptions = {
     onSuccess: () => {
       onRemove();
-      queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
+      invalidateCurrentQuery();
     },
     onError: () => {
       addErrorToast("삭제에 실패했습니다.");
