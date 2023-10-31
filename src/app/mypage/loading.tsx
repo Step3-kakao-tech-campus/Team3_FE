@@ -4,7 +4,9 @@ import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 function MyPageLoading() {
   return (
     <BackArrowContainer>
-      <LoadingSpinner />
+      <div className="min-h-[512px] flex flex-col items-center">
+        <LoadingSpinner />
+      </div>
     </BackArrowContainer>
   );
 }
