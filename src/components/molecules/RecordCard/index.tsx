@@ -1,6 +1,8 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable import/no-duplicates */
+import React from "react";
 import Badge from "@/components/atoms/Badge";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import Participant from "@/components/atoms/Participant";
@@ -9,10 +11,12 @@ import { getCookie } from "@/utils/Cookie";
 import { formatDateToString } from "@/utils/formatDateToString";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
+import ScoreEditModal from "../Modal/ScoreEditModal";
+import StarRatingModal from "../Modal/StarRatingModal";
 
 interface Props {
   data: RecordData;
@@ -21,11 +25,21 @@ interface Props {
 function RecordCard({ data }: Props): JSX.Element {
   const params = useParams();
   const [isExpand, setIsExpand] = useState(false);
+  const [scoreEditModalOpen, setScoreEditModalOpen] = useState(false);
+  const [starRatingModalOpen, setStarRatingModalOpen] = useState(false);
+  const [targetId, setTargetId] = useState(0);
 
-  const members = data?.members;
-  const scores = data?.scores;
+  const { members, scores, isClose } = data;
   const clientUserId = getCookie("userId");
   const isMyRecord = clientUserId === parseInt(params.scoreboard_user_id as string, 10);
+
+  const onScoreEditModalOpen = useCallback(() => setScoreEditModalOpen(true), []);
+  const onStarRatingModalOpen = useCallback((newTargetId: number) => {
+    setTargetId(newTargetId);
+    setStarRatingModalOpen(true);
+  }, []);
+  const onDismissScoreEditModal = useCallback(() => setScoreEditModalOpen(false), []);
+  const onDismissStarRatingModal = useCallback(() => setStarRatingModalOpen(false), []);
 
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
@@ -42,7 +56,7 @@ function RecordCard({ data }: Props): JSX.Element {
       </Link>
       <div className="record-card-lower flex flex-col gap-2">
         <RecordTimeWithLocation districtName={data.districtName} startTime={data.startTime} />
-        <div className="scores">
+        <div className="scores flex flex-col gap-1">
           {scores.map((score) => (
             <ScoreWithImageButton key={`${data.id}:${score.id}`} scoreObj={score} />
           ))}
@@ -61,20 +75,35 @@ function RecordCard({ data }: Props): JSX.Element {
                   key={`${data.id}:${member.id}`}
                   clientUserId={clientUserId}
                   isMyRecord={isMyRecord}
+                  isClose={isClose}
                   member={member}
                   scoresLength={scores.length}
+                  onScoreEditModalOpen={onScoreEditModalOpen}
+                  onStarRatingModalOpen={onStarRatingModalOpen}
                 />
               ))}
             </div>
           ) : (
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
           ))}
+        {isExpand && !isClose && (
+          <span className="text-lg text-neutral-500 text-center">모집 마감 후 점수 및 별점 등록이 가능합니다.</span>
+        )}
       </div>
+      {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={onDismissScoreEditModal} />}
+      {starRatingModalOpen && (
+        <StarRatingModal
+          postId={data?.id}
+          applicantId={data?.applicantId}
+          targetId={targetId}
+          onDismiss={onDismissStarRatingModal}
+        />
+      )}
     </div>
   );
 }
 
-export default RecordCard;
+export default React.memo(RecordCard);
 
 function RecordTimeWithLocation({
   districtName,
@@ -100,7 +129,7 @@ function RecordTimeWithLocation({
 function ScoreWithImageButton({ scoreObj }: { scoreObj: RecordData["scores"][number] }) {
   return (
     <div className="score flex gap-2">
-      <span>{`스코어 ${scoreObj.id} | ${scoreObj.score}`}</span>
+      <span>{`스코어 | ${scoreObj.score}`}</span>
       {scoreObj.scoreImage && (
         <Button rounded="full" size="xs" styleType="outlined-orange" fontWeight="normal">
           <div className="inline-flex items-center gap-x-0.5 ">
