@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import InnerContainer from "@/components/atoms/InnerContainer";
 import SearchedLocationDisplay from "@/components/atoms/SearchedLocationDisplay";
 import PostFilter from "@/components/molecules/PostFilter";
@@ -6,6 +7,7 @@ import RegionSearchBar from "@/components/molecules/RegionSearchBar";
 import { PageSearchParams } from "@/types/pageSearchParams";
 import Link from "next/link";
 import { BsPen } from "react-icons/bs";
+import PostCardSkeleton from "@/components/molecules/PostCard/Skeleton";
 
 export default function Home({ searchParams }: PageSearchParams) {
   return (
@@ -25,7 +27,9 @@ export default function Home({ searchParams }: PageSearchParams) {
             </Link>
           </div>
           <SearchedLocationDisplay searchParams={searchParams} />
-          <PostList searchParams={searchParams} />
+          <Suspense fallback={<PostCardSkeleton />}>
+            <PostList searchParams={searchParams} />
+          </Suspense>
         </div>
       </InnerContainer>
     </main>

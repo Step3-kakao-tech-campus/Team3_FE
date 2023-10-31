@@ -14,6 +14,7 @@ import { getCookie } from "@/utils/Cookie";
 import ApplyButton from "@/components/molecules/ApplyButton";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 import ProfileLink from "@/components/atoms/ProfileLink";
+import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 
 interface Props {
   id: string;
@@ -25,13 +26,20 @@ function PostTemplates({ id }: Props): JSX.Element {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { data } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
+  const { data, isLoading } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
     onError: (error) => {
       console.log(error);
     },
   });
 
   const post = data?.data?.response.post || {};
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-[80vh]">
+        <LoadingSpinner styleType="xl" />
+      </div>
+    );
 
   return (
     <div>
