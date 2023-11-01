@@ -48,9 +48,8 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
                 type="button"
                 className="text-sm underline"
                 onClick={() => {
-                  router.push(`/close_modal`);
-                  router.refresh();
-                  router.replace(`/내정보수정페이지`);
+                  setProfileModal({ isOpen: false });
+                  router.push(`/mypage`);
                 }}
               >
                 내 정보 수정
