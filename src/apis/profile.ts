@@ -21,3 +21,14 @@ export async function putProfile({ formData }: { formData: { name: string; distr
   });
   return response;
 }
+
+export async function getUsers(name: string, pageParam?: number) {
+  const res = await client.get(`/api/users`, {
+    params: {
+      key: pageParam,
+      name,
+    },
+  });
+
+  return res;
+}
