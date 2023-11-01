@@ -39,10 +39,7 @@ function PostCard({ data }: Props): JSX.Element {
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
-          <CircularProfileImage
-            src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
-            styleType="md"
-          />
+          <CircularProfileImage src={data.profileImage || "/images/default_profile_image.png"} styleType="md" />
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
       </div>

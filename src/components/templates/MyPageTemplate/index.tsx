@@ -63,7 +63,11 @@ function MyPageTemplate() {
     },
   };
   const handleOnSubmit = () => {
-    const formData = { name: nameRef.current?.value || name, districtId: regionIds.districtId, image: selectedFile };
+    const formData = {
+      name: nameRef.current?.value || name,
+      districtId: regionIds.districtId,
+      profileImage: selectedFile,
+    };
     if (nameError || fileError) addErrorToast("올바르지 않은 값이 있습니다.");
     else if (!regionIds.districtId) addErrorToast("읍/면/동 단위까지 선택해 주세요.");
     else {

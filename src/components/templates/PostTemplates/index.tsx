@@ -57,10 +57,7 @@ function PostTemplates({ id }: Props): JSX.Element {
       <div className="mt-4 flex justify-between">
         <div className="flex items-center">
           <ProfileLink className="flex items-center" userId={post.userId}>
-            <CircularProfileImage
-              src={post.profileImage ? `임시APIURL${post.profileImage}` : "/images/default_profile_image.png"}
-              styleType="sm"
-            />
+            <CircularProfileImage src={post.profileImage || "/images/default_profile_image.png"} styleType="sm" />
             <span className="ml-1 hover:underline">{post.userName}</span>
           </ProfileLink>
           <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
