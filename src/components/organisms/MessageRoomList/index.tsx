@@ -3,6 +3,7 @@
 import { deleteMessageCard, getMessages } from "@/apis/message";
 import Button from "@/components/atoms/Button";
 import MessageCard from "@/components/molecules/MessageCard";
+import UserSearchModal from "@/components/molecules/Modal/UserSearchModal";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
@@ -12,6 +13,7 @@ import React, { useState, useCallback } from "react";
 
 function MessageRoomList(): JSX.Element {
   const [checkList, setCheckList] = useState<number[]>([]);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const { addSuccessToast } = useToast();
 
@@ -60,6 +62,10 @@ function MessageRoomList(): JSX.Element {
     });
   };
 
+  const handleModalOpen = () => {
+    setIsSearchModalOpen(true);
+  };
+
   return (
     <div>
       <h1 className="mt-6 font-bold text-2xl">내 쪽지함</h1>
@@ -67,7 +73,7 @@ function MessageRoomList(): JSX.Element {
         <Button styleType="outlined-orange" fontWeight="normal" rounded="full" size="sm" onClick={handleDelete}>
           선택 삭제
         </Button>
-        <Button styleType="thunder" fontWeight="normal" rounded="full" size="sm">
+        <Button styleType="thunder" fontWeight="normal" rounded="full" size="sm" onClick={handleModalOpen}>
           사용자 검색
         </Button>
       </div>
@@ -80,6 +86,13 @@ function MessageRoomList(): JSX.Element {
         )}
         {hasNextPage && <div className="observe-area" ref={targetRef} />}
       </div>
+      {isSearchModalOpen && (
+        <UserSearchModal
+          onDismiss={() => {
+            setIsSearchModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
