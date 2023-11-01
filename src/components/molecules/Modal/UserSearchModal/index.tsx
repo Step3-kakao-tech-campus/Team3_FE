@@ -1,6 +1,7 @@
 import React from "react";
 import SearchModalTemplate from "@/components/templates/SearchModalTemplate";
 import ModalWrapper from "..";
+
 interface Props {
   onDismiss: () => void;
 }
