@@ -7,12 +7,12 @@ import { useMutation } from "@tanstack/react-query";
 import EmailVerificationLoading from "../loading";
 
 function EmailSendPage() {
-  const { mutate, isSuccess } = useMutation(postSendVerificationEmail, { useErrorBoundary: true });
+  const { mutate, isSuccess, isLoading } = useMutation(postSendVerificationEmail, { useErrorBoundary: true });
 
   useEffect(mutate, []);
 
-  if (!isSuccess) return <EmailVerificationLoading />;
-  return <SendVerificationEmailTemplate />;
+  if (!isSuccess || isLoading) return <EmailVerificationLoading />;
+  return <SendVerificationEmailTemplate sendMail={mutate} />;
 }
 
 export default EmailSendPage;
