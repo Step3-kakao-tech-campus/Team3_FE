@@ -11,11 +11,14 @@ import Logo from "public/images/bowling_logo.png";
 import BlankBar from "@/components/atoms/BlankBar";
 import { useRouter } from "next/navigation";
 
-import { postRegister } from "@/apis/sign";
+import { postLogin, postRegister } from "@/apis/sign";
 import { useMutation } from "@tanstack/react-query";
+import useToast from "@/hooks/useToast";
+import { setLogin } from "@/utils/user";
 
 function SignupForm(): JSX.Element {
   const router = useRouter();
+  const { addSuccessToast, addWarningToast } = useToast();
 
   const [errMsg, setErrMsg] = useState("");
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
@@ -30,6 +33,18 @@ function SignupForm(): JSX.Element {
   });
 
   const { mutate } = useMutation(postRegister);
+  const { mutate: callPostLogin } = useMutation(postLogin, {
+    retry: 3,
+    onSuccess: (res) => {
+      setLogin(res.headers.authorization).then(() => {
+        router.refresh();
+        router.push("/email-verification/send");
+      });
+    },
+    onError: () => {
+      addWarningToast("로그인 후 이메일 인증을 해주세요.");
+    },
+  });
 
   const handleInputChange = useCallback((fieldName: string, value: string | number) => {
     if (fieldName === "confirmPassword") {
@@ -61,8 +76,10 @@ function SignupForm(): JSX.Element {
     } else {
       mutate(formData, {
         onSuccess: () => {
+          addSuccessToast("회원가입에 성공했습니다.");
           router.back();
           router.refresh();
+          callPostLogin(formData);
         },
         onError: (err) => {
           console.log(err);
