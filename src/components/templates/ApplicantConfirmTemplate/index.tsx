@@ -66,7 +66,7 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
         <div className="applicant-number-with-button flex justify-between items-center">
           <span>총 {response?.applicantNumber}건의 신청 요청이 있습니다.</span>
           <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleClose(postId, mutateOption)}>
-            마감하기
+            모집완료
           </Button>
         </div>
       )}
