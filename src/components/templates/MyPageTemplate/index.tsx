@@ -7,6 +7,7 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
+import truncateSecondFloatingPoint from "@/utils/truncateSecondFloatingPoint";
 import { validateName } from "@/utils/validation";
 import { MutateOptions, useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
@@ -144,7 +145,7 @@ function MyPageTemplate() {
         <div className="star-rating flex gap-4">
           <h2 className="text-xl">매너점수</h2>
           <span className="text-xl flex gap-1 items-center">
-            <MdStar className="inline text-thunderOrange" /> {rating} / 5
+            <MdStar className="inline text-thunderOrange" /> {truncateSecondFloatingPoint(rating)} / 5
           </span>
         </div>
         <div className="avg flex gap-4">
