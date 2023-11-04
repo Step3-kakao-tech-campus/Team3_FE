@@ -11,6 +11,7 @@ interface Props {
 
 function KaKaoMap({ place, update }: Props) {
   const [location, setLocation] = useState({ latitude: 37.566826, longitude: 126.9786567 });
+  const [addrName, setAddrName] = useState("");
   const { addWarningToast } = useToast();
 
   function showCenterInfo(map: any) {
@@ -29,12 +30,10 @@ function KaKaoMap({ place, update }: Props) {
 
     function displayCenterInfo(result: any, status: any) {
       if (status === window.kakao.maps.services.Status.OK) {
-        const infoDiv = document.getElementById("centerAddr");
-
         for (let i = 0; i < result.length; i++) {
           // 행정동의 region_type 값은 'H' 이므로
           if (result[i].region_type === "H") {
-            infoDiv.innerHTML = result[i].address_name;
+            setAddrName(result[i].address_name);
             break;
           }
         }
@@ -168,7 +167,9 @@ function KaKaoMap({ place, update }: Props) {
         <MdPlace className="w-5 h-5" />
       </button>
       <div id="map" className="relative w-full pb-[100%]">
-        <span id="centerAddr" className="absolute z-10 left-2 top-2 p-2 bg-white bg-opacity-75" />
+        <span id="centerAddr" className="absolute z-10 left-2 top-2 p-2 bg-white bg-opacity-75">
+          {addrName}
+        </span>
       </div>
     </div>
   );
