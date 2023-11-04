@@ -1,3 +1,4 @@
+import isPastTime from "@/utils/isPastTime";
 import React from "react";
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
  * @param {Date} dueTime - 마감 시간을 Date 타입으로 전달받는다
  */
 function Badge({ isClose, dueTime }: Props): JSX.Element {
-  const isRecruitTimeOver = new Date() > new Date(dueTime);
+  const isRecruitTimeOver = isPastTime(dueTime);
   const isRecruitClosed = isClose || isRecruitTimeOver;
   return (
     <span
