@@ -6,6 +6,7 @@ interface Prop {
   member: RecordData["members"][number];
   isMyRecord: boolean;
   isClose: boolean;
+  isStartTimeOver: boolean;
   clientUserId: number;
   scoresLength: number;
   onScoreEditModalOpen: () => void;
@@ -16,6 +17,7 @@ function RecordCardMember({
   member,
   isMyRecord,
   isClose,
+  isStartTimeOver,
   clientUserId,
   scoresLength,
   onScoreEditModalOpen,
@@ -26,6 +28,7 @@ function RecordCardMember({
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
       {isMyRecord &&
         isClose &&
+        isStartTimeOver &&
         clientUserId === member.id &&
         (scoresLength ? (
           <Button size="xs" rounded="full" styleType="outlined-blue" fontWeight="normal" onClick={onScoreEditModalOpen}>
@@ -38,6 +41,7 @@ function RecordCardMember({
         ))}
       {isMyRecord &&
         isClose &&
+        isStartTimeOver &&
         clientUserId !== member.id &&
         (member.isRated ? (
           <Button size="xs" rounded="full" styleType="outlined-gray" fontWeight="normal">
