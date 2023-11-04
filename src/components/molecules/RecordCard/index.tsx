@@ -17,6 +17,7 @@ import Button from "@/components/atoms/Button";
 import RecordCardMember from "../RecordCardMember";
 import ScoreEditModal from "../Modal/ScoreEditModal";
 import StarRatingModal from "../Modal/StarRatingModal";
+import ImageModal from "../Modal/ImageModal";
 
 interface Props {
   data: RecordData;
@@ -127,16 +128,26 @@ function RecordTimeWithLocation({
 }
 
 function ScoreWithImageButton({ scoreObj }: { scoreObj: RecordData["scores"][number] }) {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
   return (
     <div className="score flex gap-2">
       <span>{`스코어 | ${scoreObj.score}`}</span>
       {scoreObj.scoreImage && (
-        <Button rounded="full" size="xs" styleType="outlined-orange" fontWeight="normal">
+        <Button
+          rounded="full"
+          size="xs"
+          styleType="outlined-orange"
+          fontWeight="normal"
+          onClick={() => setImageModalOpen(true)}
+        >
           <div className="inline-flex items-center gap-x-0.5 ">
             <MdCameraAlt className="inline" />
             <span className="leading-none">이미지 보기</span>
           </div>
         </Button>
+      )}
+      {scoreObj.scoreImage && imageModalOpen && (
+        <ImageModal imagePath={scoreObj.scoreImage} onDismiss={() => setImageModalOpen(false)} />
       )}
     </div>
   );
