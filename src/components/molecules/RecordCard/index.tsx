@@ -78,6 +78,7 @@ function RecordCard({ data }: Props): JSX.Element {
                   clientUserId={clientUserId}
                   isMyRecord={isMyRecord}
                   isClose={isClose}
+                  isStartTimeOver={isStartTimeOver}
                   member={member}
                   scoresLength={scores.length}
                   onScoreEditModalOpen={onScoreEditModalOpen}
