@@ -7,6 +7,7 @@ import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentSubmit from "../CommentSubmit";
 
 interface Props {
@@ -69,10 +70,16 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     });
   };
 
+  const handleSetValue = (value: string) => {
+    setCommentContent(value);
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[#2a5885]">{comment.userName}</span>
+        <ProfileLink userId={comment.userId}>
+          <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
+        </ProfileLink>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
           {comment.userId === userId && (
             <>
@@ -95,7 +102,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
       </div>
       {update ? (
         <div className="flex items-center gap-3 mt-2">
-          <CommentSubmit onClick={handleUpdate} value={commentContent} setValue={setCommentContent} />
+          <CommentSubmit onClick={handleUpdate} value={commentContent} handleSetValue={handleSetValue} />
         </div>
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>

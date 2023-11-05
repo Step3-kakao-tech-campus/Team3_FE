@@ -7,6 +7,8 @@ import InnerContainer from "@/components/atoms/InnerContainer";
 import QueryProvider from "@/utils/providers/queryProvider";
 import RecoilRootProvider from "@/utils/providers/recoilRootProvider";
 import Toast from "@/components/molecules/Toast";
+import ProfileModal from "@/components/molecules/Modal/ProfileModal";
+import Script from "next/script";
 
 const notoSans = Noto_Sans_KR({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -14,6 +16,12 @@ const notoSans = Noto_Sans_KR({
   display: "swap",
   fallback: ["Malgun Gothic", "Roboto", "sans-serif"],
 });
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export const metadata: Metadata = {
   title: "Thunder bowling",
@@ -25,6 +33,11 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
     <html lang="ko">
       <head>
         <link rel="icon" href="/favicons/favicon.ico" />
+        <Script
+          type="text/javascript"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_APPKEY}&autoload=false&libraries=services`}
+          strategy="beforeInteractive"
+        />
       </head>
 
       <body className={`bg-[#F6F6F6] ${notoSans.className}`}>
@@ -36,6 +49,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
             </Background>
             {modal}
             <Toast />
+            <ProfileModal />
           </QueryProvider>
         </RecoilRootProvider>
       </body>

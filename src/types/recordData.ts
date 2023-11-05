@@ -1,5 +1,6 @@
 export interface RecordData {
   id: number;
+  applicantId: number;
   title: string;
   dueTime: Date;
   districtName: string;

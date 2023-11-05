@@ -6,7 +6,7 @@ import AuthButton from "../AuthButton";
 
 function NavigationBar(): JSX.Element {
   return (
-    <nav className="fixed top-0 inset-x-0 z-999 bg-white">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-white">
       <InnerContainer>
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
@@ -14,8 +14,12 @@ function NavigationBar(): JSX.Element {
               <Image src={Logo} alt="볼링 로고" width={45} height={45} />
               <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">번개볼링</span>
             </div>
-            <Link href="/">홈</Link>
-            <Link href="/">볼링장 찾기</Link>
+            <Link href="/" className="hover:underline">
+              홈
+            </Link>
+            <Link href="/search" className="hover:underline">
+              볼링장 찾기
+            </Link>
           </div>
           <AuthButton />
         </div>

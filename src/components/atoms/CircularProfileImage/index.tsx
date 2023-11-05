@@ -7,13 +7,14 @@ interface Props {
     md: "w-8 h-8",
     sm: "w-6 h-6",
    */
-  styleType?: "huge" | "lg" | "md" | "sm";
+  styleType?: "huge" | "xl" | "lg" | "md" | "sm";
 }
 
 /**
  * 원형 유저 프로필 이미지 컴포넌트.
  * styleType으로 크기를 전달받는다
  * huge: "w-20 h-20",
+ * xl: "w-12 h-12",
  * lg: "w-10 h-10",
  * md: "w-8 h-8",
  * sm: "w-6 h-6",
@@ -22,6 +23,7 @@ interface Props {
 function CircularProfileImage({ src, styleType = "md" }: Props): JSX.Element {
   const styles = {
     huge: "w-20 h-20",
+    xl: "w-12 h-12",
     lg: "w-10 h-10",
     md: "w-8 h-8",
     sm: "w-6 h-6",

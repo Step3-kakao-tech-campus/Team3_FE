@@ -2,12 +2,13 @@
 
 import { getPostById, putPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
+import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import DatePicker from "@/components/molecules/DatePicker";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   id: string;
@@ -18,7 +19,7 @@ function PostEditForm({ id }: Props) {
 
   const postId = parseInt(id, 10);
 
-  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
+  const { data, isLoading } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
     onError: (error) => {
       console.log(error);
     },
@@ -61,7 +62,7 @@ function PostEditForm({ id }: Props) {
       };
       mutate(payload, {
         onSuccess: () => {
-          router.push(`/post/${id}`);
+          router.back();
         },
         onError: (error) => {
           console.log(error);
@@ -69,6 +70,19 @@ function PostEditForm({ id }: Props) {
       });
     }
   };
+
+  useEffect(() => {
+    setStartTime(post.startTime);
+    setDueTime(post.dueTime);
+  });
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-[80vh]">
+        <LoadingSpinner styleType="xl" />
+      </div>
+    );
+
   return (
     <div>
       <OptionTitle>제목</OptionTitle>

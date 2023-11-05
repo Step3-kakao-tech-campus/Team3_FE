@@ -7,8 +7,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
 interface Props {
-  value: Date;
-  setValue: React.Dispatch<SetStateAction<Date>>;
+  value: Date | undefined;
+  setValue: React.Dispatch<SetStateAction<Date | undefined>>;
   minDate?: Date;
   maxDate?: Date;
 }
@@ -17,7 +17,7 @@ function SimpleDatePicker({ value, setValue, minDate, maxDate }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (minDate && value < minDate) {
+    if (minDate && value && value < minDate) {
       setValue(minDate);
     }
   }, [minDate, setValue, value]);
@@ -33,7 +33,7 @@ function SimpleDatePicker({ value, setValue, minDate, maxDate }: Props) {
           setIsOpen((prev) => !prev);
         }}
       >
-        {formatDateToStringByDash(value)}
+        {value ? formatDateToStringByDash(value) : "전체 기간"}
       </Button>
       {isOpen && (
         <div className="absolute top-full">

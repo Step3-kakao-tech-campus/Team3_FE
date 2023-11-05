@@ -2,6 +2,7 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import React from "react";
 import { CommentData } from "@/types/commentData";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentBlock from "../CommentBlock";
 
 interface Props {
@@ -13,7 +14,9 @@ function ChildComment({ childComment }: Props): JSX.Element {
     <>
       <div className="flex items-center gap-3">
         <MdOutlineSubdirectoryArrowRight className="w-8 h-8 text-neutral-400" />
-        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        <ProfileLink userId={childComment.userId}>
+          <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        </ProfileLink>
         <div className="flex-1">
           <CommentBlock comment={childComment} isChild={false} />
         </div>
@@ -23,4 +26,4 @@ function ChildComment({ childComment }: Props): JSX.Element {
   );
 }
 
-export default ChildComment;
+export default React.memo(ChildComment);
