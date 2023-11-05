@@ -17,12 +17,6 @@ function KaKaoMap({ place, update }: Props) {
   function showCenterInfo(map: any) {
     const geocoder = new window.kakao.maps.services.Geocoder();
 
-    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-
-    window.kakao.maps.event.addListener(map, "idle", function () {
-      searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-    });
-
     function searchAddrFromCoords(coords: any, callback: (result: any, status: any) => void) {
       // 좌표로 행정동 주소 정보를 요청합니다
       geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
@@ -30,7 +24,7 @@ function KaKaoMap({ place, update }: Props) {
 
     function displayCenterInfo(result: any, status: any) {
       if (status === window.kakao.maps.services.Status.OK) {
-        for (let i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i += 1) {
           // 행정동의 region_type 값은 'H' 이므로
           if (result[i].region_type === "H") {
             setAddrName(result[i].address_name);
@@ -39,12 +33,33 @@ function KaKaoMap({ place, update }: Props) {
         }
       }
     }
+
+    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+
+    window.kakao.maps.event.addListener(map, "idle", function () {
+      searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+    });
   }
 
   function showPlaceOverlay(map: any, keyword: string) {
     const ps = new window.kakao.maps.services.Places();
 
-    ps.keywordSearch(keyword, placesSearch);
+    function displayMarker(data: any) {
+      const overlayContent = `
+        <a href=${data.place_url} target='_blank' rel='noreferrer'>
+          <div style="position: relative; padding: 5px; background-color: #fff; border: 1px solid #FE7E07; border-radius: 0.375rem; display: inline-block; cursor: pointer;">
+            ${data.place_name}
+            <div style="content: ''; position: absolute; top: 100%; left: 50%; border: 8px solid transparent; border-top-color: #FE7E07; transform: translateX(-50%);" />
+          </div>
+        </a>`;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const overlay = new window.kakao.maps.CustomOverlay({
+        map,
+        position: new window.kakao.maps.LatLng(data.y, data.x),
+        content: overlayContent,
+      });
+    }
 
     function placesSearch(data: any, status: any) {
       if (data.length === 0) {
@@ -54,7 +69,7 @@ function KaKaoMap({ place, update }: Props) {
       if (status === window.kakao.maps.services.Status.OK) {
         const bounds = new window.kakao.maps.LatLngBounds();
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i += 1) {
           displayMarker(data[i]);
           bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
         }
@@ -63,21 +78,7 @@ function KaKaoMap({ place, update }: Props) {
       }
     }
 
-    function displayMarker(place: any) {
-      const overlayContent = `
-        <a href=${place.place_url} target='_blank' rel='noreferrer'>
-          <div style="position: relative; padding: 5px; background-color: #fff; border: 1px solid #FE7E07; border-radius: 0.375rem; display: inline-block; cursor: pointer;">
-            ${place.place_name}
-            <div style="content: ''; position: absolute; top: 100%; left: 50%; border: 8px solid transparent; border-top-color: #FE7E07; transform: translateX(-50%);" />
-          </div>
-        </a>`;
-
-      const overlay = new window.kakao.maps.CustomOverlay({
-        map,
-        position: new window.kakao.maps.LatLng(place.y, place.x),
-        content: overlayContent,
-      });
-    }
+    ps.keywordSearch(keyword, placesSearch);
   }
 
   const initializeMap = (initializeLocation: { latitude: number; longitude: number }) => {
