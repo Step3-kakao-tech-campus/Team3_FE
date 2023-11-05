@@ -150,7 +150,7 @@ function MyPageTemplate() {
         <div className="star-rating flex gap-4">
           <h2 className="text-xl">매너점수</h2>
           <span className="text-xl flex gap-1 items-center">
-            <MdStar className="inline text-thunderOrange" /> {rating} / 5
+            <MdStar className="inline text-thunderOrange" /> {rating.toFixed(1)} / 5
           </span>
         </div>
         <div className="avg flex gap-4">

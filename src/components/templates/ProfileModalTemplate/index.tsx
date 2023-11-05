@@ -40,7 +40,7 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
           </p>
           <div className="rating flex justify-between items-center">
             <span>매너점수</span>
-            <span>{`★ ${user?.rating ? `${user?.rating} / 5` : "없음"}`}</span>
+            <span>{`★ ${user?.rating ? `${user?.rating.toFixed(1)} / 5` : "없음"}`}</span>
           </div>
           {isMyProfile && (
             <div className="button_container ml-auto">
