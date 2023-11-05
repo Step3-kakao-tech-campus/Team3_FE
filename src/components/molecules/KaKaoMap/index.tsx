@@ -23,7 +23,7 @@ function KaKaoMap({ place, update }: Props) {
       searchAddrFromCoords(map.getCenter(), displayCenterInfo);
     });
 
-    function searchAddrFromCoords(coords: any, callback: () => void) {
+    function searchAddrFromCoords(coords: any, callback: (result: any, status: any) => void) {
       // 좌표로 행정동 주소 정보를 요청합니다
       geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
     }
