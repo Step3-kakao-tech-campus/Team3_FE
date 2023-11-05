@@ -20,7 +20,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     if (cityId) queryParams.cityId = cityId;
     if (countryId) queryParams.countryId = countryId;
     if (districtId) queryParams.districtId = districtId;
-    if (all === "true" || all === "false") queryParams.all = all as string;
+    if (all === "true" || all === "false") queryParams.all = all;
     if (pageParam) queryParams.key = pageParam;
     const queryString = objectToQueryString(queryParams as Record<string, string | number>);
     return getPosts(queryString);
