@@ -26,4 +26,4 @@ function ChildComment({ childComment }: Props): JSX.Element {
   );
 }
 
-export default ChildComment;
+export default React.memo(ChildComment);
