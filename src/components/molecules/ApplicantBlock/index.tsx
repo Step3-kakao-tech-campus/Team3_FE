@@ -1,6 +1,8 @@
 import { deleteRejectApplicant, putAcceptApplicant } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
 import { Applicant } from "@/types/applicant";
 import { useCallback, useState } from "react";
 import { MdCheck, MdClose } from "react-icons/md";
@@ -14,32 +16,37 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
+  const { addErrorToast } = useToast();
   const handleAccept = useCallback(async () => {
     try {
       await putAcceptApplicant(postId, applicantId);
       setApprovalStatus("accepted");
     } catch {
-      alert("수락 요청이 실패했습니다.");
+      addErrorToast("수락 요청이 실패했습니다.");
     }
-  }, [postId, applicantId]);
+  }, [postId, applicantId, addErrorToast]);
 
   const handleReject = useCallback(async () => {
     try {
       await deleteRejectApplicant({ postId, applicantId });
       setApprovalStatus("rejected");
     } catch {
-      alert("거절 요청이 실패했습니다.");
+      addErrorToast("거절 요청이 실패했습니다.");
     }
-  }, [postId, applicantId]);
+  }, [postId, applicantId, addErrorToast]);
 
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
       <div className="user-info flex gap-2 items-center">
-        <CircularProfileImage src={user.profileImage} styleType="lg" />
+        <ProfileLink userId={user.id}>
+          <CircularProfileImage src={user.profileImage} styleType="lg" />
+        </ProfileLink>
         <div className="user-info-text flex flex-col justify-start">
-          <span className="block w-fit font-bold text-slate-700">{user.name}</span>
+          <ProfileLink userId={user.id}>
+            <span className="block w-fit font-bold text-slate-700 hover:underline">{user.name}</span>
+          </ProfileLink>
           <span className="block w-fit text-sm text-neutral-500">{`매너점수 ★ ${
-            user.rating ? `${user.rating}/5` : "없음"
+            user.rating ? `${user.rating.toFixed(1)}/5` : "없음"
           }`}</span>
         </div>
       </div>

@@ -3,20 +3,21 @@
 import { getApplicants } from "@/apis/applicant";
 import { patchPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
+import useToast from "@/hooks/useToast";
 import { Applicant } from "@/types/applicant";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-function ApplicantConfirmTemplate(): JSX.Element {
-  const pageParam = useParams();
-  const postId = parseInt(pageParam.post_id as string, 10);
-  const router = useRouter();
-  const { data, isLoading, isError, error }: any = useQuery(["getApplicants", postId], {
+interface Props {
+  postId: number;
+}
+
+function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
+  const { data, isError, error }: any = useQuery(["getApplicants", postId], {
     queryFn: () => getApplicants(postId),
+    suspense: true,
   });
 
   const response = data?.data?.response;
@@ -35,9 +36,6 @@ function ApplicantConfirmTemplate(): JSX.Element {
   );
 
   const renderComponent = useCallback(() => {
-    if (isLoading) {
-      return <LoadingSpinner />;
-    }
     if (isError) {
       return errorComponent;
     }
@@ -47,25 +45,17 @@ function ApplicantConfirmTemplate(): JSX.Element {
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
-  }, [
-    errorComponent,
-    isError,
-    isLoading,
-    noApplicantComponent,
-    postId,
-    response?.applicants,
-    response?.applicantNumber,
-  ]);
+  }, [errorComponent, isError, noApplicantComponent, postId, response?.applicants, response?.applicantNumber]);
 
+  const { addErrorToast, addSuccessToast } = useToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);
   const mutateOption = {
     onError: () => {
-      alert("요청에 실패했습니다. 다시 시도해주세요");
+      addErrorToast("요청에 실패했습니다. 다시 시도해주세요");
     },
     onSuccess: () => {
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);
-      router.back();
-      alert("마감되었습니다.");
+      addSuccessToast("마감되었습니다.");
     },
   };
 
@@ -76,7 +66,7 @@ function ApplicantConfirmTemplate(): JSX.Element {
         <div className="applicant-number-with-button flex justify-between items-center">
           <span>총 {response?.applicantNumber}건의 신청 요청이 있습니다.</span>
           <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleClose(postId, mutateOption)}>
-            마감하기
+            모집완료
           </Button>
         </div>
       )}

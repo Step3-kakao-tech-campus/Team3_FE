@@ -5,17 +5,15 @@ import Button from "@/components/atoms/Button";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { getCookie } from "@/utils/Cookie";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Props {
   postId: number;
   authorId: number;
+  onOpen: () => void;
 }
 
-function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
-  const router = useRouter();
-
+function ApplyButton({ postId, authorId, onOpen }: Props): JSX.Element | null {
   const [userId, setUserId] = useState<number | null>(null);
 
   const { data } = useQuery([`/api/posts/${postId}/applicants/check-status`, postId], () => getCheckStatus(postId), {
@@ -67,14 +65,7 @@ function ApplyButton({ postId, authorId }: Props): JSX.Element | null {
 
   if (authorId === userId) {
     return (
-      <Button
-        styleType="thunder"
-        rounded="md"
-        size="sm"
-        onClick={() => {
-          router.push(`/applicant_confirm/${postId}`, { scroll: false });
-        }}
-      >
+      <Button styleType="thunder" rounded="md" size="sm" onClick={onOpen}>
         신청자 확인
       </Button>
     );

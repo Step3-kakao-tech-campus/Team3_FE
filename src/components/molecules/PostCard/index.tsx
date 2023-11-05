@@ -17,7 +17,7 @@ function PostCard({ data }: Props): JSX.Element {
       className="post-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow hover:scale-[103%] transition"
     >
       <div className="post-title-upper">
-        <Badge isClose={data.isClose} />
+        <Badge isClose={data.isClose} dueTime={data.dueTime} />
         <Participant currentNumber={data.currentNumber} />
         <span className="text-neutral-400">
           <span className="mr-1">모집마감</span>
@@ -39,10 +39,7 @@ function PostCard({ data }: Props): JSX.Element {
           </p>
         </div>
         <div className="user-profile flex items-center h-10">
-          <CircularProfileImage
-            src={data.profileImage ? `임시APIURL${data.profileImage}` : "/images/default_profile_image.png"}
-            styleType="md"
-          />
+          <CircularProfileImage src={data.profileImage || "/images/default_profile_image.png"} styleType="md" />
           <span className="user-name text-2xl mx-1">{data.userName}</span>
         </div>
       </div>

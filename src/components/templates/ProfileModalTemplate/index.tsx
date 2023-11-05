@@ -2,19 +2,25 @@
 
 import { getProfileById } from "@/apis/profile";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
+import profileModalState from "@/stores/atoms/profileModalState";
 import { getCookie } from "@/utils/Cookie";
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
+import { useSetRecoilState } from "recoil";
 
-function ProfileModalTemplate(): JSX.Element {
+interface Props {
+  userId: number;
+}
+
+function ProfileModalTemplate({ userId }: Props): JSX.Element {
+  const setProfileModal = useSetRecoilState(profileModalState);
+
   const buttonStyle = "min-w-[150px] p-2 mx-auto flex gap-2 justify-center items-center  bg-neutral-200 rounded-full";
-  const pageParam = useParams();
-  const pageUserId = parseInt(pageParam.user_id as string, 10);
-  const isMyProfile = getCookie("userId") === pageUserId;
+  const isMyProfile = getCookie("userId") === userId;
   const { data } = useQuery({
-    queryKey: ["userProfile", pageUserId],
-    queryFn: () => getProfileById(pageUserId),
+    queryKey: ["userProfile", userId],
+    queryFn: () => getProfileById(userId),
   });
   const router = useRouter();
   const user = data?.data?.response;
@@ -34,7 +40,7 @@ function ProfileModalTemplate(): JSX.Element {
           </p>
           <div className="rating flex justify-between items-center">
             <span>매너점수</span>
-            <span>{`★ ${user?.rating ? `${user?.rating} / 5` : "없음"}`}</span>
+            <span>{`★ ${user?.rating ? `${user?.rating.toFixed(1)} / 5` : "없음"}`}</span>
           </div>
           {isMyProfile && (
             <div className="button_container ml-auto">
@@ -42,9 +48,8 @@ function ProfileModalTemplate(): JSX.Element {
                 type="button"
                 className="text-sm underline"
                 onClick={() => {
-                  router.push(`/close_modal`);
-                  router.refresh();
-                  router.replace(`/내정보수정페이지`);
+                  setProfileModal({ isOpen: false });
+                  router.push(`/mypage`);
                 }}
               >
                 내 정보 수정
@@ -58,9 +63,8 @@ function ProfileModalTemplate(): JSX.Element {
           type="button"
           className={buttonStyle}
           onClick={() => {
-            router.push(`/close_modal`);
-            router.refresh();
-            router.replace(`/쪽지페이지(내쪽지함or다른사람과의쪽지페이지)`);
+            setProfileModal({ isOpen: false });
+            router.push(isMyProfile ? `/message` : `/message/${userId}`);
           }}
         >
           <MdMail />
@@ -70,9 +74,8 @@ function ProfileModalTemplate(): JSX.Element {
           type="button"
           className={buttonStyle}
           onClick={() => {
-            router.push(`/close_modal`);
-            router.refresh();
-            router.replace(`/scoreboard/${pageUserId}`);
+            setProfileModal({ isOpen: false });
+            router.push(`/scoreboard/${userId}`);
           }}
         >
           <MdLeaderboard />

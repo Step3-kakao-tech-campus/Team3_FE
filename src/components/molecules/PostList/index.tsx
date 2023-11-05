@@ -20,7 +20,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     if (cityId) queryParams.cityId = cityId;
     if (countryId) queryParams.countryId = countryId;
     if (districtId) queryParams.districtId = districtId;
-    if (all === "true" || all === "false") queryParams.all = all as string;
+    if (all === "true" || all === "false") queryParams.all = all;
     if (pageParam) queryParams.key = pageParam;
     const queryString = objectToQueryString(queryParams as Record<string, string | number>);
     return getPosts(queryString);
@@ -33,6 +33,7 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     },
     {
       retry: 2,
+      suspense: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined; // 이전 페이지에서 받은 key값이 -1이면 undefined를 리턴하여 hasnextPage를 false로 설정
