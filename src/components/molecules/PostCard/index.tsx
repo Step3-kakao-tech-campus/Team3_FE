@@ -17,7 +17,7 @@ function PostCard({ data }: Props): JSX.Element {
       className="post-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow hover:scale-[103%] transition"
     >
       <div className="post-title-upper">
-        <Badge isClose={data.isClose} />
+        <Badge isClose={data.isClose} dueTime={data.dueTime} />
         <Participant currentNumber={data.currentNumber} />
         <span className="text-neutral-400">
           <span className="mr-1">모집마감</span>

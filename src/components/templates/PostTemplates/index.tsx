@@ -44,7 +44,7 @@ function PostTemplates({ id }: Props): JSX.Element {
   return (
     <div>
       <div className="flex justify-between mt-6">
-        <Badge isClose={post.isClose} />
+        <Badge isClose={post.isClose} dueTime={post.dueTime} />
         <div className="flex items-center">
           <Participant currentNumber={post.currentNumber} />
           <p className="searched-location flex items-center">

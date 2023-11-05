@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { MdAlarm, MdLocationPin, MdArrowDropUp, MdArrowDropDown, MdMoreHoriz, MdCameraAlt } from "react-icons/md";
 import Button from "@/components/atoms/Button";
+import isPastTime from "@/utils/isPastTime";
 import RecordCardMember from "../RecordCardMember";
 import ScoreEditModal from "../Modal/ScoreEditModal";
 import StarRatingModal from "../Modal/StarRatingModal";
@@ -30,7 +31,8 @@ function RecordCard({ data }: Props): JSX.Element {
   const [starRatingModalOpen, setStarRatingModalOpen] = useState(false);
   const [targetId, setTargetId] = useState(0);
 
-  const { members, scores, isClose } = data;
+  const { members, scores, isClose, startTime } = data;
+  const isStartTimeOver = isPastTime(startTime);
   const clientUserId = getCookie("userId");
   const isMyRecord = clientUserId === parseInt(params.scoreboard_user_id as string, 10);
 
@@ -45,7 +47,7 @@ function RecordCard({ data }: Props): JSX.Element {
   return (
     <div className="record-card flex flex-col gap-6 bg-white p-7 rounded-2xl shadow ">
       <div className="record-card-upper">
-        <Badge isClose={data.isClose} />
+        <Badge isClose={data.isClose} dueTime={data.dueTime} />
         <Participant currentNumber={data.currentNumber} />
         <span className="text-neutral-400">
           <span className="mr-1">모집마감</span>
@@ -77,6 +79,7 @@ function RecordCard({ data }: Props): JSX.Element {
                   clientUserId={clientUserId}
                   isMyRecord={isMyRecord}
                   isClose={isClose}
+                  isStartTimeOver={isStartTimeOver}
                   member={member}
                   scoresLength={scores.length}
                   onScoreEditModalOpen={onScoreEditModalOpen}
@@ -88,7 +91,14 @@ function RecordCard({ data }: Props): JSX.Element {
             <span className="no-member text-center text-2xl text-neutral-400">참여자가 없습니다.</span>
           ))}
         {isExpand && !isClose && (
-          <span className="text-lg text-neutral-500 text-center">모집 마감 후 점수 및 별점 등록이 가능합니다.</span>
+          <span className="text-lg text-neutral-500 text-center">
+            모집자가 모집완료 처리를 한 이후 점수 및 별점 등록이 가능합니다.
+          </span>
+        )}
+        {isExpand && isClose && !isStartTimeOver && (
+          <span className="text-lg text-neutral-500 text-center">
+            게임 시작 시간이 지난 후 점수 및 별점 등록이 가능합니다.
+          </span>
         )}
       </div>
       {scoreEditModalOpen && <ScoreEditModal postId={data?.id} onDismiss={onDismissScoreEditModal} />}
