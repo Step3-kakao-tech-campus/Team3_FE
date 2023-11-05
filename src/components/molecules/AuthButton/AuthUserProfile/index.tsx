@@ -9,16 +9,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 interface Props {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  onClickLogout: () => void;
 }
 
-function AuthUserProfile({ setIsLogin }: Props) {
+function AuthUserProfile({ onClickLogout }: Props) {
   const { data } = useQuery(["/api/users/mine"], getMyProfile);
   const router = useRouter();
 
   const handleLogout = () => {
     deleteToken();
-    setIsLogin(false);
+    onClickLogout();
     router.refresh();
     router.push("/");
   };
