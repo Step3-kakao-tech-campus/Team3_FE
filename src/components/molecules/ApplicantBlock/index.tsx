@@ -6,7 +6,6 @@ import ProfileLink from "@/components/atoms/ProfileLink";
 import { Applicant } from "@/types/applicant";
 import { useCallback, useState } from "react";
 import { MdCheck, MdClose } from "react-icons/md";
-import truncateSecondFloatingPoint from "@/utils/truncateSecondFloatingPoint";
 
 interface Prop {
   postId: number;
@@ -47,7 +46,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
             <span className="block w-fit font-bold text-slate-700 hover:underline">{user.name}</span>
           </ProfileLink>
           <span className="block w-fit text-sm text-neutral-500">{`매너점수 ★ ${
-            user.rating ? `${truncateSecondFloatingPoint(user.rating)}/5` : "없음"
+            user.rating ? `${user.rating.toFixed(1)}/5` : "없음"
           }`}</span>
         </div>
       </div>

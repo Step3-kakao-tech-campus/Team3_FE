@@ -4,7 +4,6 @@ import { getProfileById } from "@/apis/profile";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import profileModalState from "@/stores/atoms/profileModalState";
 import { getCookie } from "@/utils/Cookie";
-import truncateSecondFloatingPoint from "@/utils/truncateSecondFloatingPoint";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { MdLocationPin, MdMail, MdLeaderboard } from "react-icons/md";
@@ -41,7 +40,7 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
           </p>
           <div className="rating flex justify-between items-center">
             <span>매너점수</span>
-            <span>{`★ ${user?.rating ? `${truncateSecondFloatingPoint(user?.rating)} / 5` : "없음"}`}</span>
+            <span>{`★ ${user?.rating ? `${user?.rating.toFixed(1)} / 5` : "없음"}`}</span>
           </div>
           {isMyProfile && (
             <div className="button_container ml-auto">
