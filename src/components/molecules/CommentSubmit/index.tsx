@@ -4,17 +4,15 @@ import { MdSend } from "react-icons/md";
 interface Props {
   commentRef?: React.RefObject<HTMLTextAreaElement>;
   value?: string;
-  setValue?: React.Dispatch<React.SetStateAction<string>>;
+  handleSetValue?: (value: string) => void;
   onClick: () => void;
 }
 
-function CommentSubmit({ commentRef, value, setValue, onClick }: Props): JSX.Element {
+function CommentSubmit({ commentRef, value, handleSetValue, onClick }: Props): JSX.Element {
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
 
-    if (setValue) {
-      setValue(textarea.value);
-    }
+    if (handleSetValue) handleSetValue(textarea.value);
 
     if (textarea.clientHeight >= 86) {
       textarea.style.overflowY = "auto";

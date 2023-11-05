@@ -58,6 +58,10 @@ function Comment({ comment }: Props): JSX.Element {
     });
   };
 
+  const handleSetValue = (value: string) => {
+    setCommentContent(value);
+  };
+
   return (
     <>
       <div className="flex items-center gap-3">
@@ -80,7 +84,7 @@ function Comment({ comment }: Props): JSX.Element {
               commentRef={commentRef}
               onClick={handleReply}
               value={commentContent}
-              setValue={setCommentContent}
+              handleSetValue={handleSetValue}
             />
           </div>
           <hr className="mt-2" />
