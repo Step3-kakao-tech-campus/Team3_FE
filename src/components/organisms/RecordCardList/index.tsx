@@ -23,13 +23,19 @@ function RecordCardList(): JSX.Element {
       const start = URLSearchParams.get("start");
       const end = URLSearchParams.get("end");
       const queryParams: ScoreboardSearchParams = {};
-      if (condition === "all" || condition === "created" || condition === "participated")
-        queryParams.condition = condition;
-      if (status === "all" || status === "open" || status === "closed") queryParams.status = status;
+
+      const hasCondition = condition === "all" || condition === "created" || condition === "participated";
+      const hasStatus = status === "all" || status === "open" || status === "closed";
+      const isStartValid = start && isValidDateFormatByDash(start);
+      const isEndValid = end && isValidDateFormatByDash(end);
+
+      if (hasCondition) queryParams.condition = condition;
+      if (hasStatus) queryParams.status = status;
       if (cityId) queryParams.cityId = cityId;
-      if (start && isValidDateFormatByDash(start)) queryParams.start = start;
-      if (end && isValidDateFormatByDash(end)) queryParams.end = end;
+      if (isStartValid) queryParams.start = start;
+      if (isEndValid) queryParams.end = end;
       if (pageParam) queryParams.key = pageParam;
+
       return getParticipationRecord(pageUserId, queryParams);
     },
     [pageUserId],
