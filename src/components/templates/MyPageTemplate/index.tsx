@@ -9,6 +9,7 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { validateName } from "@/utils/validation";
 import { MutateOptions, useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { MdCameraAlt, MdCheck, MdClose, MdStar } from "react-icons/md";
 
@@ -99,10 +100,15 @@ function MyPageTemplate() {
               이메일 인증 완료
             </span>
           ) : (
-            <span className="text-red-500 flex items-center gap-1">
-              <MdClose />
-              이메일 미인증
-            </span>
+            <>
+              <span className="text-red-500 flex items-center gap-1">
+                <MdClose />
+                이메일 미인증
+              </span>
+              <Link href="/email-verification/send" className="hover:underline">
+                인증하기
+              </Link>
+            </>
           )}
         </div>
         <div className="region flex flex-col gap-4">
