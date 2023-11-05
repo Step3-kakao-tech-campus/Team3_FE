@@ -17,7 +17,7 @@ function NavigationBar(): JSX.Element {
             <Link href="/" className="hover:underline">
               홈
             </Link>
-            <Link href="/" className="hover:underline">
+            <Link href="/search" className="hover:underline">
               볼링장 찾기
             </Link>
           </div>
