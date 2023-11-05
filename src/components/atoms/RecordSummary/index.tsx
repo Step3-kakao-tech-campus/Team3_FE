@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 interface Props {
-  data: {
+  data?: {
     game: number;
     average: number;
     maximum: number;
@@ -20,7 +20,7 @@ function RecordSummary({ data }: Props): JSX.Element {
 
 export default RecordSummary;
 
-function Card({ text, number }: { text: string; number: number }) {
+function Card({ text, number }: { text: string; number?: number }) {
   return (
     <div className="card relative min-h-[80px] rounded-md shadow-lg bg-white py-1 px-2">
       <span className="text-sm leading-none">{text}</span>

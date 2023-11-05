@@ -70,6 +70,10 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     });
   };
 
+  const handleSetValue = (value: string) => {
+    setCommentContent(value);
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -98,7 +102,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
       </div>
       {update ? (
         <div className="flex items-center gap-3 mt-2">
-          <CommentSubmit onClick={handleUpdate} value={commentContent} setValue={setCommentContent} />
+          <CommentSubmit onClick={handleUpdate} value={commentContent} handleSetValue={handleSetValue} />
         </div>
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>

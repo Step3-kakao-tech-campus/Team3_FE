@@ -21,7 +21,7 @@ function AuthButton(): JSX.Element | null {
   return (
     <div className="flex items-center space-x-4">
       {isLogin ? (
-        <AuthUserProfile setIsLogin={setIsLogin} />
+        <AuthUserProfile onClickLogout={() => setIsLogin(false)} />
       ) : (
         <>
           <Button

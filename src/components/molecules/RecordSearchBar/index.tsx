@@ -36,10 +36,16 @@ function RecordSearchBar(): JSX.Element {
 
   const handleOnClick = useCallback(() => {
     const searchParamObj = new URLSearchParams(searchParams);
-    if (cityId) searchParamObj.set("cityId", cityId.toString());
-    else searchParamObj.delete("cityId");
+
+    if (cityId) {
+      searchParamObj.set("cityId", cityId.toString());
+    } else {
+      searchParamObj.delete("cityId");
+    }
+
     if (startDate) searchParamObj.set("start", formatDateToStringByDash(startDate));
     if (endDate) searchParamObj.set("end", formatDateToStringByDash(endDate));
+
     const queryString = searchParamObj.toString();
     router.push(`?${queryString}`);
   }, [cityId, endDate, router, searchParams, startDate]);
