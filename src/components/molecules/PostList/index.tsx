@@ -2,12 +2,12 @@
 
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { PostData } from "@/types/postData";
 import { useCallback } from "react";
 import { getPosts } from "@/apis/posts";
 import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { PostData } from "@/types/postData";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams): JSX.Element {
