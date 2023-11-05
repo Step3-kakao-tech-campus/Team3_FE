@@ -21,9 +21,8 @@ function UserCard({ user }: Props) {
   const handleOnClick = () => {
     const id = parseInt(getCookie("userId"), 10);
     if (user.id === id) {
-      return addWarningToast("자신에게 메시지를 보낼 수 없습니다.");
-    }
-    router.push(`/message/${user.id}`);
+      addWarningToast("자신에게 메시지를 보낼 수 없습니다.");
+    } else router.push(`/message/${user.id}`);
   };
   return (
     <div className="flex items-center gap-2 p-2 bg-white border border-gray-400 rounded-md">
