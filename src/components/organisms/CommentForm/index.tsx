@@ -19,9 +19,16 @@ interface Props {
 function CommentForm({ id }: Props): JSX.Element {
   const userId = getCookie("userId");
 
+  const { mutate, queryClient } = useMutateWithQueryClient(postComments);
+
+  if (!userId) {
+    queryClient.removeQueries({ queryKey: ["/api/users/mine"] });
+  }
+
   const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, {
     enabled: !!userId,
   });
+
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
     ({ pageParam = null }) => getComments(id, pageParam),
@@ -33,8 +40,6 @@ function CommentForm({ id }: Props): JSX.Element {
       },
     },
   );
-
-  const { mutate, queryClient } = useMutateWithQueryClient(postComments);
 
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
