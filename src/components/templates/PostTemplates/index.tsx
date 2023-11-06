@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { MdLocationOn, MdAlarm } from "react-icons/md";
-import { useQuery } from "@tanstack/react-query";
-import { getPostById } from "@/apis/posts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deletePost, getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
@@ -15,6 +15,9 @@ import ApplyButton from "@/components/molecules/ApplyButton";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 import ProfileLink from "@/components/atoms/ProfileLink";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import ReconfirmModal from "@/components/molecules/SemiModal/ReconfirmModal";
+import { useRouter } from "next/navigation";
+import useToast from "@/hooks/useToast";
 
 interface Props {
   id: string;
@@ -24,7 +27,12 @@ function PostTemplates({ id }: Props): JSX.Element {
   const postId = parseInt(id, 10);
   const userId = parseInt(getCookie("userId"), 10);
 
+  const router = useRouter();
+
+  const { addSuccessToast } = useToast();
+
   const [modalOpen, setModalOpen] = useState(false);
+  const [reconfirmModalOpen, setReconfirmModalOpen] = useState(false);
 
   const { data, isLoading } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
     onError: (error) => {
@@ -33,6 +41,24 @@ function PostTemplates({ id }: Props): JSX.Element {
   });
 
   const post = data?.data?.response.post || {};
+
+  const { mutate } = useMutation(deletePost);
+
+  const handleDelete = () => {
+    mutate(
+      { id: postId },
+      {
+        onSuccess: () => {
+          setReconfirmModalOpen(false);
+          router.push("/");
+          addSuccessToast("성공적으로 삭제 되었습니다.");
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  };
 
   if (isLoading)
     return (
@@ -65,7 +91,14 @@ function PostTemplates({ id }: Props): JSX.Element {
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
-        {userId === post.userId && <PostEditor id={postId} />}
+        {userId === post.userId && (
+          <PostEditor
+            id={postId}
+            handleOnClick={() => {
+              setReconfirmModalOpen(true);
+            }}
+          />
+        )}
       </div>
       <hr className="mt-4" />
       <p className="flex mt-4 items-center gap-3">
@@ -93,6 +126,15 @@ function PostTemplates({ id }: Props): JSX.Element {
           postId={postId}
           onDismiss={() => {
             setModalOpen(false);
+          }}
+        />
+      )}
+      {reconfirmModalOpen && (
+        <ReconfirmModal
+          target="게시글을"
+          handleComplete={handleDelete}
+          handleCancel={() => {
+            setReconfirmModalOpen(false);
           }}
         />
       )}

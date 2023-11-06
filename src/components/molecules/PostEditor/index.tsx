@@ -1,31 +1,14 @@
 import React from "react";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
-import { deletePost } from "@/apis/posts";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 interface Props {
   id: number;
+  handleOnClick: () => void;
 }
 
-function PostEditor({ id }: Props) {
-  const { mutate } = useMutation(deletePost);
+function PostEditor({ id, handleOnClick }: Props) {
   const router = useRouter();
-
-  const handleDelete = () => {
-    mutate(
-      { id },
-      {
-        onSuccess: () => {
-          router.refresh();
-          router.push("/");
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      },
-    );
-  };
 
   return (
     <div className="flex text-neutral-500 gap-3">
@@ -39,7 +22,7 @@ function PostEditor({ id }: Props) {
         <MdOutlineEdit />
         수정
       </button>
-      <button type="button" className="flex items-center cursor-pointer" onClick={handleDelete}>
+      <button type="button" className="flex items-center cursor-pointer" onClick={handleOnClick}>
         <MdOutlineDelete />
         삭제
       </button>
