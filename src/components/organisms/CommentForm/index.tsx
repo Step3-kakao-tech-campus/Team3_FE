@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useRef } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getComments, postComments } from "@/apis/comment";
 import Comment, { CommentWithChild } from "@/components/molecules/Comment";
 import CommentSubmit from "@/components/molecules/CommentSubmit";
@@ -9,12 +9,19 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useToast from "@/hooks/useToast";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { getMyProfile } from "@/apis/profile";
+import { getCookie } from "@/utils/Cookie";
 
 interface Props {
   id: number;
 }
 
 function CommentForm({ id }: Props): JSX.Element {
+  const userId = getCookie("userId");
+
+  const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, {
+    enabled: !!userId,
+  });
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
     ({ pageParam = null }) => getComments(id, pageParam),
@@ -74,7 +81,7 @@ function CommentForm({ id }: Props): JSX.Element {
     <div>
       <h2 className="mt-4 text-xl">댓글</h2>
       <div className="mt-6 flex items-center justify-between gap-3">
-        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        <CircularProfileImage src={profileData?.data?.response.profileImage} styleType="lg" />
         <CommentSubmit commentRef={commentRef} onClick={handleSubmit} />
       </div>
       <div className="mt-6">
