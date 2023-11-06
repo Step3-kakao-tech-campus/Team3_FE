@@ -86,6 +86,7 @@ function Message({ message, isProfile, opponentUserName, opponentUserProfileImag
       </div>
       {modalOpen && (
         <ReconfirmModal
+          target="메시지를"
           handleComplete={handleComplete}
           handleCancel={() => {
             setModalOpen(false);
