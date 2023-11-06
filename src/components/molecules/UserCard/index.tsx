@@ -21,7 +21,7 @@ function UserCard({ user }: Props) {
   const handleOnClick = () => {
     const id = parseInt(getCookie("userId"), 10);
     if (user.id === id) {
-      addWarningToast("자신에게 메시지를 보낼 수 없습니다.");
+      addWarningToast("자신에게 쪽지를 보낼 수 없습니다.");
     } else router.push(`/message/${user.id}`);
   };
   return (
