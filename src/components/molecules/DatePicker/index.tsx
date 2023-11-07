@@ -61,7 +61,7 @@ function DatePicker({ title, value, setValue }: Props): JSX.Element {
 
   return (
     <div className="flex-1">
-      <div className="relative flex items-center gap-6">
+      <div className="relative flex items-center gap-6 md:gap-2">
         <OptionTitle>{title} 일시</OptionTitle>
         <Button
           styleType="thunder"
