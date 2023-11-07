@@ -47,32 +47,34 @@ function PostTemplates({ id }: Props): JSX.Element {
         <Badge isClose={post.isClose} dueTime={post.dueTime} />
         <div className="flex items-center">
           <Participant currentNumber={post.currentNumber} />
-          <p className="searched-location flex items-center">
+          <p className="searched-location flex items-center md:text-sm">
             <MdLocationOn className="inline text-red-500 w-5 h-5" />
             {post.districtName}
           </p>
         </div>
       </div>
-      <h1 className="mt-4 text-2xl">{post.title}</h1>
-      <div className="mt-4 flex justify-between">
+      <h1 className="mt-4 text-2xl md:text-xl">{post.title}</h1>
+      <div className="mt-4 flex justify-between md:mt-2">
         <div className="flex items-center">
-          <ProfileLink className="flex items-center" userId={post.userId}>
+          <ProfileLink className="flex items-center md:text-sm" userId={post.userId}>
             <CircularProfileImage src={post.profileImage || "/images/default_profile_image.png"} styleType="sm" />
             <span className="ml-1 hover:underline">{post.userName}</span>
           </ProfileLink>
-          <span className="ml-2 text-neutral-400 text-sm">작성시간 : {formatDateToStringByDot(post.createdAt)}</span>
-          <span className="ml-2 text-neutral-400 text-sm">
+          <span className="ml-2 text-neutral-400 text-sm md:text-xs md:w-[100px]">
+            작성시간 : {formatDateToStringByDot(post.createdAt)}
+          </span>
+          <span className="ml-2 text-neutral-400 text-sm md:text-xs md:ml-1">
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
         {userId === post.userId && <PostEditor id={postId} />}
       </div>
-      <hr className="mt-4" />
+      <hr className="mt-4 md:mt-2" />
       <p className="flex mt-4 items-center gap-3">
-        <span className="text-xl">모집 정보</span>
+        <span className="text-xl md:text-base">모집 정보</span>
         <span className="text-neutral-400 text-sm">모집 마감 {formatDateToString(post.dueTime)}</span>
       </p>
-      <p className="flex mt-4 items-center gap-1">
+      <p className="flex mt-4 items-center gap-1 md:mt-2">
         <MdAlarm />
         {formatDateToString(post.startTime)}
       </p>

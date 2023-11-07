@@ -77,7 +77,7 @@ function MessageRoomList(): JSX.Element {
           사용자 검색
         </Button>
       </div>
-      <div className="styled-scroll flex flex-col gap-4 mt-6 p-6 h-[580px] border border-gray-400 overflow-y-auto">
+      <div className="styled-scroll flex flex-col gap-4 mt-6 p-6 h-[580px] border border-gray-400 overflow-y-auto md:h-[520px] md:p-4">
         {data?.pages?.map(
           (page) =>
             page?.data?.response?.messages.map((message: MessageCardType) => (

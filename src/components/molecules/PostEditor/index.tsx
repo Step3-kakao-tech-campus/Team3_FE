@@ -39,7 +39,7 @@ function PostEditor({ id }: Props) {
       <div className="flex text-neutral-500 gap-3">
         <button
           type="button"
-          className="flex items-center cursor-pointer"
+          className="flex items-center cursor-pointer md:text-xs"
           onClick={() => {
             router.push(`/post/${id}/edit`);
           }}
@@ -49,7 +49,7 @@ function PostEditor({ id }: Props) {
         </button>
         <button
           type="button"
-          className="flex items-center cursor-pointer"
+          className="flex items-center cursor-pointer md:text-xs"
           onClick={() => {
             setReconfirmModalOpen(true);
           }}

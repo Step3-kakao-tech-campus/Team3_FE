@@ -89,7 +89,7 @@ function PostEditForm({ id }: Props) {
       <input
         type="text"
         placeholder="제목을 입력해 주세요."
-        className="w-full py-2 px-3 rounded-lg border border-gray-400"
+        className="w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm"
         defaultValue={post.title}
         ref={titleRef}
       />
@@ -107,7 +107,7 @@ function PostEditForm({ id }: Props) {
       </div>
       <OptionTitle>내용</OptionTitle>
       <textarea
-        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400"
+        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400 md:h-[300px]"
         placeholder="내용을 입력해 주세요."
         defaultValue={post.content}
         ref={contentRef}
