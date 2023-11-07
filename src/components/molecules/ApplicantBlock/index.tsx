@@ -18,7 +18,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
-  const { addErrorToast } = useToast();
+  const { addErrorToast, addSuccessToast } = useToast();
 
   const { mutate: acceptApiCall, queryClient } = useMutateWithQueryClient(putAcceptApplicant);
   const { mutate: rejectApiCall } = useMutation(deleteRejectApplicant);
@@ -30,13 +30,14 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
         onSuccess: () => {
           setApprovalStatus("accepted");
           queryClient.invalidateQueries(["getApplicants", postId]);
+          addSuccessToast("수락되었습니다.");
         },
         onError: () => {
           addErrorToast("수락 요청이 실패했습니다.");
         },
       },
     );
-  }, [acceptApiCall, postId, applicantId, queryClient, addErrorToast]);
+  }, [acceptApiCall, postId, applicantId, queryClient, addSuccessToast, addErrorToast]);
 
   const handleReject = useCallback(async () => {
     rejectApiCall(
@@ -45,13 +46,14 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
         onSuccess: () => {
           setApprovalStatus("rejected");
           queryClient.invalidateQueries(["getApplicants", postId]);
+          addSuccessToast("거절되었습니다.");
         },
         onError: () => {
           addErrorToast("거절 요청이 실패했습니다.");
         },
       },
     );
-  }, [rejectApiCall, postId, applicantId, queryClient, addErrorToast]);
+  }, [rejectApiCall, postId, applicantId, queryClient, addSuccessToast, addErrorToast]);
 
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
