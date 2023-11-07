@@ -35,8 +35,7 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
         <link rel="icon" href="/favicons/favicon.ico" />
         <Script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_APPKEY}&autoload=false&libraries=services`}
-          strategy="beforeInteractive"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=3b5893ebb985d9c035b14cc31922553f&autoload=false&libraries=services`}
         />
       </head>
 
