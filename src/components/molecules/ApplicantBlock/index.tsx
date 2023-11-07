@@ -36,7 +36,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   }, [postId, applicantId, addErrorToast]);
 
   return (
-    <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
+    <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4 md:px-2">
       <div className="user-info flex gap-2 items-center">
         <ProfileLink userId={user.id}>
           <CircularProfileImage src={user.profileImage} styleType="lg" />
@@ -50,7 +50,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
           }`}</span>
         </div>
       </div>
-      <div className="confirm-control flex gap-3">
+      <div className="confirm-control flex gap-3 md:gap-1.5">
         {approvalStatus === "accepted" && (
           <span className="text-green-500 flex items-center">
             <MdCheck className="inline" />
@@ -66,10 +66,10 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
         {approvalStatus === "pending" && (
           <>
             <Button styleType="outlined-gray" size="sm" rounded="full" onClick={() => handleReject()}>
-              <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
+              <span className="block text-sm font-normal min-w-[40px] leading-none fontsize md:min-w-[34px]">거절</span>
             </Button>
             <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleAccept()}>
-              <span className="block text-sm font-normal min-w-[40px]">수락</span>
+              <span className="block text-sm font-normal min-w-[40px] md:min-w-[34px]">수락</span>
             </Button>
           </>
         )}
