@@ -37,7 +37,7 @@ function SearchModalTemplate() {
   const { targetRef } = useIntersectionObserver(handleIntersect);
 
   return (
-    <div className="w-[350px]">
+    <div className="w-[350px] md:w-[325px]">
       <h1 className="mt-4 font-bold text-xl text-center">사용자 검색</h1>
       <div className="mt-4">
         <input

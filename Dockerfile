@@ -40,7 +40,6 @@ ENV PORT 3000
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
-ENV NEXT_PUBLIC_API_URL https://k2b218aaad192a.user-app.krampoline.com
-ENV NEXT_PUBLIC_KAKAOMAP_APPKEY 3b5893ebb985d9c035b14cc31922553f
+ENV NEXT_PUBLIC_API_URL https://ka02fa9a0d9a2a.user-app.krampoline.com
 
 CMD ["node", "server.js"]

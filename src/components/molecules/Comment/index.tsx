@@ -66,7 +66,7 @@ function Comment({ comment }: Props): JSX.Element {
     <>
       <div className="flex items-center gap-3">
         <ProfileLink userId={comment.userId}>
-          <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+          <CircularProfileImage src={comment.profileImage} styleType="lg" />
         </ProfileLink>
         <div className="flex-1">
           <CommentBlock comment={comment} isChild handleReplyForm={handleReplyForm} />

@@ -25,9 +25,11 @@ function AuthUserProfile({ onClickLogout }: Props) {
 
   return (
     <>
-      <ProfileLink userId={data?.data?.response?.id} className="flex items-center gap-2">
+      <ProfileLink userId={data?.data?.response?.id} className="flex items-center gap-1">
         <CircularProfileImage src={data?.data?.response?.profileImage} />
-        <span className="text-sm text-gray-500 hover:underline">{data?.data?.response?.name}님</span>
+        <span className="text-sm text-gray-500 hover:underline md:w-0 md:invisible">
+          {data?.data?.response?.name}님
+        </span>
       </ProfileLink>
       <Button styleType="white" rounded="md" size="sm" onClick={handleLogout}>
         로그아웃

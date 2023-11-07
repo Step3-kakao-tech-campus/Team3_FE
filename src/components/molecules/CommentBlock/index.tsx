@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
 import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentSubmit from "../CommentSubmit";
+import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
 interface Props {
   comment: CommentData;
@@ -21,6 +22,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   const params = useParams();
   const id = parseInt(params.id as string, 10);
 
+  const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
 
@@ -43,6 +45,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     mutate(payload, {
       onSuccess: () => {
         queryClient.invalidateQueries(["/comments", id]);
+        setModalOpen(false);
       },
       onError: (error) => {
         console.log(error);
@@ -87,7 +90,13 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
                 <MdOutlineEdit />
                 수정
               </button>
-              <button type="button" onClick={handleDeleteComment} className="flex items-center cursor-pointer">
+              <button
+                type="button"
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                className="flex items-center cursor-pointer"
+              >
                 <MdOutlineDelete />
                 삭제
               </button>
@@ -106,6 +115,15 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
         </div>
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
+      )}
+      {modalOpen && (
+        <ReconfirmModal
+          target="댓글을"
+          handleComplete={handleDeleteComment}
+          handleCancel={() => {
+            setModalOpen(false);
+          }}
+        />
       )}
     </>
   );

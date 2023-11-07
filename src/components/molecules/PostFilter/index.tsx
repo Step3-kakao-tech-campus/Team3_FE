@@ -15,7 +15,7 @@ function PostFilter({ searchParams }: PageSearchParams): JSX.Element {
     router.push(`${pathname}?${queryString}`);
   };
 
-  const commonButtonStyle = "rounded-full border min-w-[80px]";
+  const commonButtonStyle = "rounded-full border min-w-[80px] md:text-sm";
   const selectedButtonStyle = "border-thunderOrange text-thunderOrange";
   const nonSelectedButtonStyle = "border-neutral-400 text-neutral-400";
 
