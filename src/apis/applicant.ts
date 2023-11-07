@@ -30,6 +30,6 @@ export async function postApply(postId: number) {
 
 export async function getCheckStatus(postId: number) {
   if (!postId) throw new Error("postApply: postId 또는 accessToken이 유효하지 않습니다.");
-  const res = await client.get(`api/posts/${postId}/applicants/check-status`);
+  const res = await client.get(`/api/posts/${postId}/applicants/check-status`);
   return res;
 }
