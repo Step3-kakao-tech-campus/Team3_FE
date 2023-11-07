@@ -69,7 +69,7 @@ function SigninForm(): JSX.Element {
     <div>
       <div className="flex items-center justify-center pb-[22px]">
         <Image src={Logo} alt="볼링 로고" width={50} height={50} />
-        <h1 className="text-[40px] text-transparent bg-clip-text bg-thunder">번개볼링</h1>
+        <h1 className="text-[40px] text-transparent bg-clip-text bg-thunder md:text-2xl">번개볼링</h1>
       </div>
 
       <div>
@@ -79,12 +79,12 @@ function SigninForm(): JSX.Element {
             {
               type: "email",
               placeholder: "이메일(아이디)",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
             {
               type: "password",
               placeholder: "비밀번호",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
           ]}
           onInputChange={handleInputChange}

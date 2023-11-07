@@ -60,8 +60,8 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
   };
 
   return (
-    <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px]">
-      <h1 className="text-2xl">신청자 확인</h1>
+    <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px] md:w-[300px]">
+      <h1 className="text-2xl md:text-xl">신청자 확인</h1>
       {!isError && (
         <div className="applicant-number-with-button flex justify-between items-center">
           <span>총 {response?.applicantNumber}건의 신청 요청이 있습니다.</span>

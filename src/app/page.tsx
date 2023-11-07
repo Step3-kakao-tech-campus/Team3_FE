@@ -14,13 +14,13 @@ export default function Home({ searchParams }: PageSearchParams) {
     <main>
       <InnerContainer>
         {/* 배너 이미지 추가 */}
-        <div className="main-contents flex flex-col gap-2 m-10">
+        <div className="main-contents flex flex-col gap-2 m-10 md:mt-4 md:m-2">
           <RegionSearchBar searchParams={searchParams} />
           <div className="flex justify-between mt-6">
             <PostFilter searchParams={searchParams} />
             <Link
               href="/create"
-              className="px-2 py-1 ring-gray-400 ring-inset font-bold filter hover:brightness-95 bg-thunder text-white rounded-full"
+              className="px-2 py-1 ring-gray-400 ring-inset font-bold filter hover:brightness-95 bg-thunder text-white rounded-full md:text-sm"
             >
               <BsPen className="inline mr-1" />
               <span className="font-normal">글쓰기</span>

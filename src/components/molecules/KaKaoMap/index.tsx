@@ -161,7 +161,7 @@ function KaKaoMap({ place, update }: Props) {
     <div>
       <button
         type="button"
-        className="ml-auto mb-4 flex items-center text-blue-600 hover:underline hover:brightness-95"
+        className="ml-auto mb-4 flex items-center text-blue-600 hover:underline hover:brightness-95 md:mb-2"
         onClick={() => getLocation()}
       >
         <span className="text-lg">내위치</span>

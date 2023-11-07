@@ -35,9 +35,9 @@ function ToastItem({ toastData, backgroundColor, icon }: Props): JSX.Element {
     <div
       className={`flex items-center w-[320px] h-[60px] pl-3 rounded-md text-white ${backgroundColor} shadow-sm 
       ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"} transition-all duration-300 
-      `}
+      md:w-[240px] md:h-[45px] md:text-sm`}
     >
-      <div className="mr-4">{icon}</div>
+      <div className="mr-4 md:mr-2">{icon}</div>
       {message}
     </div>
   );

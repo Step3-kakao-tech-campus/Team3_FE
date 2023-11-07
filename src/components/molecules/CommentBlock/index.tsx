@@ -45,6 +45,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     mutate(payload, {
       onSuccess: () => {
         queryClient.invalidateQueries(["/comments", id]);
+        setModalOpen(false);
       },
       onError: (error) => {
         console.log(error);

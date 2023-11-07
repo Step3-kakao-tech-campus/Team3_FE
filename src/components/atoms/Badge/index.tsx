@@ -18,7 +18,7 @@ function Badge({ isClose, dueTime }: Props): JSX.Element {
     <span
       className={`inline-block text-white rounded-full px-3 py-1 ${
         isRecruitClosed ? "bg-neutral-400" : "bg-[#37D629]"
-      }`}
+      } md:px-2 md:text-sm`}
     >
       {isRecruitClosed ? "마감" : "모집중"}
     </span>

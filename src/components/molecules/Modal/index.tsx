@@ -16,7 +16,7 @@ function ModalWrapper({ children, noPadding, onDismiss }: Props): JSX.Element {
     <div className="fixed z-50 left-0 right-0 top-0 bottom-0 flex items-center justify-center ">
       <div
         className={`relative bg-white rounded-2xl border-[#868484] shadow-2xl overflow-clip ${
-          noPadding ? "p-0" : "p-6"
+          noPadding ? "p-0" : "p-6 md:p-3"
         }`}
       >
         <button

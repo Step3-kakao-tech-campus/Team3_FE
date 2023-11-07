@@ -9,10 +9,10 @@ function NavigationBar(): JSX.Element {
     <nav className="fixed top-0 inset-x-0 z-50 bg-white">
       <InnerContainer>
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center mr-4">
+          <div className="flex items-center space-x-4 md:space-x-2">
+            <div className="flex items-center mr-4 md:mr-1">
               <Image src={Logo} alt="볼링 로고" width={45} height={45} />
-              <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent">번개볼링</span>
+              <span className="text-2xl font-bold bg-clip-text bg-thunder text-transparent md:hidden">번개볼링</span>
             </div>
             <Link href="/" className="hover:underline">
               홈
