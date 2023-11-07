@@ -29,7 +29,7 @@ function Button({ styleType, rounded, size, onClick, children, fontWeight = "bol
   };
   const sizeObj = {
     lg: "w-[546px] h-[40px] text-xl",
-    sm: "px-2 py-1",
+    sm: "px-2 py-1 md:text-base",
     md: "px-2 py-1.5 min-w-[100px]",
     xs: "px-2 py-[3px] leading-none text-sm min-w-[80px]",
   };
