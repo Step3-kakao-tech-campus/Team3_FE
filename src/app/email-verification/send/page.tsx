@@ -4,14 +4,14 @@ import SendVerificationEmailTemplate from "@/components/templates/EmailVerificat
 import { useEffect } from "react";
 import { postSendVerificationEmail } from "@/apis/email";
 import { useMutation } from "@tanstack/react-query";
-import EmailVerificationLoading from "../loading";
+import DefaultLoadingUI from "@/app/loading";
 
 function EmailSendPage() {
   const { mutate, isSuccess, isLoading } = useMutation(postSendVerificationEmail, { useErrorBoundary: true });
 
   useEffect(mutate, []);
 
-  if (!isSuccess || isLoading) return <EmailVerificationLoading />;
+  if (!isSuccess || isLoading) return <DefaultLoadingUI />;
   return <SendVerificationEmailTemplate sendMail={mutate} />;
 }
 

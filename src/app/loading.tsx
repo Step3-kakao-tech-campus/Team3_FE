@@ -1,6 +1,7 @@
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import React from "react";
 
-function EmailVerificationLoading() {
+function DefaultLoadingUI() {
   return (
     <div className="flex justify-center items-center h-[80vh]">
       <LoadingSpinner styleType="xl" />
@@ -8,4 +9,4 @@ function EmailVerificationLoading() {
   );
 }
 
-export default EmailVerificationLoading;
+export default DefaultLoadingUI;

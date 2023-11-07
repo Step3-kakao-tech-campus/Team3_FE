@@ -2,11 +2,11 @@
 
 import MyPageTemplate from "@/components/templates/MyPageTemplate";
 import useIsMounted from "@/hooks/useMounted";
-import MyPageLoading from "./loading";
+import DefaultLoadingUI from "../loading";
 
 function MyPage() {
   const { isMounted } = useIsMounted();
-  if (!isMounted) return <MyPageLoading />;
+  if (!isMounted) return <DefaultLoadingUI />;
   return <MyPageTemplate />;
 }
 
