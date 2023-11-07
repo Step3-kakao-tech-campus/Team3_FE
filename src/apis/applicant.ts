@@ -6,7 +6,7 @@ export async function getApplicants(postId: number) {
   return res;
 }
 
-export async function putAcceptApplicant(postId: number, applicantId: number) {
+export async function putAcceptApplicant({ postId, applicantId }: { postId: number; applicantId: number }) {
   if (!postId) throw new Error("putAcceptApplicant: postId 또는 accessToken이 유효하지 않습니다.");
   if (!applicantId) throw new Error("putAcceptApplicant: applicantId가 유효하지 않습니다.");
   const res = await client.put(`/api/posts/${postId}/applicants/${applicantId}`, {
