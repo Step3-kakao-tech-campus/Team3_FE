@@ -56,7 +56,7 @@ function MessageSubmit() {
   };
 
   return (
-    <div className="flex items-center gap-4 mt-6 md:gap-3">
+    <div className="flex items-center gap-4 mt-6 md:gap-3 md:mt-3">
       <textarea
         className="resize-none flex-1 h-[40px] max-h-[168px] py-2 px-3 rounded-lg border border-gray-400 overflow-y-hidden"
         placeholder="내용을 입력해 주세요."
