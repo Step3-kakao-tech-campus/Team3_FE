@@ -45,7 +45,7 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
-  }, [errorComponent, isError, noApplicantComponent, postId, response?.applicants, response?.applicantNumber]);
+  }, [isError, response?.applicantNumber, response?.applicants, errorComponent, noApplicantComponent, postId]);
 
   const { addErrorToast, addSuccessToast } = useToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);

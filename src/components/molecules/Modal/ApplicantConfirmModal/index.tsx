@@ -1,8 +1,8 @@
 "use client";
 
 import ApplicantConfirmTemplate from "@/components/templates/ApplicantConfirmTemplate";
-import React, { Suspense } from "react";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import SuspenseErrorBoundary from "@/components/atoms/SuspenseErrorBoundary";
 import ModalWrapper from "..";
 
 interface Props {
@@ -13,9 +13,9 @@ interface Props {
 function ApplicantConfirmModal({ postId, onDismiss }: Props) {
   return (
     <ModalWrapper onDismiss={onDismiss}>
-      <Suspense fallback={<LoadingSpinner />}>
+      <SuspenseErrorBoundary errorFallback={<div>Error Fallback</div>} suspenseFallback={<LoadingSpinner />}>
         <ApplicantConfirmTemplate postId={postId} />
-      </Suspense>
+      </SuspenseErrorBoundary>
     </ModalWrapper>
   );
 }
