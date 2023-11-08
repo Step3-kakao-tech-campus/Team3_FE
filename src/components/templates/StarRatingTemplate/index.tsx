@@ -35,8 +35,8 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
   };
 
   return (
-    <div className="star-rating-template flex flex-col gap-3">
-      <div className="flex items-center gap-2 text-xl">
+    <div className="star-rating-template flex flex-col gap-3 md:m-2">
+      <div className="flex items-center gap-2 text-xl md:mt-1 md:text-base">
         <CircularProfileImage src={userImage} />
         <h1>{userName && `${userName}님의`}</h1>
       </div>
