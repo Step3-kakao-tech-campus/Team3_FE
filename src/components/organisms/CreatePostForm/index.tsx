@@ -75,7 +75,7 @@ function CreatePostForm(): JSX.Element {
       <DropdownBox selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} styleType="small" />
       <div className="flex md:gap-2">
         <DatePicker title="모임" value={startTime} setValue={setStartTime} />
-        <DatePicker title="마감" value={dueTime} setValue={setDueTime} />
+        <DatePicker title="마감" value={dueTime} isRight setValue={setDueTime} />
       </div>
       <OptionTitle>내용</OptionTitle>
       <textarea

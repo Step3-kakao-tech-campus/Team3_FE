@@ -102,6 +102,7 @@ function PostEditForm({ id }: Props) {
         <DatePicker
           title="마감"
           value={dueTime}
+          isRight
           setValue={setDueTime as React.Dispatch<React.SetStateAction<Date | null>>}
         />
       </div>
