@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { deleteMessages } from "@/apis/message";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { useParams } from "next/navigation";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
 interface Props {
@@ -25,6 +26,8 @@ function Message({ message, isProfile, opponentUserName, opponentUserProfileImag
 
   const { mutate, queryClient } = useMutateWithQueryClient(deleteMessages);
 
+  const { addApiErrorToast } = useApiErrorToast();
+
   let style;
   if (message.isReceive) {
     style = "bg-[#FDAA49] rounded-br-md";
@@ -39,6 +42,9 @@ function Message({ message, isProfile, opponentUserName, opponentUserProfileImag
         onSuccess: () => {
           queryClient.invalidateQueries([`/api/messages/opponents/${id}`, id]);
           setModalOpen(false);
+        },
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "메세지 삭제에 실패했습니다." });
         },
       },
     );

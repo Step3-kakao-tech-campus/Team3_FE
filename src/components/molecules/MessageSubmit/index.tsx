@@ -2,6 +2,7 @@
 
 import { postMessages } from "@/apis/message";
 import Button from "@/components/atoms/Button";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { useParams } from "next/navigation";
 import React, { useRef } from "react";
@@ -13,6 +14,8 @@ function MessageSubmit() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate, queryClient } = useMutateWithQueryClient(postMessages);
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -40,7 +43,7 @@ function MessageSubmit() {
         textAreaRef.current!.style.overflowY = "hidden";
       },
       onError: (err) => {
-        console.log(err);
+        addApiErrorToast({ err, alt: "메세지 전송에 실패했습니다." });
       },
     });
   };
