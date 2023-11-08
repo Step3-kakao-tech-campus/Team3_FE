@@ -39,7 +39,7 @@ function ScoreEditForm({ postId, initialScoresData }: Props) {
   };
 
   return (
-    <div className="score-edit-form flex flex-col gap-2 min-w-[350px]">
+    <div className="score-edit-form flex flex-col gap-2 min-w-[350px] md:min-w-[270px]">
       {formScores?.map((formScore) => (
         <ScoreInput
           key={formScore?.id}
