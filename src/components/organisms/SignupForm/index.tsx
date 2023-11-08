@@ -15,10 +15,11 @@ import { postLogin, postRegister } from "@/apis/sign";
 import { useMutation } from "@tanstack/react-query";
 import useToast from "@/hooks/useToast";
 import { setLogin } from "@/utils/user";
+import getApiErrorMsg from "@/utils/getApiErrorMsg";
 
 function SignupForm(): JSX.Element {
   const router = useRouter();
-  const { addSuccessToast, addWarningToast } = useToast();
+  const { addSuccessToast, addWarningToast, addErrorToast } = useToast();
 
   const [errMsg, setErrMsg] = useState("");
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
@@ -82,11 +83,23 @@ function SignupForm(): JSX.Element {
           callPostLogin(formData);
         },
         onError: (err) => {
-          console.log(err);
+          const errorMessage = getApiErrorMsg(err);
+          if (errorMessage) addErrorToast(errorMessage);
+          else addErrorToast("회원가입 요청이 실패했습니다.");
         },
       });
     }
-  }, [confirmPassword, consentChecked, formData, regionIds.districtId, router, mutate]);
+  }, [
+    formData,
+    confirmPassword,
+    regionIds.districtId,
+    consentChecked,
+    mutate,
+    addSuccessToast,
+    router,
+    callPostLogin,
+    addErrorToast,
+  ]);
 
   useEffect(() => {
     handleInputChange("districtId", regionIds.districtId);
