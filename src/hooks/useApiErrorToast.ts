@@ -6,9 +6,13 @@ interface Param {
   alt: string;
 }
 
-export default function useApiErrorToast({ err, alt }: Param) {
+export default function useApiErrorToast() {
   const { addErrorToast } = useToast();
-  const errorMessage = getApiErrorMsg(err);
-  if (errorMessage) addErrorToast(errorMessage);
-  else addErrorToast(alt);
+  const addApiErrorToast = ({ err, alt }: Param) => {
+    const errorMessage = getApiErrorMsg(err);
+    if (errorMessage) addErrorToast(errorMessage);
+    else addErrorToast(alt);
+  };
+
+  return { addApiErrorToast };
 }
