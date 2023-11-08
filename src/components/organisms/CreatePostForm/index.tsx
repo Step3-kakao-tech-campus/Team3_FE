@@ -9,6 +9,7 @@ import { postRegisterPosts } from "@/apis/posts";
 import { useMutation } from "@tanstack/react-query";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useRouter } from "next/navigation";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 function CreatePostForm(): JSX.Element {
   const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
@@ -20,6 +21,8 @@ function CreatePostForm(): JSX.Element {
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
   const router = useRouter();
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { mutate } = useMutation({ mutationFn: postRegisterPosts });
 
@@ -54,8 +57,8 @@ function CreatePostForm(): JSX.Element {
         onSuccess: (res) => {
           router.replace(`/post/${res.data.response.id}`);
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "글 작성에 실패했습니다." });
         },
       });
     }
