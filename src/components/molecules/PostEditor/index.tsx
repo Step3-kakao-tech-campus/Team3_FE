@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import useToast from "@/hooks/useToast";
 import { useMutation } from "@tanstack/react-query";
 import { deletePost } from "@/apis/posts";
+import { getCookie } from "@/utils/Cookie";
 import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
 interface Props {
   id: number;
+  userId: number;
 }
 
-function PostEditor({ id }: Props) {
+function PostEditor({ id, userId }: Props) {
+  const [myId, setMyId] = useState<number | null>(null);
+
   const router = useRouter();
 
   const [reconfirmModalOpen, setReconfirmModalOpen] = useState(false);
@@ -33,6 +39,13 @@ function PostEditor({ id }: Props) {
       },
     );
   };
+
+  useEffect(() => {
+    const cookieId = parseInt(getCookie("userId"), 10);
+    setMyId(cookieId);
+  });
+
+  if (myId !== userId) return null;
 
   return (
     <>
