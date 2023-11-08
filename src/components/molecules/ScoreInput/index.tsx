@@ -123,14 +123,14 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
       <div className="score-input flex items-center justify-between">
         {isEditing ? (
           <>
-            <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
+            <button type="button" onClick={handleRemove} className="text-red-500 text-xl md:text-lg">
               <MdRemoveCircleOutline />
             </button>
             <input
               type="number"
               defaultValue={scoreValue}
               onChange={handleScoreInputChange}
-              className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none"
+              className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none md:max-w-[80px] md:py-0"
             />
             <Button
               rounded="full"
