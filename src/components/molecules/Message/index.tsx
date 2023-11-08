@@ -48,10 +48,10 @@ function Message({ message, isProfile, opponentUserName, opponentUserProfileImag
     <div className={`relative flex ${!message.isReceive && "flex-row-reverse"}`}>
       {isProfile && (
         <>
-          <div className="absolute bottom-2">
+          <div className="absolute top-[-16px]">
             <CircularProfileImage src={opponentUserProfileImage} styleType="xl" />
           </div>
-          <span className="absolute top-[-24px] left-14 text-sm font-medium">{opponentUserName}</span>
+          <span className="absolute top-[-24px] left-14 text-sm font-medium md:left-12">{opponentUserName}</span>
         </>
       )}
       <div
@@ -65,8 +65,8 @@ function Message({ message, isProfile, opponentUserName, opponentUserProfileImag
       >
         <pre
           className={`inline-block max-w-[420px] mx-2 p-2 rounded-t-md ${style} whitespace-pre-wrap break-all ${
-            message.isReceive && "ml-14"
-          }`}
+            message.isReceive && "ml-14 md:ml-12"
+          } md:max-w-[230px]`}
         >
           {message.content}
         </pre>
