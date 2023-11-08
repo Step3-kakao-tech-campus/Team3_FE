@@ -18,6 +18,7 @@ function SearchModalTemplate() {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined;
       },
+      suspense: true,
     },
   );
 
