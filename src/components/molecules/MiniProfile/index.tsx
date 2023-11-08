@@ -9,7 +9,7 @@ interface Prop {
 }
 
 function MiniProfile({ userId, imageSrc, userName, size = "md" }: Prop): JSX.Element {
-  const fontSize = { md: "text-xl", sm: "text-base" };
+  const fontSize = { md: "text-xl md:text-sm", sm: "text-base" };
   return (
     <ProfileLink userId={userId} className="inline-flex gap-1 items-center">
       <CircularProfileImage src={imageSrc} styleType={size} />

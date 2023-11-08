@@ -9,7 +9,7 @@ function RecordOverview({ userId }: { userId: number }) {
   const userName = data?.data?.response?.name;
   return (
     <>
-      <h1 className="title text-2xl">{userName}님의 기록</h1>
+      <h1 className="title text-2xl mt-2 md:text-xl">{userName}님의 기록</h1>
       <RecordSummary data={data?.data?.response} />
     </>
   );
