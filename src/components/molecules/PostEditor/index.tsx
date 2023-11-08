@@ -43,7 +43,7 @@ function PostEditor({ id, userId }: Props) {
   useEffect(() => {
     const cookieId = parseInt(getCookie("userId"), 10);
     setMyId(cookieId);
-  });
+  }, []);
 
   if (myId !== userId) return null;
 
