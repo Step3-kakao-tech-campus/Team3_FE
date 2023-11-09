@@ -7,14 +7,12 @@ import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
-import CommentForm from "@/components/organisms/CommentForm";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
-import PostEditor from "@/components/molecules/PostEditor";
-import { getCookie } from "@/utils/Cookie";
 import ApplyButton from "@/components/molecules/ApplyButton";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 import ProfileLink from "@/components/atoms/ProfileLink";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import CommentForm from "@/components/organisms/CommentForm";
+import PostEditor from "@/components/molecules/PostEditor";
 
 interface Props {
   id: string;
@@ -22,24 +20,17 @@ interface Props {
 
 function PostTemplates({ id }: Props): JSX.Element {
   const postId = parseInt(id, 10);
-  const userId = parseInt(getCookie("userId"), 10);
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { data, isLoading } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
+  const { data } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
+    staleTime: 1000 * 10,
     onError: (error) => {
       console.log(error);
     },
   });
 
   const post = data?.data?.response.post || {};
-
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-[80vh]">
-        <LoadingSpinner styleType="xl" />
-      </div>
-    );
 
   return (
     <div>
@@ -67,7 +58,7 @@ function PostTemplates({ id }: Props): JSX.Element {
             조회수 <strong className="font-medium text-neutral-500">{post.viewCount}</strong>
           </span>
         </div>
-        {userId === post.userId && <PostEditor id={postId} />}
+        <PostEditor id={postId} userId={post.userId} />
       </div>
       <hr className="mt-4 md:mt-2" />
       <p className="flex mt-4 items-center gap-3">

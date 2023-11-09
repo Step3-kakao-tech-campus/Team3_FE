@@ -1,6 +1,8 @@
+"use client";
+
 import { CommentData } from "@/types/commentData";
 import { getCookie } from "@/utils/Cookie";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
@@ -19,10 +21,10 @@ interface Props {
 }
 
 function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element {
-  const userId = parseInt(getCookie("userId"), 10);
   const params = useParams();
   const id = parseInt(params.id as string, 10);
 
+  const [myId, setMyId] = useState<number | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
@@ -79,6 +81,11 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     setCommentContent(value);
   };
 
+  useEffect(() => {
+    const cookieId = parseInt(getCookie("userId"), 10);
+    setMyId(cookieId);
+  }, []);
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -86,7 +93,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
           <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
         </ProfileLink>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
-          {comment.userId === userId && (
+          {comment.userId === myId && (
             <>
               <button type="button" onClick={handleUpdateForm} className="flex items-center cursor-pointer">
                 <MdOutlineEdit />
