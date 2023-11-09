@@ -18,7 +18,7 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
   const searchParams = useSearchParams();
   const pageUserId = parseInt(param.scoreboard_user_id as string, 10);
 
-  const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId));
+  const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId), { suspense: true });
   const userName = data?.data?.response?.name;
   const userImage = data?.data?.response?.profileImage;
 
