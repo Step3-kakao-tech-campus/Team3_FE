@@ -18,7 +18,7 @@ function MessageForm(): JSX.Element {
     [`/api/messages/opponents/${id}`, id],
     ({ pageParam = null }) => getUserMessages(id, pageParam),
     {
-      suspense: true,
+      useErrorBoundary: true,
       retry: false,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
