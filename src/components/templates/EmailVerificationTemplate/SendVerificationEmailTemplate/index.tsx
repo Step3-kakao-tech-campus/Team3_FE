@@ -13,10 +13,10 @@ function SendVerificationEmailTemplate({ sendMail }: Prop): JSX.Element {
     <div className="email-verification-error min-h-[60vh] flex flex-col justify-evenly">
       <div className="flex flex-col items-center gap-8">
         <MdCheckCircle className="text-8xl text-thunderOrange" />
-        <h2 className="text-3xl">인증 메일을 보냈습니다.</h2>
+        <h2 className="text-3xl md:text-xl">인증 메일을 보냈습니다.</h2>
         <div className="email-verification-error flex flex-col items-center gap-3">
-          <p className="text-xl text-neutral-500">가입하신 이메일의 메일함을 확인해주세요.</p>
-          <p className="text-center text-lg text-neutral-500">
+          <p className="text-xl md:text-base text-neutral-500">가입하신 이메일의 메일함을 확인해주세요.</p>
+          <p className="text-center text-lg md:text-base text-neutral-500">
             이메일 확인이 이루어지지 않을 경우, 일부 서비스 이용에 제한이 있을 수 있습니다.
           </p>
         </div>
