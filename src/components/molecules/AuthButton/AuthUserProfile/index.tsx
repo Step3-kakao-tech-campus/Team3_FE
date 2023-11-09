@@ -1,11 +1,13 @@
 "use client";
 
 import { getMyProfile } from "@/apis/profile";
+import { postLogout } from "@/apis/sign";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import ProfileLink from "@/components/atoms/ProfileLink";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import { deleteToken } from "@/utils/user";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -14,13 +16,25 @@ interface Props {
 
 function AuthUserProfile({ onClickLogout }: Props) {
   const { data } = useQuery(["/api/users/mine"], getMyProfile);
+
+  const { mutate } = useMutation({ mutationFn: postLogout });
+  const { addApiErrorToast } = useApiErrorToast();
+
   const router = useRouter();
 
   const handleLogout = () => {
-    deleteToken();
-    onClickLogout();
-    router.refresh();
-    router.push("/");
+    const payload: void = undefined;
+    mutate(payload, {
+      onSuccess: () => {
+        deleteToken();
+        onClickLogout();
+        router.refresh();
+        router.push("/");
+      },
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "로그아웃을 실패했습니다." });
+      },
+    });
   };
 
   return (
