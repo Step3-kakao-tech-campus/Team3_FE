@@ -13,6 +13,7 @@ import { validateEmail, validatePassword } from "@/utils/validation";
 import { setLogin } from "@/utils/user";
 import { postLogin } from "@/apis/sign";
 import { useMutation } from "@tanstack/react-query";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 function SigninForm(): JSX.Element {
   const router = useRouter();
@@ -22,6 +23,8 @@ function SigninForm(): JSX.Element {
     password: "",
   });
   const [errMsg, setErrMsg] = useState("");
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { mutate } = useMutation(postLogin);
 
@@ -47,11 +50,11 @@ function SigninForm(): JSX.Element {
           router.refresh();
         },
         onError: (err) => {
-          console.log(err);
+          addApiErrorToast({ err, alt: "회원가입 요청이 실패했습니다." });
         },
       });
     }
-  }, [formData, router, mutate]);
+  }, [formData, mutate, router, addApiErrorToast]);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {

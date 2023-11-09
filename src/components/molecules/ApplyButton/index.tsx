@@ -2,6 +2,7 @@
 
 import { deleteRejectApplicant, getCheckStatus, postApply } from "@/apis/applicant";
 import Button from "@/components/atoms/Button";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { getCookie } from "@/utils/Cookie";
@@ -27,6 +28,7 @@ function ApplyButton({ postId, authorId, onOpen }: Props): JSX.Element | null {
   const [isApplied, setIsApplied] = useState<boolean | null>(null);
 
   const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   useEffect(() => {
     setIsApplied(data?.data?.response.isApplied);
@@ -44,8 +46,8 @@ function ApplyButton({ postId, authorId, onOpen }: Props): JSX.Element | null {
         setIsApplied(true);
         addSuccessToast("성공적으로 신청되었습니다.");
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "신청에 실패했습니다." });
       },
     });
   };
@@ -58,8 +60,8 @@ function ApplyButton({ postId, authorId, onOpen }: Props): JSX.Element | null {
           setIsApplied(false);
           addSuccessToast("신청이 취소되었습니다.");
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "취소에 실패했습니다." });
         },
       },
     );

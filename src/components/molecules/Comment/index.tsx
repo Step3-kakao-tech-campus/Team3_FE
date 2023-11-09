@@ -9,6 +9,7 @@ import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { postReply } from "@/apis/comment";
 import useToast from "@/hooks/useToast";
 import ProfileLink from "@/components/atoms/ProfileLink";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
 import CommentSubmit from "../CommentSubmit";
@@ -33,6 +34,7 @@ function Comment({ comment }: Props): JSX.Element {
   const { mutate, queryClient } = useMutateWithQueryClient(postReply);
 
   const { addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleReplyForm = () => {
     setReply((prev) => !prev);
@@ -54,8 +56,8 @@ function Comment({ comment }: Props): JSX.Element {
         queryClient.invalidateQueries(["/comments", id]);
         setReply(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 등록에 실패했습니다." });
       },
     });
   };

@@ -8,11 +8,11 @@ import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
-import PostEditor from "@/components/molecules/PostEditor";
 import ApplyButton from "@/components/molecules/ApplyButton";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 import ProfileLink from "@/components/atoms/ProfileLink";
 import CommentForm from "@/components/organisms/CommentForm";
+import PostEditor from "@/components/molecules/PostEditor";
 
 interface Props {
   id: string;

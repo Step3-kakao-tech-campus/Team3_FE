@@ -5,7 +5,10 @@ import ProfileModalTemplate from "@/components/templates/ProfileModalTemplate";
 import { useRecoilState } from "recoil";
 import profileModalState from "@/stores/atoms/profileModalState";
 
+import SuspenseErrorBoundary from "@/components/atoms/SuspenseErrorBoundary";
 import ModalWrapper from "..";
+import ErrorModal from "../ErrorModal";
+import LoadingModal from "../LoadingModal";
 
 function ProfileModal(): JSX.Element | null {
   const [profileModal, setProfileModal] = useRecoilState(profileModalState);
@@ -17,7 +20,9 @@ function ProfileModal(): JSX.Element | null {
           setProfileModal({ isOpen: false });
         }}
       >
-        <ProfileModalTemplate userId={profileModal.userId!} />
+        <SuspenseErrorBoundary errorFallback={<ErrorModal />} suspenseFallback={<LoadingModal />}>
+          <ProfileModalTemplate userId={profileModal.userId!} />
+        </SuspenseErrorBoundary>
       </ModalWrapper>
     );
   return null;

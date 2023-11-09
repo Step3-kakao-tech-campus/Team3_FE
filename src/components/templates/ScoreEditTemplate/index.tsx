@@ -9,9 +9,11 @@ import { useQuery } from "@tanstack/react-query";
 function ScoreEditTemplate({ postId }: { postId: number }) {
   const { data: scoreData } = useQuery([`/api/posts/${postId}/scores`], () => getScore(postId), { suspense: true });
   const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, { suspense: true });
+
   const scores = scoreData?.data?.response?.scores;
   const userName = profileData?.data?.response?.name;
   const profileImage = profileData?.data?.response?.profileImage;
+
   return (
     <div className="score-edit-template">
       {profileData?.data?.response && (

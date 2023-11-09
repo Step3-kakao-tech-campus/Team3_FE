@@ -5,6 +5,7 @@ import Button from "@/components/atoms/Button";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import DatePicker from "@/components/molecules/DatePicker";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -18,6 +19,8 @@ function PostEditForm({ id }: Props) {
   const router = useRouter();
 
   const postId = parseInt(id, 10);
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { data, isLoading } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
     onError: (error) => {
@@ -64,8 +67,8 @@ function PostEditForm({ id }: Props) {
         onSuccess: () => {
           router.back();
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "글 수정에 실패했습니다." });
         },
       });
     }

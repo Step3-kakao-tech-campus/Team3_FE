@@ -7,8 +7,8 @@ import { useCallback, useRef, useState } from "react";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
-import useToast from "@/hooks/useToast";
 import { useParams, useSearchParams } from "next/navigation";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 interface Props {
   postId: number;
@@ -34,7 +34,7 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const { isNew } = scoreData;
   const isModified = scoreData.scoreNum !== scoreValue || scoreData.scoreImage !== selectedFile;
 
-  const { addErrorToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
@@ -67,16 +67,16 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   interface Params {
     onSuccess?: () => void;
     onError?: () => void;
-    errorMsg?: string;
+    errorMsg: string;
   }
   const createMutationOptions = ({ onSuccess, onError, errorMsg }: Params): UseMutationOptions => ({
     onSuccess: () => {
       if (onSuccess) onSuccess();
       invalidateCurrentQuery();
     },
-    onError: () => {
+    onError: (err) => {
       if (onError) onError();
-      addErrorToast(errorMsg || "작업에 실패했습니다.");
+      addApiErrorToast({ err, alt: errorMsg });
     },
   });
 

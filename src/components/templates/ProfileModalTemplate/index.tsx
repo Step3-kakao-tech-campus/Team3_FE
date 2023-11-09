@@ -21,6 +21,7 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
   const { data } = useQuery({
     queryKey: ["userProfile", userId],
     queryFn: () => getProfileById(userId),
+    suspense: true,
   });
   const router = useRouter();
   const user = data?.data?.response;

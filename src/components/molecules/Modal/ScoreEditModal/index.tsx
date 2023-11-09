@@ -1,14 +1,15 @@
 import ScoreEditTemplate from "@/components/templates/ScoreEditTemplate";
-import { Suspense } from "react";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import SuspenseErrorBoundary from "@/components/atoms/SuspenseErrorBoundary";
 import ModalWrapper from "..";
+import ErrorModal from "../ErrorModal";
+import LoadingModal from "../LoadingModal";
 
 function ScoreEditModal({ postId, onDismiss }: { postId: number; onDismiss: () => void }) {
   return (
     <ModalWrapper onDismiss={onDismiss}>
-      <Suspense fallback={<LoadingSpinner />}>
+      <SuspenseErrorBoundary errorFallback={<ErrorModal />} suspenseFallback={<LoadingModal />}>
         <ScoreEditTemplate postId={postId} />
-      </Suspense>
+      </SuspenseErrorBoundary>
     </ModalWrapper>
   );
 }
