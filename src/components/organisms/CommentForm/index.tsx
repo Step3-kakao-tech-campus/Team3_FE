@@ -34,6 +34,7 @@ function CommentForm({ id }: Props): JSX.Element {
     ["/comments", id],
     ({ pageParam = 0 }) => getComments(id, pageParam),
     {
+      useErrorBoundary: true,
       staleTime: 1000 * 10,
       retry: false,
       getNextPageParam: (lastPage) => {
