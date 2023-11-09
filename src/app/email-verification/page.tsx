@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { postConfirmVerificationEmail } from "@/apis/email";
 import VerificationEmailTemplate from "@/components/templates/EmailVerificationTemplate/VerificationEmailTemplate";
 import { useSearchParams } from "next/navigation";
-import DefaultLoadingUI from "../loading";
+import DefaultLoadingUI from "@/components/templates/DefaultLoadingUI";
 
 function EmailVerificationPage() {
   const searchParam = useSearchParams();
