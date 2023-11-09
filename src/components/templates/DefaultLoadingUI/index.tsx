@@ -4,7 +4,7 @@ import WhiteContainer from "@/components/atoms/WhiteContainer";
 function DefaultLoadingUI() {
   return (
     <WhiteContainer>
-      <div className="flex justify-center items-center h-[50vh]">
+      <div className="flex justify-center items-center h-[70vh]">
         <LoadingSpinner styleType="xl" />
       </div>
     </WhiteContainer>
