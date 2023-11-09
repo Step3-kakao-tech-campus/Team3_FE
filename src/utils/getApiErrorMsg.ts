@@ -1,3 +1,4 @@
 export default function getApiErrorMsg(err: unknown) {
-  return err.response?.data?.errorMessage;
+  const error = err as any;
+  return error.response?.data?.errorMessage;
 }
