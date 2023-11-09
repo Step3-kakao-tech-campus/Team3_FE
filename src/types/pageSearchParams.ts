@@ -3,5 +3,6 @@ export interface PageSearchParams {
     cityId?: string;
     countryId?: string;
     districtId?: string;
+    all?: string;
   };
 }
