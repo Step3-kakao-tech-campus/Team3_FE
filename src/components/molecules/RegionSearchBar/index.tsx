@@ -35,7 +35,7 @@ function RegionSearchBar({ searchParams }: PageSearchParams): JSX.Element {
       </div>
       <button
         type="button"
-        className="min-w-[40px] h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl md:min-w-[30px] md:h-[30px]"
+        className="min-w-[40px] h-10 rounded-full bg-thunder outline outline-1 outline-white shadow-xl hover:brightness-95 md:min-w-[30px] md:h-[30px]"
         onClick={() => {
           if (regionIds.cityId >= 0 && regionIds.countryId >= 0 && regionIds.districtId >= 0)
             router.push(`/${queryString}`);
