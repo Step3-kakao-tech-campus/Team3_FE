@@ -24,6 +24,7 @@ function MessageRoomList(): JSX.Element {
     ({ pageParam = null }) => getMessages(pageParam),
     {
       retry: false,
+      suspense: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined;
