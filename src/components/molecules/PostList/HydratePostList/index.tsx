@@ -6,7 +6,7 @@ import PostList from "..";
 import PostCardSkeleton from "../../PostCard/Skeleton";
 
 async function HydratePostList({ searchParams }: PageSearchParams) {
-  await queryClient.prefetchInfiniteQuery(["/api/posts"], async () => {
+  await queryClient.prefetchInfiniteQuery(["/api/posts", searchParams], async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
       cache: "no-cache",
     });
@@ -15,10 +15,10 @@ async function HydratePostList({ searchParams }: PageSearchParams) {
     return { data };
   });
 
-  const prefetchState = queryClient.getQueryState<any>(["/api/posts"]);
+  const prefetchState = queryClient.getQueryState<any>(["/api/posts", searchParams]);
 
   if (prefetchState?.data?.pages[0]?.data?.status !== 200) {
-    queryClient.removeQueries(["/api/posts"]);
+    queryClient.removeQueries(["/api/posts", searchParams]);
   }
 
   const dehydratedState = JSON.parse(JSON.stringify(dehydrate(queryClient)));
