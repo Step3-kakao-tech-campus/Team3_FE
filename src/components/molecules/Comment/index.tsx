@@ -1,3 +1,5 @@
+"use client";
+
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import React, { useRef, useState } from "react";
 import { useParams } from "next/navigation";
