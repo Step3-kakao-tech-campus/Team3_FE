@@ -15,10 +15,12 @@ import { postLogin, postRegister } from "@/apis/sign";
 import { useMutation } from "@tanstack/react-query";
 import useToast from "@/hooks/useToast";
 import { setLogin } from "@/utils/user";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 function SignupForm(): JSX.Element {
   const router = useRouter();
   const { addSuccessToast, addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const [errMsg, setErrMsg] = useState("");
   const [consentChecked, setConsentChecked] = useState(false); // 동의 체크 상태
@@ -82,11 +84,21 @@ function SignupForm(): JSX.Element {
           callPostLogin(formData);
         },
         onError: (err) => {
-          console.log(err);
+          addApiErrorToast({ err, alt: "회원가입 요청이 실패했습니다." });
         },
       });
     }
-  }, [confirmPassword, consentChecked, formData, regionIds.districtId, router, mutate]);
+  }, [
+    formData,
+    confirmPassword,
+    regionIds.districtId,
+    consentChecked,
+    mutate,
+    addSuccessToast,
+    router,
+    callPostLogin,
+    addApiErrorToast,
+  ]);
 
   useEffect(() => {
     handleInputChange("districtId", regionIds.districtId);
@@ -108,7 +120,7 @@ function SignupForm(): JSX.Element {
     <div>
       <div className="flex items-center justify-center pb-[22px]">
         <Image src={Logo} alt="볼링 로고" width={50} height={50} />
-        <h1 className="text-[40px] text-transparent bg-clip-text bg-thunder">번개볼링</h1>
+        <h1 className="text-[40px] text-transparent bg-clip-text bg-thunder md:text-2xl">번개볼링</h1>
       </div>
 
       <div>
@@ -118,22 +130,22 @@ function SignupForm(): JSX.Element {
             {
               type: "email",
               placeholder: "이메일",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
             {
               type: "name",
               placeholder: "닉네임",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
             {
               type: "password",
               placeholder: "비밀번호",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
             {
               type: "confirmPassword",
               placeholder: "비밀번호 확인",
-              className: "w-full py-2 px-3 rounded-lg border border-gray-400",
+              className: "w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm",
             },
           ]}
           onInputChange={(type, value) => handleInputChange(type, value)} // Pass the input change handler

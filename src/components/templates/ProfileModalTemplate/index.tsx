@@ -21,24 +21,25 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
   const { data } = useQuery({
     queryKey: ["userProfile", userId],
     queryFn: () => getProfileById(userId),
+    suspense: true,
   });
   const router = useRouter();
   const user = data?.data?.response;
 
   return (
     <div className="profile-modal-contents">
-      <div className="profile-modal-upper flex gap-5 bg-thunder px-10 py-7 items-center">
+      <div className="profile-modal-upper flex gap-5 bg-thunder px-10 py-7 items-center md:px-6 md:py-6 md:gap-3">
         <CircularProfileImage src={user?.profileImage} styleType="huge" />
-        <div className="user-info text-white flex flex-col gap-1">
+        <div className="user-info text-white flex flex-col gap-1 md:mt-1">
           <div className="flex justify-between items-center">
-            <span className="text-lg font-semibold">{user?.name}</span>
+            <span className="text-lg font-semibold md:text-sm">{user?.name}</span>
             <span className="text-sm">{`Average ${user?.averageScore}`}</span>
           </div>
           <p>
             <MdLocationPin className="inline" />
-            <span>{user?.address}</span>
+            <span className="md:text-sm">{user?.address}</span>
           </p>
-          <div className="rating flex justify-between items-center">
+          <div className="rating flex justify-between items-center md:text-sm">
             <span>매너점수</span>
             <span>{`★ ${user?.rating ? `${user?.rating.toFixed(1)} / 5` : "없음"}`}</span>
           </div>
@@ -58,7 +59,7 @@ function ProfileModalTemplate({ userId }: Props): JSX.Element {
           )}
         </div>
       </div>
-      <div className="profile-modal-lower flex flex-col gap-4 p-7">
+      <div className="profile-modal-lower flex flex-col gap-4 p-7 md:p-5">
         <button
           type="button"
           className={buttonStyle}

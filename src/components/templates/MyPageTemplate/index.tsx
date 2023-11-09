@@ -5,6 +5,7 @@ import { getMyProfile, putProfile } from "@/apis/profile";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import DropdownBox from "@/components/molecules/DropdownBox";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { validateName } from "@/utils/validation";
@@ -51,6 +52,7 @@ function MyPageTemplate() {
   };
 
   const { addErrorToast, addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: putCurrentProfile, queryClient } = useMutateWithQueryClient(putProfile);
   const mutateOption: MutateOptions = {
     onSuccess: () => {
@@ -58,9 +60,7 @@ function MyPageTemplate() {
       queryClient.invalidateQueries(["/api/users/mine"]);
     },
     onError: (err: any) => {
-      const statusCode = err.response?.data?.status;
-      if (statusCode === 500) addErrorToast("이미 존재하는 닉네임입니다.");
-      else addErrorToast("저장에 실패했습니다");
+      addApiErrorToast({ err, alt: "프로필 수정에 실패했습니다." });
     },
   };
   const handleOnSubmit = () => {
@@ -81,7 +81,7 @@ function MyPageTemplate() {
       <h1 className="text-2xl mb-4">마이페이지</h1>
       <div className="my-page-content flex flex-col gap-4">
         <div className="nickname flex gap-4 items-center">
-          <h2 className="text-xl">닉네임</h2>
+          <h2 className="text-xl md:text-lg">닉네임</h2>
           <input
             type="text"
             ref={nameRef}
@@ -91,32 +91,32 @@ function MyPageTemplate() {
           />
           {nameError && <span className="text-red-500">{nameError}</span>}
         </div>
-        <div className="email flex gap-4 items-center">
-          <h2 className="text-xl">이메일</h2>
-          <span>{email}</span>
+        <div className="email flex gap-4 items-center md:gap-2 md:mt-2">
+          <h2 className="text-xl md:text-lg">이메일</h2>
+          <span className="md:text-sm">{email}</span>
           {verification ? (
-            <span className="text-green-500 flex items-center gap-1">
+            <span className="text-green-500 flex items-center gap-1 md:text-sm">
               <MdCheck className="inline" />
               이메일 인증 완료
             </span>
           ) : (
             <>
-              <span className="text-red-500 flex items-center gap-1">
+              <span className="text-red-500 flex items-center gap-1 md:text-sm">
                 <MdClose />
                 이메일 미인증
               </span>
-              <Link href="/email-verification/send" className="hover:underline">
+              <Link href="/email-verification/send" className="hover:underline md:text-sm">
                 인증하기
               </Link>
             </>
           )}
         </div>
-        <div className="region flex flex-col gap-4">
-          <h2 className="text-xl">지역</h2>
+        <div className="region flex flex-col gap-4 md:mt-2">
+          <h2 className="text-xl md:text-lg">지역</h2>
           <DropdownBox selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} styleType="small" />
         </div>
-        <div className="profile-image flex flex-col gap-4">
-          <h2 className="text-xl">프로필 이미지</h2>
+        <div className="profile-image flex flex-col gap-4 md:mt-2">
+          <h2 className="text-xl md:text-lg">프로필 이미지</h2>
           <div className="flex gap-4 items-center">
             <CircularProfileImage
               src={selectedFile ? URL.createObjectURL(selectedFile) : profileImage}
@@ -147,14 +147,14 @@ function MyPageTemplate() {
             />
           </div>
         </div>
-        <div className="star-rating flex gap-4">
-          <h2 className="text-xl">매너점수</h2>
+        <div className="star-rating flex gap-4 md:mt-2">
+          <h2 className="text-xl md:text-lg">매너점수</h2>
           <span className="text-xl flex gap-1 items-center">
             <MdStar className="inline text-thunderOrange" /> {rating.toFixed(1)} / 5
           </span>
         </div>
-        <div className="avg flex gap-4">
-          <h2 className="text-xl">Average</h2>
+        <div className="avg flex gap-4 md:mt-2">
+          <h2 className="text-xl md:text-lg">Average</h2>
           <span className="text-xl">{averageScore}</span>
         </div>
       </div>

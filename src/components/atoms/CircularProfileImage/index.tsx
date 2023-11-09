@@ -23,8 +23,8 @@ interface Props {
 function CircularProfileImage({ src, styleType = "md" }: Props): JSX.Element {
   const styles = {
     huge: "w-20 h-20",
-    xl: "w-12 h-12",
-    lg: "w-10 h-10",
+    xl: "w-12 h-12 md:w-10 md:h-10",
+    lg: "w-10 h-10 md:w-8 md:h-8",
     md: "w-8 h-8",
     sm: "w-6 h-6",
   };

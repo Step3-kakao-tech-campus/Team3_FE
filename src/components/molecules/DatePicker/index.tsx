@@ -12,10 +12,11 @@ import { GiAlarmClock } from "react-icons/gi";
 interface Props {
   title: string;
   value: Date | null;
+  isRight?: boolean;
   setValue: React.Dispatch<SetStateAction<Date | null>>;
 }
 
-function DatePicker({ title, value, setValue }: Props): JSX.Element {
+function DatePicker({ title, value, isRight, setValue }: Props): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const [isTimeOpen, setIsTimeOpen] = useState(false);
 
@@ -61,7 +62,7 @@ function DatePicker({ title, value, setValue }: Props): JSX.Element {
 
   return (
     <div className="flex-1">
-      <div className="relative flex items-center gap-6">
+      <div className="relative flex items-center gap-6 md:gap-2">
         <OptionTitle>{title} 일시</OptionTitle>
         <Button
           styleType="thunder"
@@ -78,7 +79,7 @@ function DatePicker({ title, value, setValue }: Props): JSX.Element {
           날짜 설정
         </Button>
         {isOpen && (
-          <div className="absolute top-full">
+          <div className={`absolute top-full ${isRight && "md:right-0"}`}>
             <Calendar
               locale="ko"
               value={value}

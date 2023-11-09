@@ -7,6 +7,9 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      md: { max: "767px" },
+    },
     extend: {
       colors: {
         thunderOrange: "#FE7E07",
