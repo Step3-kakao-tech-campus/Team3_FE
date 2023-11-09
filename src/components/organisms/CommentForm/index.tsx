@@ -31,8 +31,9 @@ function CommentForm({ id }: Props): JSX.Element {
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
-    ({ pageParam = null }) => getComments(id, pageParam),
+    ({ pageParam = 0 }) => getComments(id, pageParam),
     {
+      staleTime: 1000 * 10,
       retry: false,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;

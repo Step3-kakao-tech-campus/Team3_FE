@@ -7,12 +7,13 @@ import { getPostById } from "@/apis/posts";
 import Badge from "@/components/atoms/Badge";
 import Participant from "@/components/atoms/Participant";
 import { formatDateToString, formatDateToStringByDot } from "@/utils/formatDateToString";
-import CommentForm from "@/components/organisms/CommentForm";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import PostEditor from "@/components/molecules/PostEditor";
 import ApplyButton from "@/components/molecules/ApplyButton";
 import ApplicantConfirmModal from "@/components/molecules/Modal/ApplicantConfirmModal";
 import ProfileLink from "@/components/atoms/ProfileLink";
+import CommentForm from "@/components/organisms/CommentForm";
+import HydrateCommentForm from "@/components/organisms/CommentForm/HydrateCommentForm";
 
 interface Props {
   id: string;
@@ -81,6 +82,7 @@ function PostTemplates({ id }: Props): JSX.Element {
       </div>
       <hr className="mt-6" />
       <CommentForm id={postId} />
+      {/*<HydrateCommentForm id={postId} />*/}
       {modalOpen && (
         <ApplicantConfirmModal
           postId={postId}
