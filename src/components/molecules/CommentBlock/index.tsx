@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
 import ProfileLink from "@/components/atoms/ProfileLink";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import CommentSubmit from "../CommentSubmit";
 import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
@@ -30,6 +31,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   const { mutate: putMutate } = useMutation(putComments);
 
   const { addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const payload = {
     postId: id,
@@ -47,8 +49,8 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
         queryClient.invalidateQueries(["/comments", id]);
         setModalOpen(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 삭제에 실패했습니다." });
       },
     });
   };
@@ -67,8 +69,8 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
         queryClient.invalidateQueries(["/comments", id]);
         setUpdate(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 수정에 실패했습니다." });
       },
     });
   };

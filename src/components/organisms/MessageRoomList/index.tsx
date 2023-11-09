@@ -4,6 +4,7 @@ import { deleteMessageCard, getMessages } from "@/apis/message";
 import Button from "@/components/atoms/Button";
 import MessageCard from "@/components/molecules/MessageCard";
 import UserSearchModal from "@/components/molecules/Modal/UserSearchModal";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
@@ -16,6 +17,7 @@ function MessageRoomList(): JSX.Element {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/api/messages/opponents"],
@@ -56,7 +58,9 @@ function MessageRoomList(): JSX.Element {
             setCheckList([]);
             addSuccessToast("성공적으로 삭제되었습니다.");
           },
-          onError: () => {},
+          onError: (err) => {
+            addApiErrorToast({ err, alt: "삭제에 실패했습니다." });
+          },
         },
       );
     });

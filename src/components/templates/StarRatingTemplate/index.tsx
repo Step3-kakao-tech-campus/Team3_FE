@@ -4,6 +4,7 @@ import { getProfileById } from "@/apis/profile";
 import postRating from "@/apis/rating";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { StarRatingModalProps } from "@/types/starRatingModalProps";
@@ -21,7 +22,8 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
   const userName = data?.data?.response?.name;
   const userImage = data?.data?.response?.profileImage;
 
-  const { addErrorToast, addSuccessToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: postStarRating, queryClient } = useMutateWithQueryClient(postRating);
   const mutateOption = {
     onSuccess: () => {
@@ -29,8 +31,8 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
       addSuccessToast("등록이 완료되었습니다.");
       onDismiss();
     },
-    onError: () => {
-      addErrorToast("요청이 실패하였습니다.");
+    onError: (err: unknown) => {
+      addApiErrorToast({ err, alt: "별점 등록이 실패하였습니다." });
     },
   };
 

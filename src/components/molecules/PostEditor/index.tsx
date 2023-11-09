@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import useToast from "@/hooks/useToast";
 import { useMutation } from "@tanstack/react-query";
 import { deletePost } from "@/apis/posts";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
 interface Props {
@@ -17,6 +18,7 @@ function PostEditor({ id }: Props) {
 
   const { mutate } = useMutation(deletePost);
   const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleDelete = () => {
     mutate(
@@ -27,8 +29,8 @@ function PostEditor({ id }: Props) {
           router.push("/");
           addSuccessToast("성공적으로 삭제 되었습니다.");
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "삭제 요청에 실패했습니다." });
         },
       },
     );
