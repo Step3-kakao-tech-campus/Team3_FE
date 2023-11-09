@@ -4,6 +4,7 @@ import { getApplicants } from "@/apis/applicant";
 import { patchPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { Applicant } from "@/types/applicant";
@@ -45,13 +46,14 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
-  }, [errorComponent, isError, noApplicantComponent, postId, response?.applicants, response?.applicantNumber]);
+  }, [isError, response?.applicantNumber, response?.applicants, errorComponent, noApplicantComponent, postId]);
 
-  const { addErrorToast, addSuccessToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);
   const mutateOption = {
-    onError: () => {
-      addErrorToast("요청에 실패했습니다. 다시 시도해주세요");
+    onError: (err: unknown) => {
+      addApiErrorToast({ err, alt: "요청에 실패했습니다. 다시 시도해주세요" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);

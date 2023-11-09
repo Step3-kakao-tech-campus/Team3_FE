@@ -2,6 +2,7 @@
 
 import { postMessages } from "@/apis/message";
 import Button from "@/components/atoms/Button";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { useParams } from "next/navigation";
 import React, { useRef } from "react";
@@ -13,6 +14,8 @@ function MessageSubmit() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate, queryClient } = useMutateWithQueryClient(postMessages);
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = e.target;
@@ -40,7 +43,7 @@ function MessageSubmit() {
         textAreaRef.current!.style.overflowY = "hidden";
       },
       onError: (err) => {
-        console.log(err);
+        addApiErrorToast({ err, alt: "메세지 전송에 실패했습니다." });
       },
     });
   };
@@ -56,7 +59,7 @@ function MessageSubmit() {
   };
 
   return (
-    <div className="flex items-center gap-4 mt-6">
+    <div className="flex items-center gap-4 mt-6 md:gap-3 md:mt-3">
       <textarea
         className="resize-none flex-1 h-[40px] max-h-[168px] py-2 px-3 rounded-lg border border-gray-400 overflow-y-hidden"
         placeholder="내용을 입력해 주세요."

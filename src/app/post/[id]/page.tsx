@@ -1,5 +1,5 @@
 import BackArrowContainer from "@/components/atoms/BackArrowContainer";
-import PostTemplates from "@/components/templates/PostTemplates";
+import HydratePostTemplates from "@/components/templates/PostTemplates/HydratePostTemplates";
 import React from "react";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 function PostHome({ params }: Props) {
   return (
     <BackArrowContainer>
-      <PostTemplates id={params.id} />
+      <HydratePostTemplates id={params.id} />
     </BackArrowContainer>
   );
 }

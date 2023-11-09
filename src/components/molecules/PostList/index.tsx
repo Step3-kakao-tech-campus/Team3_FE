@@ -27,12 +27,12 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
   };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ["post_list", searchParams],
+    ["/api/posts"],
     (reactQueryParam) => {
       return getPostList(reactQueryParam, new URLSearchParams(searchParams));
     },
     {
-      retry: 2,
+      staleTime: 1000 * 10,
       suspense: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;

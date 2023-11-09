@@ -43,9 +43,9 @@ function MessageForm(): JSX.Element {
 
   return (
     <div>
-      <h1 className="mt-6 text-center text-2xl font-semibold">{`${data?.pages[0]?.data?.response?.opponentUserName}님과의 대화`}</h1>
+      <h1 className="mt-6 text-center text-2xl font-semibold md:mt-2 md:text-lg">{`${data?.pages[0]?.data?.response?.opponentUserName}님과의 대화`}</h1>
       <hr className="mt-4" />
-      <div className="styled-scroll flex flex-col-reverse gap-4 mt-2 h-[580px] overflow-y-auto">
+      <div className="styled-scroll flex flex-col-reverse gap-4 mt-2 h-[580px] overflow-y-auto md:h-[480px]">
         {data?.pages?.map(
           (page) =>
             page?.data?.response?.messages.map((message: MessageType, index: number) => {
@@ -76,7 +76,7 @@ function MessageForm(): JSX.Element {
                     opponentUserProfileImage={page?.data?.response?.opponentUserProfileImage}
                   />
                   {isDate && (
-                    <div className="my-4 mx-20 py-2 bg-gray-400 rounded-full text-gray-600 text-center">
+                    <div className="my-4 mx-20 py-2 bg-gray-400 rounded-full text-gray-600 text-center md:py-1">
                       {formatDateToMessageDay(message.time)}
                     </div>
                   )}

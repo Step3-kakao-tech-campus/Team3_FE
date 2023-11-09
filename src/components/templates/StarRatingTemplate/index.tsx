@@ -4,6 +4,7 @@ import { getProfileById } from "@/apis/profile";
 import postRating from "@/apis/rating";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import StarButtons from "@/components/atoms/StarButtons";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { StarRatingModalProps } from "@/types/starRatingModalProps";
@@ -17,11 +18,12 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
   const searchParams = useSearchParams();
   const pageUserId = parseInt(param.scoreboard_user_id as string, 10);
 
-  const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId));
+  const { data } = useQuery([`/api/users/${targetId}`], () => getProfileById(targetId), { suspense: true });
   const userName = data?.data?.response?.name;
   const userImage = data?.data?.response?.profileImage;
 
-  const { addErrorToast, addSuccessToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: postStarRating, queryClient } = useMutateWithQueryClient(postRating);
   const mutateOption = {
     onSuccess: () => {
@@ -29,14 +31,14 @@ function StarRatingTemplate({ postId, applicantId, targetId, onDismiss }: StarRa
       addSuccessToast("등록이 완료되었습니다.");
       onDismiss();
     },
-    onError: () => {
-      addErrorToast("요청이 실패하였습니다.");
+    onError: (err: unknown) => {
+      addApiErrorToast({ err, alt: "별점 등록이 실패하였습니다." });
     },
   };
 
   return (
-    <div className="star-rating-template flex flex-col gap-3">
-      <div className="flex items-center gap-2 text-xl">
+    <div className="star-rating-template flex flex-col gap-3 md:m-2">
+      <div className="flex items-center gap-2 text-xl md:mt-1 md:text-base">
         <CircularProfileImage src={userImage} />
         <h1>{userName && `${userName}님의`}</h1>
       </div>

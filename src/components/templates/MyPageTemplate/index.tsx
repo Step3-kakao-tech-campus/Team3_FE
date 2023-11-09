@@ -5,6 +5,7 @@ import { getMyProfile, putProfile } from "@/apis/profile";
 import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import DropdownBox from "@/components/molecules/DropdownBox";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { validateName } from "@/utils/validation";
@@ -51,6 +52,7 @@ function MyPageTemplate() {
   };
 
   const { addErrorToast, addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: putCurrentProfile, queryClient } = useMutateWithQueryClient(putProfile);
   const mutateOption: MutateOptions = {
     onSuccess: () => {
@@ -58,9 +60,7 @@ function MyPageTemplate() {
       queryClient.invalidateQueries(["/api/users/mine"]);
     },
     onError: (err: any) => {
-      const statusCode = err.response?.data?.status;
-      if (statusCode === 500) addErrorToast("이미 존재하는 닉네임입니다.");
-      else addErrorToast("저장에 실패했습니다");
+      addApiErrorToast({ err, alt: "프로필 수정에 실패했습니다." });
     },
   };
   const handleOnSubmit = () => {

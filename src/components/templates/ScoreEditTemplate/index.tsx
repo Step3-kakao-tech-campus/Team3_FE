@@ -9,13 +9,15 @@ import { useQuery } from "@tanstack/react-query";
 function ScoreEditTemplate({ postId }: { postId: number }) {
   const { data: scoreData } = useQuery([`/api/posts/${postId}/scores`], () => getScore(postId), { suspense: true });
   const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, { suspense: true });
+
   const scores = scoreData?.data?.response?.scores;
   const userName = profileData?.data?.response?.name;
   const profileImage = profileData?.data?.response?.profileImage;
+
   return (
     <div className="score-edit-template">
       {profileData?.data?.response && (
-        <div className="score-edit-title flex gap-2 text-2xl items-center leading-non mb-4">
+        <div className="score-edit-title flex gap-2 text-2xl items-center leading-non mb-4 md:text-lg md:mb-3">
           <CircularProfileImage src={profileImage} styleType="lg" />
           <h1>{`${userName}님의 점수`}</h1>
         </div>

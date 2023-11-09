@@ -8,6 +8,7 @@ import { useCallback, useState } from "react";
 import { MdCheck, MdClose } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { useMutation } from "@tanstack/react-query";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 interface Prop {
   postId: number;
@@ -18,7 +19,8 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
-  const { addErrorToast, addSuccessToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { mutate: acceptApiCall, queryClient } = useMutateWithQueryClient(putAcceptApplicant);
   const { mutate: rejectApiCall } = useMutation(deleteRejectApplicant);
@@ -32,12 +34,12 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
           queryClient.invalidateQueries(["getApplicants", postId]);
           addSuccessToast("수락되었습니다.");
         },
-        onError: () => {
-          addErrorToast("수락 요청이 실패했습니다.");
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "수락 요청이 실패했습니다." });
         },
       },
     );
-  }, [acceptApiCall, postId, applicantId, queryClient, addSuccessToast, addErrorToast]);
+  }, [acceptApiCall, postId, applicantId, queryClient, addSuccessToast, addApiErrorToast]);
 
   const handleReject = useCallback(async () => {
     rejectApiCall(
@@ -48,12 +50,12 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
           queryClient.invalidateQueries(["getApplicants", postId]);
           addSuccessToast("거절되었습니다.");
         },
-        onError: () => {
-          addErrorToast("거절 요청이 실패했습니다.");
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "거절 요청이 실패했습니다." });
         },
       },
     );
-  }, [rejectApiCall, postId, applicantId, queryClient, addSuccessToast, addErrorToast]);
+  }, [rejectApiCall, postId, applicantId, queryClient, addSuccessToast, addApiErrorToast]);
 
   return (
     <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4 md:px-2">

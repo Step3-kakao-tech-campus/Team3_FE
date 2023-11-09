@@ -30,7 +30,7 @@ function RecordCardList(): JSX.Element {
   const { targetRef } = useIntersectionObserver(handleIntersect);
 
   return (
-    <div className="record-card-list flex flex-col gap-5">
+    <div className="record-card-list flex flex-col gap-5 md:gap-3">
       {hasPage ? (
         pages?.map((page) => {
           return page?.map((post: RecordData) => {
@@ -38,7 +38,7 @@ function RecordCardList(): JSX.Element {
           });
         })
       ) : (
-        <p className="no-post-search-result my-10 text-center center text-2xl text-neutral-500">
+        <p className="no-post-search-result my-10 text-center center text-2xl text-neutral-500 md:text-xl">
           검색된 참여 기록이 없습니다. 더 넓은 범위로 검색해 보세요.
         </p>
       )}

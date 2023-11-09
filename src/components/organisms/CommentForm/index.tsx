@@ -11,6 +11,7 @@ import useToast from "@/hooks/useToast";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { getMyProfile } from "@/apis/profile";
 import { getCookie } from "@/utils/Cookie";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 interface Props {
   id: number;
@@ -31,8 +32,9 @@ function CommentForm({ id }: Props): JSX.Element {
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
-    ({ pageParam = null }) => getComments(id, pageParam),
+    ({ pageParam = 0 }) => getComments(id, pageParam),
     {
+      staleTime: 1000 * 10,
       retry: false,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
@@ -44,6 +46,7 @@ function CommentForm({ id }: Props): JSX.Element {
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
   const { addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleIntersect = useCallback(
     async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
@@ -76,8 +79,8 @@ function CommentForm({ id }: Props): JSX.Element {
         commentRef.current!.style.height = "40px";
         commentRef.current!.style.overflowY = "hidden";
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 등록에 실패했습니다." });
       },
     });
   };
