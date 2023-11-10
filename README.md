@@ -7,7 +7,7 @@
 
 <p align="center">번개 지향 볼링 모집 커뮤니티 "번개볼링"의 프론트엔드 레포지토리입니다.</p>
 
-> <p align="center">[카카오 테크 캠퍼스](https://www.kakaotechcampus.com/) 1기 부산대 3조 프로젝트입니다.</p>
+> <div align="center"><a href="https://www.kakaotechcampus.com/">카카오 테크 캠퍼스</a> 1기 부산대 3조 프로젝트입니다.</div>
 
 ## Collaborators
 
@@ -43,6 +43,7 @@
 
 <details>
     <summary><h3>기획</h3></summary>
+    
 #### 5Whys
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/5084761e-b0af-42f1-9962-a87db722c67c" width="50%"/>
@@ -51,6 +52,11 @@
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/d7e87208-6fc5-407c-aa7f-5f21442e69b6" width="100%"/>
 </details>
+
+#### Figma
+
+- [FigJam 기획](https://www.figma.com/file/x1qngNGszfTY3an4nDM2xN/3%EC%A1%B0?type=whiteboard&node-id=0%3A1&t=gwhdVZW6eLrRPOrp-1)
+- [Figma Wireframe 서비스 디자인](https://www.figma.com/file/hKOS0wj6goXDFGyBRREknv/3%EC%A1%B0_%EC%99%80%EC%9D%B4%EC%96%B4-%ED%94%84%EB%A0%88%EC%9E%84?type=design&node-id=217%3A196&mode=design&t=CYh2mBqkgmHLu0aI-1)
 
 ### 둘러보기
 
@@ -64,15 +70,13 @@
 
 ## System Structure
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/2086f92a-42da-4be2-9eb9-1232e2f0bcce" alt="Logo" width="100%"/>
-
 ### 전체 구성도
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/2086f92a-42da-4be2-9eb9-1232e2f0bcce" alt="Logo" width="100%"/>
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/8e67c097-3aea-410b-bcbc-abeb03eaf9f9" alt="Logo" width="100%"/>
 
 <details>
 
-<summary><h4>ERD(ER - Diagram) - [ERD 협업 링크](https://www.erdcloud.com/d/GHYAMbQS9pzC6k8ZB)</h4></summary>
+<summary><h4>ERD(ER - Diagram) - <a href="https://www.erdcloud.com/d/GHYAMbQS9pzC6k8ZB">ERD 협업 링크</a></h4></summary>
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/d5f7380f-6ee2-4b68-b94f-c588f40829ec" alt="Logo" width="100%"/>
 
@@ -146,7 +150,14 @@
    $ npm i
    ```
 
-3. 개발 서버 실행
+3. 환경변수 파일(.env)을 생성한 후 API URL을 설정
+
+    ```
+    // 백엔드 레포지토리로 가서 설정 후 적용
+    NEXT_PUBLIC_API_URL= ~~~
+    ```
+
+5. 개발 서버 실행
 
    ```jsx
    $ npm run dev
@@ -160,6 +171,31 @@
   ```
 
 ## FEATURES
+
+#### 회원가입 / 로그인 플로우
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/ae9f0517-0967-4e28-8d6a-5efeaa8b247e" width="302.5px" height="256.5px" />
+
+- 웹페이지에 회원가입이 가능합니다.
+- 이메일과 닉네임, 비밀번호를 입력하고 지역을 선택한 후 회원가입을 진행합니다.
+</br>
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/b96c909c-7b38-4dd2-8e7d-9f93b008f89e" width="444px" height="385.5px" /> 
+</br>
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/2a4999cb-44b8-47e1-a320-d8159263e160" width="444px" height="385.5px" />
+</br>
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/86b2c129-6b0c-4f99-89a7-72f0859717f3" width="444px" height="385.5px" />
+
+- 회원가입을 완료한 후 이메일 인증을 합니다.
+- 이메일 인증을 하지 않으면 여러가지 기능을 이용하지 못합니다.
+</br>
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/28d4f56c-fd75-4a33-b923-8a630dc485bd" width="302px" height="183px" />
+
+- 회원가입을한 메일로 로그인이 가능합니다.
+
+
 #### 메인 페이지
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/20ab031b-2b43-43b3-a686-e23db3c9e3dc" width="470px" height="375.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/5a0cb055-0987-4b4f-91c0-cc3490399005" width="160px" height="342.5px" />
