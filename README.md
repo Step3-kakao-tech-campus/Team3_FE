@@ -11,15 +11,6 @@
 
 ## Collaborators
 
-**<p align="center">Backend</p>**
-<div align="center">
-
-|                          조장                          |                        테크 리더                        |                        기획 리더                         |                       리액셔너                        |
-| :----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------: |
-|          [박소현](https://github.com/sososo0)          |          [안혜준](https://github.com/jagaldol)          |          [김기해](https://github.com/xcelxlorx)          |          [김윤재](https://github.com/yunzae)          |
-| <img src="https://github.com/sososo0.png" width="100"> | <img src="https://github.com/jagaldol.png" width="100"> | <img src="https://github.com/xcelxlorx.png" width="100"> | <img src="https://github.com/yunzae.png" width="100"> |
-</div>
-
 **<p align="center">Frontend</p>**
 <div align="center">
 
@@ -27,6 +18,15 @@
 | :------------------------------------------------------: | :---------------------------------------------------------: |
 |          [강주호](https://github.com/kjh302903)          |          [허동혁](https://github.com/Heo-Donghyuk)          |
 | <img src="https://github.com/kjh302903.png" width="100"> | <img src="https://github.com/Heo-Donghyuk.png" width="100"> |
+</div>
+
+**<p align="center">Backend</p>**
+<div align="center">
+
+|                          조장                          |                        테크 리더                        |                        기획 리더                         |                       리액셔너                        |
+| :----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------: |
+|          [박소현](https://github.com/sososo0)          |          [안혜준](https://github.com/jagaldol)          |          [김기해](https://github.com/xcelxlorx)          |          [김윤재](https://github.com/yunzae)          |
+| <img src="https://github.com/sososo0.png" width="100"> | <img src="https://github.com/jagaldol.png" width="100"> | <img src="https://github.com/xcelxlorx.png" width="100"> | <img src="https://github.com/yunzae.png" width="100"> |
 </div>
 
 ## Introduction
