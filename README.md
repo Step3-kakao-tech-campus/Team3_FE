@@ -195,6 +195,7 @@
 
 - 회원가입을한 메일로 로그인이 가능합니다.
 
+---
 
 #### 메인 페이지
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/20ab031b-2b43-43b3-a686-e23db3c9e3dc" width="470px" height="375.5px" />
@@ -275,5 +276,5 @@
 - 자신의 닉네임, 지역, 프로필 이미지를 변경할 수 있습니다.
 - 자신의 매너점수와 average를 확인할 수 있습니다.
 
----
+
 
