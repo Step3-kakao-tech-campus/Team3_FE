@@ -37,8 +37,8 @@
 
 ---
 
-### 기획
-
+<details>
+    <summary><h3>기획</h3></summary>
 #### 5Whys
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/5084761e-b0af-42f1-9962-a87db722c67c" width="50%"/>
@@ -46,8 +46,7 @@
 #### 1Pager 기획
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/d7e87208-6fc5-407c-aa7f-5f21442e69b6" width="100%"/>
-
----
+</details>
 
 ### 둘러보기
 
