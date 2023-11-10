@@ -15,7 +15,7 @@ interface Props {
 }
 
 function AuthUserProfile({ onClickLogout }: Props) {
-  const { data } = useQuery(["/api/users/mine"], getMyProfile);
+  const { data } = useQuery(["/api/users/mine"], getMyProfile, { cacheTime: Infinity, staleTime: Infinity });
 
   const { mutate } = useMutation({ mutationFn: postLogout });
   const { addApiErrorToast } = useApiErrorToast();
