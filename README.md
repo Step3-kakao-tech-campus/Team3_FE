@@ -161,14 +161,28 @@
 
 ## FEATURES
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/20ab031b-2b43-43b3-a686-e23db3c9e3dc" width="313px" height="250px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/20ab031b-2b43-43b3-a686-e23db3c9e3dc" width="470px" height="375.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/5a0cb055-0987-4b4f-91c0-cc3490399005" width="160px" height="342.5px" />
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/81ab6be0-4389-463b-b74c-81902e9e9492" width="313px" height="250px" />
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/99732aaa-1901-43b8-a978-000f676fadeb" width="161.5px" height="331.3px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/81ab6be0-4389-463b-b74c-81902e9e9492" width="474px" height="383.5px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/99732aaa-1901-43b8-a978-000f676fadeb" width="161.5px" height="347px" />
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/f421b93f-a5a5-421d-ab93-5ce0a576c872" width="313px" height="250px" />
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/37248cf9-f455-41c3-931e-a3b68939a1e7" width="160px" height="342.5px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/f421b93f-a5a5-421d-ab93-5ce0a576c872" width="472.5px" height="375px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/37248cf9-f455-41c3-931e-a3b68939a1e7" width="161px" height="339.5px" />
 
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/7138249b-77f6-403a-b2a9-bb3a17493c5a" width="469px" height="381px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/693286b8-837b-4076-9386-1df52b799514" width="160x" height="340.5px" />
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/c3341508-4514-4bd3-a2d6-756a81cec547" width="460.5px" height="373px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/3b227f88-3a80-4cb9-a66e-86ae6320a0da" width="159px" height="328px" />
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/8365c693-24ea-4901-959c-85585ab5c78a" width="468.5px" height="367.5px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/f1ff4262-d972-4900-816e-c2a1989d47ce" width="160.5px" height="321.5px" />
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/b2ffde51-6e30-48c8-af41-e70f6d695bf2" width="437px" height="379.5px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/c13d7577-e6f7-44ea-be07-587e10f58319" width="161.5px" height="334.5px" />
+
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/40dcb052-2da5-4edd-a17e-b64cae24941d" width="470.5px" height="387.5px" />
+<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/538615d3-6c62-4e2d-9f5f-b696ac9be54b" width="161px" height="337.5px" />
 
 
