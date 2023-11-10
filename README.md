@@ -1,13 +1,13 @@
 # Team3_FE
 
-<p align="left">
+<p align="center">
     <img src="docs/LogoTitle-Orange.png" alt="Logo" width="60%"/>
 
 </p>
 
-번개 지향 볼링 모집 커뮤니티 "번개볼링"의 프론트엔드 레포지토리입니다.
+<p align="center">번개 지향 볼링 모집 커뮤니티 "번개볼링"의 프론트엔드 레포지토리입니다.</p>
 
-> [카카오 테크 캠퍼스](https://www.kakaotechcampus.com/) 1기 부산대 3조 프로젝트입니다.
+> <p align="center">[카카오 테크 캠퍼스](https://www.kakaotechcampus.com/) 1기 부산대 3조 프로젝트입니다.</p>
 
 ## Collaborators
 
