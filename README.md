@@ -72,7 +72,11 @@
 
 ### 전체 구성도
 
-<img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/8e67c097-3aea-410b-bcbc-abeb03eaf9f9" alt="Logo" width="100%"/>
+<img src="https://cdn.discordapp.com/attachments/1153948062511812643/1172526224959082557/be9c828dfe87ad9b.png?ex=6560a324&is=654e2e24&hm=7703e925a30b864f655556f495c993ca4b6fbe3428e46f0fee515f20dffd2572&" alt="Logo" width="100%"/>
+
+### FrontEnd 구성도
+
+<img src="https://cdn.discordapp.com/attachments/1153948062511812643/1172526225542090863/f3b2ccd1efc5fc44.png?ex=6560a324&is=654e2e24&hm=c7cc05a28bc1d9ee0de669895066dfabc94b123ab3578c123d78dc7681dbcde7&" alt="Logo" width="100%"/>
 
 <details>
 
