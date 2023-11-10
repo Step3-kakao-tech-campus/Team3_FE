@@ -12,21 +12,25 @@
 ## Collaborators
 
 **<p align="center">Frontend</p>**
+
 <div align="center">
 
 |                         리마인더                         |                          타임 키퍼                          |
 | :------------------------------------------------------: | :---------------------------------------------------------: |
 |          [강주호](https://github.com/kjh302903)          |          [허동혁](https://github.com/Heo-Donghyuk)          |
 | <img src="https://github.com/kjh302903.png" width="100"> | <img src="https://github.com/Heo-Donghyuk.png" width="100"> |
+
 </div>
 
 **<p align="center">Backend</p>**
+
 <div align="center">
 
 |                          조장                          |                        테크 리더                        |                        기획 리더                         |                       리액셔너                        |
 | :----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------: |
 |          [박소현](https://github.com/sososo0)          |          [안혜준](https://github.com/jagaldol)          |          [김기해](https://github.com/xcelxlorx)          |          [김윤재](https://github.com/yunzae)          |
 | <img src="https://github.com/sososo0.png" width="100"> | <img src="https://github.com/jagaldol.png" width="100"> | <img src="https://github.com/xcelxlorx.png" width="100"> | <img src="https://github.com/yunzae.png" width="100"> |
+
 </div>
 
 ## Introduction
@@ -122,9 +126,40 @@
 
 ## How to Start
 
+#### Requirement
+
+- Node.js 16.14.0 이상
+
+#### 시작하기
+
+1. 프로젝트 클론
+
+   ```jsx
+   $ git clone https://github.com/Step3-kakao-tech-campus/Team3_FE.git
+   ```
+
+2. 프로젝트 의존성 설치
+
+   ```jsx
+   $ npm install
+   # 또는
+   $ npm i
+   ```
+
+3. 개발 서버 실행
+
+   ```jsx
+   $ npm run dev
+   ```
+
+- 사용 가능한 스크립트
+  ```jsx
+  $ npm run dev : 개발 서버 실행
+  $ npm run build : 프로젝트 빌드
+  $ npm run start : 프로덕션 서버 실행
+  ```
 
 ## FEATURES
-
 
 <br><br><br><br><br>
 
