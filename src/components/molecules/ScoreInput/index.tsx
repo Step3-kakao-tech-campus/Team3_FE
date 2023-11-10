@@ -62,6 +62,7 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const invalidateCurrentQuery = useCallback(() => {
     queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
     queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
+    queryClient.invalidateQueries([`/api/users/${pageUserId}/records`]);
   }, [pageUserId, postId, queryClient, searchParams]);
 
   interface Params {

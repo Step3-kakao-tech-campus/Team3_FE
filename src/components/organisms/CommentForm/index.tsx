@@ -28,12 +28,15 @@ function CommentForm({ id }: Props): JSX.Element {
 
   const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, {
     enabled: !!userId,
+    cacheTime: Infinity,
+    staleTime: Infinity,
   });
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/comments", id],
     ({ pageParam = 0 }) => getComments(id, pageParam),
     {
+      useErrorBoundary: true,
       staleTime: 1000 * 10,
       retry: false,
       getNextPageParam: (lastPage) => {

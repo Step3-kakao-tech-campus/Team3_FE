@@ -16,7 +16,7 @@ function RecordFilter(): JSX.Element {
       searchParamObj.set("condition", newCondition);
       const queryString = searchParamObj.toString();
       setCondition(searchParamObj.get("condition") || "all");
-      router.push(`?${queryString}`);
+      router.replace(`?${queryString}`);
     },
     [router, searchParams],
   );
@@ -26,7 +26,7 @@ function RecordFilter(): JSX.Element {
       searchParamObj.set("status", newStatus);
       const queryString = searchParamObj.toString();
       setStatus(searchParamObj.get("status") || "all");
-      router.push(`?${queryString}`);
+      router.replace(`?${queryString}`);
     },
     [router, searchParams],
   );
