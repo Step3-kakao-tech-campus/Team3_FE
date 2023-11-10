@@ -1,9 +1,8 @@
 import React from "react";
 import SearchModalTemplate from "@/components/templates/SearchModalTemplate";
-import SuspenseErrorBoundary from "@/components/atoms/SuspenseErrorBoundary";
+import ErrorBoundaryWithQuery from "@/components/atoms/ErrorBoundaryWithQuery";
 import ModalWrapper from "..";
 import ErrorModal from "../ErrorModal";
-import LoadingModal from "../LoadingModal";
 
 interface Props {
   onDismiss: () => void;
@@ -12,9 +11,9 @@ interface Props {
 function UserSearchModal({ onDismiss }: Props): JSX.Element {
   return (
     <ModalWrapper onDismiss={onDismiss}>
-      <SuspenseErrorBoundary errorFallback={<ErrorModal />} suspenseFallback={<LoadingModal />}>
+      <ErrorBoundaryWithQuery fallback={<ErrorModal />}>
         <SearchModalTemplate />
-      </SuspenseErrorBoundary>
+      </ErrorBoundaryWithQuery>
     </ModalWrapper>
   );
 }

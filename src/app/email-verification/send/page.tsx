@@ -4,6 +4,7 @@ import SendVerificationEmailTemplate from "@/components/templates/EmailVerificat
 import { useEffect } from "react";
 import { postSendVerificationEmail } from "@/apis/email";
 import { useMutation } from "@tanstack/react-query";
+
 import EmailAirplane from "@/components/atoms/EmailAirplane";
 
 function EmailSendPage() {

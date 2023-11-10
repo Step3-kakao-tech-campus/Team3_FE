@@ -25,9 +25,7 @@ function PostTemplates({ id }: Props): JSX.Element {
 
   const { data } = useQuery([`/api/posts/${postId}`, postId], () => getPostById(postId), {
     staleTime: 1000 * 10,
-    onError: (error) => {
-      console.log(error);
-    },
+    useErrorBoundary: true,
   });
 
   const post = data?.data?.response.post || {};

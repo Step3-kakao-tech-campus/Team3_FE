@@ -15,7 +15,11 @@ import { useRef, useState } from "react";
 import { MdCameraAlt, MdCheck, MdClose, MdStar } from "react-icons/md";
 
 function MyPageTemplate() {
-  const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, { suspense: true });
+  const { data: profileData } = useQuery(["/api/users/mine"], getMyProfile, {
+    suspense: true,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+  });
   const response = profileData?.data?.response;
   const { name, email, verification, averageScore, rating, districtId, profileImage } = response;
   const { data: regionData } = useQuery([`/api/cities/districts/${districtId}`], () => getAllRegions(districtId), {

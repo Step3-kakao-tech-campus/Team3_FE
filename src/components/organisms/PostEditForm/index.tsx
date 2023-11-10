@@ -2,7 +2,6 @@
 
 import { getPostById, putPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import DatePicker from "@/components/molecules/DatePicker";
 import useApiErrorToast from "@/hooks/useApiErrorToast";
@@ -22,10 +21,8 @@ function PostEditForm({ id }: Props) {
 
   const { addApiErrorToast } = useApiErrorToast();
 
-  const { data, isLoading } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
-    onError: (error) => {
-      console.log(error);
-    },
+  const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
+    suspense: true,
   });
 
   const post = data?.data?.response.post || {};
@@ -78,13 +75,6 @@ function PostEditForm({ id }: Props) {
     setStartTime(post.startTime);
     setDueTime(post.dueTime);
   });
-
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-[80vh]">
-        <LoadingSpinner styleType="xl" />
-      </div>
-    );
 
   return (
     <div>
