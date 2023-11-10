@@ -6,13 +6,31 @@ import Button from "@/components/atoms/Button";
 import DatePicker from "@/components/molecules/DatePicker";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { postRegisterPosts } from "@/apis/posts";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useRouter } from "next/navigation";
 import useApiErrorToast from "@/hooks/useApiErrorToast";
+import { getMyProfile } from "@/apis/profile";
+import { getAllRegions } from "@/apis/district";
 
 function CreatePostForm(): JSX.Element {
-  const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
+  const { data } = useQuery(["/api/users/mine"], getMyProfile, {
+    suspense: true,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+  });
+
+  const districtId = data?.data?.response?.districtId;
+
+  const { data: regionData } = useQuery([`/api/cities/districts/${districtId}`], () => getAllRegions(districtId), {
+    suspense: true,
+    staleTime: Infinity,
+  });
+
+  const cityId = regionData?.data?.response?.cityId;
+  const countryId = regionData?.data?.response?.countryId;
+
+  const [regionIds, setRegionIds] = useState({ cityId, countryId, districtId });
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);
   const [errMsg, setErrMsg] = useState("");
