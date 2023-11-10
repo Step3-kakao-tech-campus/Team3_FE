@@ -160,29 +160,84 @@
   ```
 
 ## FEATURES
-
+#### 메인 페이지
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/20ab031b-2b43-43b3-a686-e23db3c9e3dc" width="470px" height="375.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/5a0cb055-0987-4b4f-91c0-cc3490399005" width="160px" height="342.5px" />
+
+- 모임을 희망하는 지역과 모집 여부를 선택하여 검색이 가능합니다.
+- 게시글 카드를 클릭하여 모집글 상세 페이지로 이동할 수 있습니다.
+- Infinity scroll을 적용하여 끊임 없이 새로운 게시글을 확인할 수 있습니다.
+- 글쓰기 버튼을 클릭하여 글쓰기 페이지로 이동할 수 있습니다.
+  
+---
+#### 게시글 상세 페이지
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/81ab6be0-4389-463b-b74c-81902e9e9492" width="474px" height="383.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/99732aaa-1901-43b8-a978-000f676fadeb" width="161.5px" height="347px" />
 
+- 모집 상세 내용을 조회할 수 있습니다.
+- 모임에 대한 신청 및 취소가 가능합니다.
+- 모집자는 신청자 확인 및 수락, 거절이 가능합니다.
+- 댓글을 확인 및 작성할 수 있습니다.
+
+---
+#### 게시글 작성, 수정 페이지
+
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/f421b93f-a5a5-421d-ab93-5ce0a576c872" width="472.5px" height="375px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/37248cf9-f455-41c3-931e-a3b68939a1e7" width="161px" height="339.5px" />
+
+- 제목, 모집 지역, 모임 일시, 마감 일시, 내용을 입력하여  모집글 작성 및 수정이 가능합니다.
+
+---
+#### 내 쪽지함
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/7138249b-77f6-403a-b2a9-bb3a17493c5a" width="469px" height="381px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/693286b8-837b-4076-9386-1df52b799514" width="160x" height="340.5px" />
 
+- 유저 검색 모달을 통해 닉네임으로 대화를 원하는 유저를 검색할 수 있습니다.
+- 대화방을 더블 클릭하여 개별 쪽지 페이지로 이동 가능합니다.
+- 생성된 대화방을 선택하여 삭제할 수 있습니다.
+
+---
+#### 일대일 대화방
+
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/c3341508-4514-4bd3-a2d6-756a81cec547" width="460.5px" height="373px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/3b227f88-3a80-4cb9-a66e-86ae6320a0da" width="159px" height="328px" />
+
+- 상대에게 쪽지를 전송할 수 있습니다.
+- 보낸 쪽지를 선택하여 삭제할 수 있습니다.
+- Infinity scroll을 적용하여 끊임 없이 지난 대화를 확인할 수 있습니다.
+
+---
+#### 스코어보드 페이지
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/8365c693-24ea-4901-959c-85585ab5c78a" width="468.5px" height="367.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/f1ff4262-d972-4900-816e-c2a1989d47ce" width="160.5px" height="321.5px" />
 
+- 유저의 상세 기록을 확인할 수 있습니다.
+- 모집 지역, 기간, 글의 상태에 따른 기록을 조회할 수 있습니다.
+- 참여한 기록에 대한 점수, 이미지를 등록 및 수정할 수 있습니다.
+- 유저가 등록한 점수와 이미지를 확인할 수 있습니다.
+- 함께 참여한 유저에 대한 별점 등록이 가능합니다.
+- Infinity scroll을 적용하여 끊임 없이 기록을 확인할 수 있습니다.
+
+---
+#### 볼링장 검색 페이지
+
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/b2ffde51-6e30-48c8-af41-e70f6d695bf2" width="437px" height="379.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/c13d7577-e6f7-44ea-be07-587e10f58319" width="161.5px" height="334.5px" />
+
+- 검색어를 통해 볼링장을 검색할 수 있습니다.
+- 검색 결과를 클릭하여 볼링장 정보 페이지로 이동할 수 있습니다.
+
+---
+#### 마이페이지
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/40dcb052-2da5-4edd-a17e-b64cae24941d" width="470.5px" height="387.5px" />
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/79841977/538615d3-6c62-4e2d-9f5f-b696ac9be54b" width="161px" height="337.5px" />
 
+- 자신의 닉네임, 지역, 프로필 이미지를 변경할 수 있습니다.
+- 자신의 매너점수와 average를 확인할 수 있습니다.
+
+---
 
