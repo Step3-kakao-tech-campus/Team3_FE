@@ -1,13 +1,33 @@
 # Team3_FE
 
 <p align="left">
-    <img src="docs/LogoTitle-Orange.png" alt="Logo" width="70%"/>
+    <img src="docs/LogoTitle-Orange.png" alt="Logo" width="60%"/>
 
 </p>
 
 번개 지향 볼링 모집 커뮤니티 "번개볼링"의 프론트엔드 레포지토리입니다.
 
 > [카카오 테크 캠퍼스](https://www.kakaotechcampus.com/) 1기 부산대 3조 프로젝트입니다.
+
+## Collaborators
+
+**<p align="center">Backend</p>**
+<div align="center">
+
+|                          조장                          |                        테크 리더                        |                        기획 리더                         |                       리액셔너                        |
+| :----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------: |
+|          [박소현](https://github.com/sososo0)          |          [안혜준](https://github.com/jagaldol)          |          [김기해](https://github.com/xcelxlorx)          |          [김윤재](https://github.com/yunzae)          |
+| <img src="https://github.com/sososo0.png" width="100"> | <img src="https://github.com/jagaldol.png" width="100"> | <img src="https://github.com/xcelxlorx.png" width="100"> | <img src="https://github.com/yunzae.png" width="100"> |
+</div>
+
+**<p align="center">Frontend</p>**
+<div align="center">
+
+|                         리마인더                         |                          타임 키퍼                          |
+| :------------------------------------------------------: | :---------------------------------------------------------: |
+|          [강주호](https://github.com/kjh302903)          |          [허동혁](https://github.com/Heo-Donghyuk)          |
+| <img src="https://github.com/kjh302903.png" width="100"> | <img src="https://github.com/Heo-Donghyuk.png" width="100"> |
+</div>
 
 ## Introduction
 
@@ -101,24 +121,6 @@
 
 ## FEATURES
 
-
-## Collaborators
-
-[카카오 테크 캠퍼스](https://www.kakaotechcampus.com/) 1기 부산대 3조
-
-### Backend
-
-|                          조장                          |                        테크 리더                        |                        기획 리더                         |                       리액셔너                        |
-| :----------------------------------------------------: | :-----------------------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------: |
-|          [박소현](https://github.com/sososo0)          |          [안혜준](https://github.com/jagaldol)          |          [김기해](https://github.com/xcelxlorx)          |          [김윤재](https://github.com/yunzae)          |
-| <img src="https://github.com/sososo0.png" width="100"> | <img src="https://github.com/jagaldol.png" width="100"> | <img src="https://github.com/xcelxlorx.png" width="100"> | <img src="https://github.com/yunzae.png" width="100"> |
-
-### Frontend
-
-|                         리마인더                         |                          타임 키퍼                          |
-| :------------------------------------------------------: | :---------------------------------------------------------: |
-|          [강주호](https://github.com/kjh302903)          |          [허동혁](https://github.com/Heo-Donghyuk)          |
-| <img src="https://github.com/kjh302903.png" width="100"> | <img src="https://github.com/Heo-Donghyuk.png" width="100"> |
 
 <br><br><br><br><br>
 
