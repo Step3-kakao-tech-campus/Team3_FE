@@ -6,8 +6,9 @@ import Button from "@/components/atoms/Button";
 import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import ProfileLink from "@/components/atoms/ProfileLink";
 import useApiErrorToast from "@/hooks/useApiErrorToast";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteToken } from "@/utils/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
 function AuthUserProfile({ onClickLogout }: Props) {
   const { data } = useQuery(["/api/users/mine"], getMyProfile, { cacheTime: Infinity, staleTime: Infinity });
 
-  const { mutate } = useMutation({ mutationFn: postLogout });
+  const { mutate, queryClient } = useMutateWithQueryClient(postLogout);
   const { addApiErrorToast } = useApiErrorToast();
 
   const router = useRouter();
@@ -26,6 +27,7 @@ function AuthUserProfile({ onClickLogout }: Props) {
     const payload: void = undefined;
     mutate(payload, {
       onSuccess: () => {
+        queryClient.invalidateQueries(["/api/users/mine"]);
         deleteToken();
         onClickLogout();
         router.refresh();
