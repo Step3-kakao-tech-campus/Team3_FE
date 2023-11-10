@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "@/utils/Cookie";
-import { setLogin } from "@/utils/user";
+import { deleteToken, setLogin } from "@/utils/user";
 import postAuthentication from "./auth";
 
 const client = axios.create({
@@ -17,8 +17,14 @@ client.interceptors.request.use(async (config) => {
   const currentTime = Date.now() / 1000;
 
   if (currentTime >= exp) {
-    const res = await postAuthentication();
-    setLogin(res.headers.authorization);
+    try {
+      const res = await postAuthentication();
+      setLogin(res.headers.authorization);
+    } catch (e) {
+      deleteToken();
+      alert("토큰이 만료되어 다시 로그인이 필요합니다.");
+      window.location.href = "/";
+    }
   }
 
   const { headers } = config;

@@ -50,7 +50,7 @@ function SigninForm(): JSX.Element {
           router.refresh();
         },
         onError: (err) => {
-          addApiErrorToast({ err, alt: "회원가입 요청이 실패했습니다." });
+          addApiErrorToast({ err, alt: "로그인 요청이 실패했습니다." });
         },
       });
     }
