@@ -11,13 +11,15 @@ const client = axios.create({
   },
   withCredentials: true, // 다른 도메인(Cross Origin)에 요청을 보낼 때 http -> https
 });
+const sourceRequest: any = {};
 
 client.interceptors.request.use(async (config) => {
   const exp = getCookie("exp");
   const currentTime = Date.now() / 1000;
-
-  if (currentTime >= exp) {
+  const key = `${exp}`;
+  if (currentTime >= exp && !sourceRequest[key]) {
     try {
+      sourceRequest[key] = new Date();
       const res = await postAuthentication();
       setLogin(res.headers.authorization);
     } catch (e) {
