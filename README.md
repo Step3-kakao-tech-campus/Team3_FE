@@ -41,6 +41,27 @@
 
 ---
 
+## Focus
+
+#### Next.js13, SSR,SEO
+
+- “빠른 페이지 렌더링”과 “검색 엔진 최적화”를 위해 SSR(서버 사이드 렌더리)을 지원하도록 구현했습니다.
+<img width="800" src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/2a5f6fce-e41d-470e-823f-63b94d80afcd">
+
+- 서버에서 가져온 HTML파일에서 SSR이 된것을 볼 수 있다.
+<br/>
+<img width="800" src="https://github.com/Step3-kakao-tech-campus/Team3_FE/assets/79841977/3bf6d544-0a09-4441-b9fe-4e1e743a03f1">
+
+- Lighthouse로 성능 분석을 실시한 결과, 성능 점수는 98점으로 높은 점수를 획득할 수 있었다.
+- 또한, Next js에서 지원하는 Link 태그를 통한 페이지의 prefetch를 이용하여 다른 페이지 이동 시 빠른 화면 전환 효과를 얻을 수 있었습니다.
+
+#### Suspense와 EerrorBoundary를 이용한 선언적 로딩, 에러 처리
+
+- Next.js 13 App router는 loading.tsx, error.tsx를 이용한 선언적 로딩, 에러 처리를 지원합니다.
+- 이를 이용하여 코드의 가독성 및 유지보수성을 향상시킬 수 있었습니다.
+- 추가적으로 컴포넌트 단위에서의 로딩, 에러 처리는 suspense와 react-error-boundary를 이용하여 처리했습니다.
+
+
 <details>
     <summary><h3>기획</h3></summary>
     
@@ -173,6 +194,7 @@
   $ npm run build : 프로젝트 빌드
   $ npm run start : 프로덕션 서버 실행
   ```
+
 
 ## FEATURES
 
