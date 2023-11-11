@@ -4,6 +4,7 @@ import { deleteMessageCard, getMessages } from "@/apis/message";
 import Button from "@/components/atoms/Button";
 import MessageCard from "@/components/molecules/MessageCard";
 import UserSearchModal from "@/components/molecules/Modal/UserSearchModal";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
@@ -16,12 +17,14 @@ function MessageRoomList(): JSX.Element {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
     ["/api/messages/opponents"],
     ({ pageParam = null }) => getMessages(pageParam),
     {
       retry: false,
+      useErrorBoundary: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined;
@@ -56,7 +59,9 @@ function MessageRoomList(): JSX.Element {
             setCheckList([]);
             addSuccessToast("성공적으로 삭제되었습니다.");
           },
-          onError: () => {},
+          onError: (err) => {
+            addApiErrorToast({ err, alt: "삭제에 실패했습니다." });
+          },
         },
       );
     });
@@ -77,7 +82,7 @@ function MessageRoomList(): JSX.Element {
           사용자 검색
         </Button>
       </div>
-      <div className="styled-scroll flex flex-col gap-4 mt-6 p-6 h-[580px] border border-gray-400 overflow-y-auto">
+      <div className="styled-scroll flex flex-col gap-4 mt-6 p-6 h-[580px] border border-gray-400 overflow-y-auto md:h-[520px] md:p-4">
         {data?.pages?.map(
           (page) =>
             page?.data?.response?.messages.map((message: MessageCardType) => (

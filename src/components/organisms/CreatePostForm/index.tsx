@@ -6,12 +6,31 @@ import Button from "@/components/atoms/Button";
 import DatePicker from "@/components/molecules/DatePicker";
 import DropdownBox from "@/components/molecules/DropdownBox";
 import { postRegisterPosts } from "@/apis/posts";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useRouter } from "next/navigation";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
+import { getMyProfile } from "@/apis/profile";
+import { getAllRegions } from "@/apis/district";
 
 function CreatePostForm(): JSX.Element {
-  const [regionIds, setRegionIds] = useState({ cityId: -1, countryId: -1, districtId: -1 });
+  const { data } = useQuery(["/api/users/mine"], getMyProfile, {
+    suspense: true,
+    cacheTime: Infinity,
+    staleTime: Infinity,
+  });
+
+  const districtId = data?.data?.response?.districtId;
+
+  const { data: regionData } = useQuery([`/api/cities/districts/${districtId}`], () => getAllRegions(districtId), {
+    suspense: true,
+    staleTime: Infinity,
+  });
+
+  const cityId = regionData?.data?.response?.cityId;
+  const countryId = regionData?.data?.response?.countryId;
+
+  const [regionIds, setRegionIds] = useState({ cityId, countryId, districtId });
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [dueTime, setDueTime] = useState<Date | null>(null);
   const [errMsg, setErrMsg] = useState("");
@@ -20,6 +39,8 @@ function CreatePostForm(): JSX.Element {
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
   const router = useRouter();
+
+  const { addApiErrorToast } = useApiErrorToast();
 
   const { mutate } = useMutation({ mutationFn: postRegisterPosts });
 
@@ -54,8 +75,8 @@ function CreatePostForm(): JSX.Element {
         onSuccess: (res) => {
           router.replace(`/post/${res.data.response.id}`);
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "글 작성에 실패했습니다." });
         },
       });
     }
@@ -68,18 +89,18 @@ function CreatePostForm(): JSX.Element {
       <input
         type="text"
         placeholder="제목을 입력해 주세요."
-        className="w-full py-2 px-3 rounded-lg border border-gray-400"
+        className="w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm"
         ref={titleRef}
       />
       <OptionTitle>모집 지역</OptionTitle>
       <DropdownBox selectedOptionIds={regionIds} setSelectedOptionIds={setRegionIds} styleType="small" />
-      <div className="flex">
+      <div className="flex md:gap-2">
         <DatePicker title="모임" value={startTime} setValue={setStartTime} />
-        <DatePicker title="마감" value={dueTime} setValue={setDueTime} />
+        <DatePicker title="마감" value={dueTime} isRight setValue={setDueTime} />
       </div>
       <OptionTitle>내용</OptionTitle>
       <textarea
-        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400"
+        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400 md:h-60"
         placeholder="내용을 입력해 주세요."
         ref={contentRef}
       />

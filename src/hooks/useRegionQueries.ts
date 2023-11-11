@@ -12,18 +12,24 @@ export default function useRegionQueries(param: Param) {
       {
         queryKey: ["cityId"],
         queryFn: getCities,
+        cacheTime: Infinity,
+        staleTime: Infinity,
       },
       {
         queryKey: ["countryId", param.cityId],
         queryFn: () => {
           return getCountries(param.cityId);
         },
+        cacheTime: Infinity,
+        staleTime: Infinity,
       },
       {
         queryKey: ["districtId", param.countryId],
         queryFn: () => {
           return getDistricts(param.countryId);
         },
+        cacheTime: Infinity,
+        staleTime: Infinity,
       },
     ],
   });

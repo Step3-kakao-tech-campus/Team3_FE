@@ -51,7 +51,7 @@ function RecordSearchBar(): JSX.Element {
   }, [cityId, endDate, router, searchParams, startDate]);
 
   return (
-    <div className="record-search-bar flex gap-4 items-center">
+    <div className="record-search-bar flex gap-4 items-center md:gap-2">
       <div>
         <Dropdown
           placeholder=""
@@ -66,7 +66,7 @@ function RecordSearchBar(): JSX.Element {
       <div className="period-dropdown flex gap-2 items-center">
         <SimpleDatePicker value={startDate} setValue={setStartDate} maxDate={currentDate} />
         <span className="text-neutral-500">~</span>
-        <SimpleDatePicker value={endDate} setValue={setEndDate} minDate={startDate} />
+        <SimpleDatePicker value={endDate} isRight setValue={setEndDate} minDate={startDate} />
       </div>
       <div>
         <Button styleType="thunder" fontWeight="normal" size="sm" rounded="full" onClick={handleOnClick}>

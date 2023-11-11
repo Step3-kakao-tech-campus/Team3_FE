@@ -4,6 +4,7 @@ import { getApplicants } from "@/apis/applicant";
 import { patchPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
 import ApplicantBlock from "@/components/molecules/ApplicantBlock";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import useToast from "@/hooks/useToast";
 import { Applicant } from "@/types/applicant";
@@ -45,13 +46,14 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
     return response?.applicants?.map((applicant: Applicant) => {
       return <ApplicantBlock key={applicant.id} applicantData={applicant} postId={postId} />;
     });
-  }, [errorComponent, isError, noApplicantComponent, postId, response?.applicants, response?.applicantNumber]);
+  }, [isError, response?.applicantNumber, response?.applicants, errorComponent, noApplicantComponent, postId]);
 
-  const { addErrorToast, addSuccessToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
   const { mutate: handleClose, queryClient } = useMutateWithQueryClient(patchPost);
   const mutateOption = {
-    onError: () => {
-      addErrorToast("요청에 실패했습니다. 다시 시도해주세요");
+    onError: (err: unknown) => {
+      addApiErrorToast({ err, alt: "요청에 실패했습니다. 다시 시도해주세요" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries([`/api/posts/${postId}`, postId]);
@@ -60,8 +62,8 @@ function ApplicantConfirmTemplate({ postId }: Props): JSX.Element {
   };
 
   return (
-    <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px]">
-      <h1 className="text-2xl">신청자 확인</h1>
+    <div className="applicant-confirm flex flex-col gap-4 text-center w-[500px] md:w-[300px]">
+      <h1 className="text-2xl md:text-xl">신청자 확인</h1>
       {!isError && (
         <div className="applicant-number-with-button flex justify-between items-center">
           <span>총 {response?.applicantNumber}건의 신청 요청이 있습니다.</span>

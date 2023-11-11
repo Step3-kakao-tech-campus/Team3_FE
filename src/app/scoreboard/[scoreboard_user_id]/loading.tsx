@@ -1,12 +1,7 @@
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
-import React from "react";
+import DefaultLoadingUI from "@/components/templates/DefaultLoadingUI";
 
-function ScoreBoardLoading() {
-  return (
-    <div className="flex justify-center items-center h-[80vh]">
-      <LoadingSpinner styleType="xl" />
-    </div>
-  );
+function LoadingPage() {
+  return <DefaultLoadingUI />;
 }
 
-export default ScoreBoardLoading;
+export default LoadingPage;

@@ -6,6 +6,9 @@ import ProfileLink from "@/components/atoms/ProfileLink";
 import { Applicant } from "@/types/applicant";
 import { useCallback, useState } from "react";
 import { MdCheck, MdClose } from "react-icons/md";
+import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
+import { useMutation } from "@tanstack/react-query";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 interface Prop {
   postId: number;
@@ -16,27 +19,46 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
   const { user, status: isAccept, id: applicantId } = applicantData;
   const [approvalStatus, setApprovalStatus] = useState(isAccept ? "accepted" : "pending");
 
-  const { addErrorToast } = useToast();
+  const { addSuccessToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
+
+  const { mutate: acceptApiCall, queryClient } = useMutateWithQueryClient(putAcceptApplicant);
+  const { mutate: rejectApiCall } = useMutation(deleteRejectApplicant);
+
   const handleAccept = useCallback(async () => {
-    try {
-      await putAcceptApplicant(postId, applicantId);
-      setApprovalStatus("accepted");
-    } catch {
-      addErrorToast("수락 요청이 실패했습니다.");
-    }
-  }, [postId, applicantId, addErrorToast]);
+    acceptApiCall(
+      { postId, applicantId },
+      {
+        onSuccess: () => {
+          setApprovalStatus("accepted");
+          queryClient.invalidateQueries(["getApplicants", postId]);
+          addSuccessToast("수락되었습니다.");
+        },
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "수락 요청이 실패했습니다." });
+        },
+      },
+    );
+  }, [acceptApiCall, postId, applicantId, queryClient, addSuccessToast, addApiErrorToast]);
 
   const handleReject = useCallback(async () => {
-    try {
-      await deleteRejectApplicant({ postId, applicantId });
-      setApprovalStatus("rejected");
-    } catch {
-      addErrorToast("거절 요청이 실패했습니다.");
-    }
-  }, [postId, applicantId, addErrorToast]);
+    rejectApiCall(
+      { postId, applicantId },
+      {
+        onSuccess: () => {
+          setApprovalStatus("rejected");
+          queryClient.invalidateQueries(["getApplicants", postId]);
+          addSuccessToast("거절되었습니다.");
+        },
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "거절 요청이 실패했습니다." });
+        },
+      },
+    );
+  }, [rejectApiCall, postId, applicantId, queryClient, addSuccessToast, addApiErrorToast]);
 
   return (
-    <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4">
+    <div className="applicant flex items-center justify-between border rounded-2xl py-2 px-4 md:px-2">
       <div className="user-info flex gap-2 items-center">
         <ProfileLink userId={user.id}>
           <CircularProfileImage src={user.profileImage} styleType="lg" />
@@ -50,7 +72,7 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
           }`}</span>
         </div>
       </div>
-      <div className="confirm-control flex gap-3">
+      <div className="confirm-control flex gap-3 md:gap-1.5">
         {approvalStatus === "accepted" && (
           <span className="text-green-500 flex items-center">
             <MdCheck className="inline" />
@@ -66,10 +88,10 @@ function ApplicantBlock({ postId, applicantData }: Prop): JSX.Element {
         {approvalStatus === "pending" && (
           <>
             <Button styleType="outlined-gray" size="sm" rounded="full" onClick={() => handleReject()}>
-              <span className="block text-sm font-normal min-w-[40px] leading-none fontsize">거절</span>
+              <span className="block text-sm font-normal min-w-[40px] leading-none fontsize md:min-w-[34px]">거절</span>
             </Button>
             <Button styleType="thunder" size="sm" rounded="full" onClick={() => handleAccept()}>
-              <span className="block text-sm font-normal min-w-[40px]">수락</span>
+              <span className="block text-sm font-normal min-w-[40px] md:min-w-[34px]">수락</span>
             </Button>
           </>
         )}
