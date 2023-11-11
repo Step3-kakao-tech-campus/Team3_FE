@@ -51,12 +51,12 @@
 #### 1Pager 기획
 
 <img src="https://github.com/Step3-kakao-tech-campus/Team3_BE/assets/81746373/d7e87208-6fc5-407c-aa7f-5f21442e69b6" width="100%"/>
-</details>
 
 #### Figma
 
 - [FigJam 기획](https://www.figma.com/file/x1qngNGszfTY3an4nDM2xN/3%EC%A1%B0?type=whiteboard&node-id=0%3A1&t=gwhdVZW6eLrRPOrp-1)
 - [Figma Wireframe 서비스 디자인](https://www.figma.com/file/hKOS0wj6goXDFGyBRREknv/3%EC%A1%B0_%EC%99%80%EC%9D%B4%EC%96%B4-%ED%94%84%EB%A0%88%EC%9E%84?type=design&node-id=217%3A196&mode=design&t=CYh2mBqkgmHLu0aI-1)
+</details>
 
 ### 둘러보기
 
