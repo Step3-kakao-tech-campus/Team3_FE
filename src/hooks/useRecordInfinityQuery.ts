@@ -44,6 +44,7 @@ function useRecordInfinityQuery({ pageUserId, searchParams }: Prop) {
       return getRecordList(reactQueryParam, searchParams);
     },
     {
+      suspense: true,
       retry: 2,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;

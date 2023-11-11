@@ -4,7 +4,6 @@ export async function getComments(id: number, pageParam?: number) {
   const response = await client.get(`/api/posts/${id}/comments`, {
     params: {
       key: pageParam,
-      size: 10,
     },
   });
   return response;

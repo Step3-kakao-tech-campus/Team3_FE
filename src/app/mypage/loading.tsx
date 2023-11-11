@@ -1,14 +1,7 @@
-import BackArrowContainer from "@/components/atoms/BackArrowContainer";
-import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import DefaultLoadingUI from "@/components/templates/DefaultLoadingUI";
 
-function MyPageLoading() {
-  return (
-    <BackArrowContainer>
-      <div className="min-h-[512px] flex flex-col items-center">
-        <LoadingSpinner />
-      </div>
-    </BackArrowContainer>
-  );
+function LoadingPage() {
+  return <DefaultLoadingUI />;
 }
 
-export default MyPageLoading;
+export default LoadingPage;

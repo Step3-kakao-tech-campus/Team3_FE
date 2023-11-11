@@ -28,9 +28,9 @@ function Button({ styleType, rounded, size, onClick, children, fontWeight = "bol
     "filled-red": "bg-[#FF2E2E] text-white",
   };
   const sizeObj = {
-    lg: "w-[546px] h-[40px] text-xl",
-    sm: "px-2 py-1",
-    md: "px-2 py-1.5 min-w-[100px]",
+    lg: "w-[546px] h-[40px] text-xl md:w-[300px]",
+    sm: "px-2 py-1 md:text-sm",
+    md: "px-2 py-1.5 min-w-[100px] md:px-1.5 md:py-1 md:min-w-[90px]",
     xs: "px-2 py-[3px] leading-none text-sm min-w-[80px]",
   };
   const roundedObj = {

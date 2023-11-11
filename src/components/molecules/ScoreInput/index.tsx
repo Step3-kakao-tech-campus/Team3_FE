@@ -7,8 +7,8 @@ import { useCallback, useRef, useState } from "react";
 import useScoreMutation from "@/hooks/useScoreMutation";
 import { UseMutationOptions, useQueryClient } from "@tanstack/react-query";
 import { MdRemoveCircleOutline, MdDeleteForever, MdCameraAlt } from "react-icons/md";
-import useToast from "@/hooks/useToast";
 import { useParams, useSearchParams } from "next/navigation";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 
 interface Props {
   postId: number;
@@ -34,7 +34,7 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const { isNew } = scoreData;
   const isModified = scoreData.scoreNum !== scoreValue || scoreData.scoreImage !== selectedFile;
 
-  const { addErrorToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleScoreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const scoreInputValue = parseInt(e.target.value, 10);
@@ -62,21 +62,22 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
   const invalidateCurrentQuery = useCallback(() => {
     queryClient.invalidateQueries([`/api/posts/${postId}/scores`]);
     queryClient.invalidateQueries([`/api/posts/users/${pageUserId}/participation-records`, searchParams.toString()]);
+    queryClient.invalidateQueries([`/api/users/${pageUserId}/records`]);
   }, [pageUserId, postId, queryClient, searchParams]);
 
   interface Params {
     onSuccess?: () => void;
     onError?: () => void;
-    errorMsg?: string;
+    errorMsg: string;
   }
   const createMutationOptions = ({ onSuccess, onError, errorMsg }: Params): UseMutationOptions => ({
     onSuccess: () => {
       if (onSuccess) onSuccess();
       invalidateCurrentQuery();
     },
-    onError: () => {
+    onError: (err) => {
       if (onError) onError();
-      addErrorToast(errorMsg || "작업에 실패했습니다.");
+      addApiErrorToast({ err, alt: errorMsg });
     },
   });
 
@@ -123,14 +124,14 @@ function ScoreInput({ postId, scoreData, onRemove }: Props) {
       <div className="score-input flex items-center justify-between">
         {isEditing ? (
           <>
-            <button type="button" onClick={handleRemove} className="text-red-500 text-xl">
+            <button type="button" onClick={handleRemove} className="text-red-500 text-xl md:text-lg">
               <MdRemoveCircleOutline />
             </button>
             <input
               type="number"
               defaultValue={scoreValue}
               onChange={handleScoreInputChange}
-              className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none"
+              className="max-w-[120px] text-center border border-gray-400 rounded-lg py-1 px-2 appearance-none md:max-w-[80px] md:py-0"
             />
             <Button
               rounded="full"

@@ -24,7 +24,7 @@ function RecordCardMember({
   onStarRatingModalOpen,
 }: Prop): JSX.Element {
   return (
-    <div className="member flex gap-4 items-center">
+    <div className="member flex gap-4 items-center md:gap-2">
       <MiniProfile userId={member.id} userName={member.name} imageSrc={member.profileImage} />
       {isMyRecord &&
         isClose &&
