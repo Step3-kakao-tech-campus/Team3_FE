@@ -1,3 +1,5 @@
+"use client";
+
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import React, { useRef, useState } from "react";
 import { useParams } from "next/navigation";
@@ -6,6 +8,8 @@ import CircularProfileImage from "@/components/atoms/CircularProfileImage";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { postReply } from "@/apis/comment";
 import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import CommentBlock from "../CommentBlock";
 import ChildComment from "../ChildComment";
 import CommentSubmit from "../CommentSubmit";
@@ -30,6 +34,7 @@ function Comment({ comment }: Props): JSX.Element {
   const { mutate, queryClient } = useMutateWithQueryClient(postReply);
 
   const { addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const handleReplyForm = () => {
     setReply((prev) => !prev);
@@ -51,16 +56,22 @@ function Comment({ comment }: Props): JSX.Element {
         queryClient.invalidateQueries(["/comments", id]);
         setReply(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 등록에 실패했습니다." });
       },
     });
+  };
+
+  const handleSetValue = (value: string) => {
+    setCommentContent(value);
   };
 
   return (
     <>
       <div className="flex items-center gap-3">
-        <CircularProfileImage src="/images/default_profile_image.png" styleType="lg" />
+        <ProfileLink userId={comment.userId}>
+          <CircularProfileImage src={comment.profileImage} styleType="lg" />
+        </ProfileLink>
         <div className="flex-1">
           <CommentBlock comment={comment} isChild handleReplyForm={handleReplyForm} />
         </div>
@@ -77,7 +88,7 @@ function Comment({ comment }: Props): JSX.Element {
               commentRef={commentRef}
               onClick={handleReply}
               value={commentContent}
-              setValue={setCommentContent}
+              handleSetValue={handleSetValue}
             />
           </div>
           <hr className="mt-2" />
@@ -88,4 +99,4 @@ function Comment({ comment }: Props): JSX.Element {
   );
 }
 
-export default Comment;
+export default React.memo(Comment);

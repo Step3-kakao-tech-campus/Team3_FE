@@ -2,26 +2,25 @@
 
 import { ToastData } from "@/types/toast";
 import React, { useEffect, useState } from "react";
-import { MdWarningAmber, MdErrorOutline, MdCheckCircleOutline } from "react-icons/md";
 import toastState from "@/stores/atoms/toastState";
 import { useSetRecoilState } from "recoil";
 
 interface Props {
   toastData: ToastData;
   backgroundColor: string;
-  icon: typeof MdWarningAmber | typeof MdErrorOutline | typeof MdCheckCircleOutline;
+  icon: React.ReactNode;
 }
 
 function ToastItem({ toastData, backgroundColor, icon }: Props): JSX.Element {
   const { id, message } = toastData;
-  const [visible, setVisible] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   const setToastList = useSetRecoilState(toastState);
 
   useEffect(() => {
-    setVisible(1);
+    setVisible(true);
     const timer = setTimeout(() => {
-      setVisible(0);
+      setVisible(false);
       setTimeout(() => {
         setToastList((prev: ToastData[]) => {
           return prev.filter((item: ToastData) => item.id !== id);
@@ -36,9 +35,9 @@ function ToastItem({ toastData, backgroundColor, icon }: Props): JSX.Element {
     <div
       className={`flex items-center w-[320px] h-[60px] pl-3 rounded-md text-white ${backgroundColor} shadow-sm 
       ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"} transition-all duration-300 
-      `}
+      md:w-[240px] md:h-[45px] md:text-sm`}
     >
-      <div className="mr-4">{icon}</div>
+      <div className="mr-4 md:mr-2">{icon}</div>
       {message}
     </div>
   );

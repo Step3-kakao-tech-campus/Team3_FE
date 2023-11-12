@@ -1,4 +1,5 @@
 import BackArrowButton from "../BackArrowButton";
+import WhiteContainer from "../WhiteContainer";
 
 interface Props {
   children: React.ReactNode;
@@ -6,10 +7,10 @@ interface Props {
 
 function BackArrowContainer({ children }: Props): JSX.Element {
   return (
-    <div className="mt-8 p-16 bg-white lg:mx-28">
+    <WhiteContainer>
       <BackArrowButton />
       {children}
-    </div>
+    </WhiteContainer>
   );
 }
 

@@ -1,13 +1,18 @@
+"use client";
+
 import { CommentData } from "@/types/commentData";
 import { getCookie } from "@/utils/Cookie";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
 import useMutateWithQueryClient from "@/hooks/useMutateWithQueryClient";
 import { deleteComments, putComments } from "@/apis/comment";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import useToast from "@/hooks/useToast";
+import ProfileLink from "@/components/atoms/ProfileLink";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import CommentSubmit from "../CommentSubmit";
+import ReconfirmModal from "../SemiModal/ReconfirmModal";
 
 interface Props {
   comment: CommentData;
@@ -16,10 +21,11 @@ interface Props {
 }
 
 function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element {
-  const userId = parseInt(getCookie("userId"), 10);
   const params = useParams();
   const id = parseInt(params.id as string, 10);
 
+  const [myId, setMyId] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [update, setUpdate] = useState(false);
   const [commentContent, setCommentContent] = useState(comment.content);
 
@@ -27,6 +33,7 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
   const { mutate: putMutate } = useMutation(putComments);
 
   const { addWarningToast } = useToast();
+  const { addApiErrorToast } = useApiErrorToast();
 
   const payload = {
     postId: id,
@@ -42,9 +49,10 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
     mutate(payload, {
       onSuccess: () => {
         queryClient.invalidateQueries(["/comments", id]);
+        setModalOpen(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 삭제에 실패했습니다." });
       },
     });
   };
@@ -63,24 +71,41 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
         queryClient.invalidateQueries(["/comments", id]);
         setUpdate(false);
       },
-      onError: (error) => {
-        console.log(error);
+      onError: (err) => {
+        addApiErrorToast({ err, alt: "댓글 수정에 실패했습니다." });
       },
     });
   };
 
+  const handleSetValue = (value: string) => {
+    setCommentContent(value);
+  };
+
+  useEffect(() => {
+    const cookieId = parseInt(getCookie("userId"), 10);
+    setMyId(cookieId);
+  }, []);
+
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[#2a5885]">{comment.userName}</span>
+        <ProfileLink userId={comment.userId}>
+          <span className="text-[#2a5885] hover:underline">{comment.userName}</span>
+        </ProfileLink>
         <div className="flex items-center gap-2 text-neutral-400 text-sm">
-          {comment.userId === userId && (
+          {comment.userId === myId && (
             <>
               <button type="button" onClick={handleUpdateForm} className="flex items-center cursor-pointer">
                 <MdOutlineEdit />
                 수정
               </button>
-              <button type="button" onClick={handleDeleteComment} className="flex items-center cursor-pointer">
+              <button
+                type="button"
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                className="flex items-center cursor-pointer"
+              >
                 <MdOutlineDelete />
                 삭제
               </button>
@@ -95,10 +120,19 @@ function CommentBlock({ comment, isChild, handleReplyForm }: Props): JSX.Element
       </div>
       {update ? (
         <div className="flex items-center gap-3 mt-2">
-          <CommentSubmit onClick={handleUpdate} value={commentContent} setValue={setCommentContent} />
+          <CommentSubmit onClick={handleUpdate} value={commentContent} handleSetValue={handleSetValue} />
         </div>
       ) : (
         <pre className="whitespace-pre-wrap break-all">{comment.content}</pre>
+      )}
+      {modalOpen && (
+        <ReconfirmModal
+          target="댓글을"
+          handleComplete={handleDeleteComment}
+          handleCancel={() => {
+            setModalOpen(false);
+          }}
+        />
       )}
     </>
   );

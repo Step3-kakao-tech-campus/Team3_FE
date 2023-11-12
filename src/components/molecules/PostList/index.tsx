@@ -2,12 +2,12 @@
 
 import { PageSearchParams } from "@/types/pageSearchParams";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { PostData } from "@/types/postData";
 import { useCallback } from "react";
 import { getPosts } from "@/apis/posts";
 import objectToQueryString from "@/utils/objectToQueryString";
 import { PostSearchParam } from "@/types/postSearchParam";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { PostData } from "@/types/postData";
 import PostCard from "../PostCard";
 
 function PostList({ searchParams }: PageSearchParams): JSX.Element {
@@ -20,19 +20,20 @@ function PostList({ searchParams }: PageSearchParams): JSX.Element {
     if (cityId) queryParams.cityId = cityId;
     if (countryId) queryParams.countryId = countryId;
     if (districtId) queryParams.districtId = districtId;
-    if (all === "true" || all === "false") queryParams.all = all as string;
+    if (all === "true" || all === "false") queryParams.all = all;
     if (pageParam) queryParams.key = pageParam;
     const queryString = objectToQueryString(queryParams as Record<string, string | number>);
     return getPosts(queryString);
   };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ["post_list", searchParams],
+    ["/api/posts", searchParams],
     (reactQueryParam) => {
       return getPostList(reactQueryParam, new URLSearchParams(searchParams));
     },
     {
-      retry: 2,
+      staleTime: 1000 * 10,
+      useErrorBoundary: true,
       getNextPageParam: (lastPage) => {
         const newKey = lastPage?.data?.response?.nextCursorRequest?.key;
         return newKey !== -1 ? newKey : undefined; // 이전 페이지에서 받은 key값이 -1이면 undefined를 리턴하여 hasnextPage를 false로 설정

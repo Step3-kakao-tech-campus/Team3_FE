@@ -4,10 +4,11 @@ import { getPostById, putPost } from "@/apis/posts";
 import Button from "@/components/atoms/Button";
 import OptionTitle from "@/components/atoms/OptionTitle";
 import DatePicker from "@/components/molecules/DatePicker";
+import useApiErrorToast from "@/hooks/useApiErrorToast";
 import { formatDateToKoreanTime } from "@/utils/formatDateToString";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   id: string;
@@ -18,10 +19,10 @@ function PostEditForm({ id }: Props) {
 
   const postId = parseInt(id, 10);
 
+  const { addApiErrorToast } = useApiErrorToast();
+
   const { data } = useQuery([`/api/posts${id}`, id], () => getPostById(postId), {
-    onError: (error) => {
-      console.log(error);
-    },
+    suspense: true,
   });
 
   const post = data?.data?.response.post || {};
@@ -61,21 +62,27 @@ function PostEditForm({ id }: Props) {
       };
       mutate(payload, {
         onSuccess: () => {
-          router.push(`/post/${id}`);
+          router.back();
         },
-        onError: (error) => {
-          console.log(error);
+        onError: (err) => {
+          addApiErrorToast({ err, alt: "글 수정에 실패했습니다." });
         },
       });
     }
   };
+
+  useEffect(() => {
+    setStartTime(post.startTime);
+    setDueTime(post.dueTime);
+  });
+
   return (
     <div>
       <OptionTitle>제목</OptionTitle>
       <input
         type="text"
         placeholder="제목을 입력해 주세요."
-        className="w-full py-2 px-3 rounded-lg border border-gray-400"
+        className="w-full py-2 px-3 rounded-lg border border-gray-400 md:text-sm"
         defaultValue={post.title}
         ref={titleRef}
       />
@@ -88,12 +95,13 @@ function PostEditForm({ id }: Props) {
         <DatePicker
           title="마감"
           value={dueTime}
+          isRight
           setValue={setDueTime as React.Dispatch<React.SetStateAction<Date | null>>}
         />
       </div>
       <OptionTitle>내용</OptionTitle>
       <textarea
-        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400"
+        className="resize-none py-2 px-3 w-full h-96 rounded-lg border border-gray-400 md:h-[300px]"
         placeholder="내용을 입력해 주세요."
         defaultValue={post.content}
         ref={contentRef}
