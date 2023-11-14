@@ -16,7 +16,7 @@ interface Props {
 }
 
 function AuthUserProfile({ onClickLogout }: Props) {
-  const { data } = useQuery(["/api/users/mine"], getMyProfile, { cacheTime: Infinity, staleTime: Infinity });
+  const { data, isLoading } = useQuery(["/api/users/mine"], getMyProfile, { cacheTime: Infinity, staleTime: Infinity });
 
   const { mutate, queryClient } = useMutateWithQueryClient(postLogout);
   const { addApiErrorToast } = useApiErrorToast();
@@ -38,6 +38,8 @@ function AuthUserProfile({ onClickLogout }: Props) {
       },
     });
   };
+
+  if (isLoading) return null;
 
   return (
     <>
