@@ -1,3 +1,5 @@
+import { formatDateToKoreanTime } from "./formatDateToString";
+
 export default function isPastTime(date: Date): boolean {
-  return new Date() > new Date(date);
+  return formatDateToKoreanTime(new Date()) > formatDateToKoreanTime(new Date(date));
 }
