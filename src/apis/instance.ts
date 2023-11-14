@@ -33,6 +33,12 @@ client.interceptors.request.use(async (config) => {
   const originalRequest = config;
 
   if (currentTime >= exp) {
+    const retryOrigReq = new Promise<InternalAxiosRequestConfig<any>>((resolve) => {
+      subscribeTokenRefresh((token: Token) => {
+        originalRequest.headers.Authorization = token;
+        resolve(originalRequest);
+      });
+    });
     if (!isRefreshing) {
       isRefreshing = true;
       await postAuthentication()
@@ -48,13 +54,6 @@ client.interceptors.request.use(async (config) => {
           window.location.href = "/";
         });
     }
-
-    const retryOrigReq = new Promise<InternalAxiosRequestConfig<any>>((resolve) => {
-      subscribeTokenRefresh((token: Token) => {
-        originalRequest.headers.Authorization = token;
-        resolve(originalRequest);
-      });
-    });
     return retryOrigReq;
   }
   const { headers } = config;
